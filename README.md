@@ -1,26 +1,34 @@
 # Hovli Courtyard Villa
 
-Single-page architectural presentation for a three-level minimalist high-tech villa built around a central courtyard pool on a walled 3,000 m² plot (50 × 60 m).
+Architectural presentation for a three-level minimalist high-tech villa built around a central courtyard pool. The land (plot) is 3,000 m², 50 × 60 m, enclosed by a 3 m wall. Floor areas are counted separately for each level.
 
-The page includes a master site plan, labelled floor plans for the basement, ground and first floors, a section, north and east elevations, live WebGL renders, a room-by-room breakdown, technical systems, a materials palette and an area schedule.
+The ground floor contains every room of the reference Drafted.ai plan (six bedrooms, primary suite, three bathrooms, seven closets, garage, office, den, living, dining, kitchen, nook, sunroom, family room, storage and circulation), rearranged around the pool.
 
-All drawings, areas and renders are generated from one data model in `data.js` (room rectangles in metres), so every figure on the page matches the plans.
+## What the page shows
+
+- Ink-and-watercolour concept images (static JPGs in `images/`)
+- Master site plan
+- Precise CAD floor plans for the basement, ground and first floors, with walls, door swings, glazing, grid axes, dimensions and room areas
+- Staged, furnished colour plans for each level
+- Section A–A and four elevations (front, back, left, right)
+- Room-by-room breakdown, technical systems, materials and area schedule
+
+Every drawing, area and concept image is generated from one data model (`data.js` and `plan-data.js`), so the figures always match the plans.
 
 ## Files
 
-- `index.html`: page layout, styles and written content
+- `index.html`: layout, styles and written content
 - `data.js`: plot, levels, rooms, glazing and external areas
-- `draw-plans.js`: site plan and floor plans (SVG)
-- `draw-sections.js`: section, elevations and systems diagrams (SVG)
-- `render.js`: 3D renders built with three.js r147 (loaded from jsDelivr)
-- `serve.js`: optional local static server
+- `plan-data.js`: doors, windows, open-plan edges and furniture
+- `draw-plans.js`, `draw-sections.js`, `draw-cad.js`, `draw-elev.js`: SVG drawing generators
+- `images/`: the concept images
+- `bake.html`, `bake.js`: regenerate the concept images from the data (needs `serve.js`)
+- `serve.js`: local static server that also saves baked images
 
 ## Run locally
-
-Open `index.html` through any static server, for example:
 
 ```bash
 node serve.js
 ```
 
-Then visit http://localhost:4817. GitHub Pages also works with no build step.
+Then open http://localhost:4817 for the page, or http://localhost:4817/bake.html to re-bake the images after changing the design.

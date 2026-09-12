@@ -86,7 +86,9 @@ p{margin:0;max-width:66ch;color:#c9cdd0}
 .kv{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:10px;font:400 12px var(--mono);color:var(--muted)}
 .kv b{color:var(--text);font-weight:500;font-variant-numeric:tabular-nums}
 @media (max-width:1100px){.dwg-row{grid-template-columns:1fr}.notes{border-left:0;border-top:1px solid var(--line-2)}}
-.stack{display:grid;gap:40px}
+.stack{display:grid;grid-template-columns:minmax(0,1fr);gap:40px}
+.dwg-row{grid-template-columns:minmax(0,1fr) 300px}
+@media (max-width:1100px){.dwg-row{grid-template-columns:minmax(0,1fr)}}
 .cap{display:flex;justify-content:space-between;gap:16px;margin-top:10px}
 
 /* concept */
@@ -101,9 +103,7 @@ p{margin:0;max-width:66ch;color:#c9cdd0}
 .renders{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;background:var(--line)}
 .rfig{margin:0;background:#07090a;position:relative}
 .rfig .frame{aspect-ratio:9/5;position:relative;overflow:hidden}
-.rfig img{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .8s}
-.rfig.done img,.hero-fig.done img{opacity:1}
-.hero-fig img{opacity:0;transition:opacity 1s}
+.rfig img{width:100%;height:100%;object-fit:cover;display:block;background:#f4f2eb}
 .pending{position:absolute;inset:0;display:grid;place-items:center;font:400 11px var(--mono);letter-spacing:.16em;color:var(--faint)}
 .done .pending{display:none}
 .fail .pending::after{content:" · WebGL unavailable in this browser"}
@@ -181,15 +181,15 @@ footer{padding:36px 0 60px}
 <header class="bar"><div class="wrap">
   <b>HOVLI · HV-01</b>
   <nav aria-label="Drawing set">
-    <a href="#a001">A-001 Concept</a><a href="#a100">A-100 Site</a><a href="#a101">A-101–103 Plans</a><a href="#a201">A-201 Section</a><a href="#a400">A-400 Renders</a><a href="#a500">A-500 Rooms</a><a href="#m100">M-100 Systems</a><a href="#a600">A-600 Materials</a><a href="#a700">A-700 Areas</a>
+    <a href="#a001">A-001 Concept</a><a href="#a100">A-100 Site</a><a href="#a101">A-101–103 Plans</a><a href="#a201">A-201–304 Elevations</a><a href="#a400">A-400 Concept images</a><a href="#a500">A-500 Rooms</a><a href="#m100">M-100 Systems</a><a href="#a600">A-600 Materials</a><a href="#a700">A-700 Areas</a>
   </nav>
 </div></header>
 
 <main>
 <section class="hero" id="a000">
   <figure class="hero-fig" id="heroFig">
-    <img data-view="V-01" alt="Dusk exterior: the monolithic perimeter wall and automated gate, the black first-floor volume and the double-height glass lobby lit by linear LED.">
-    <div class="pending">RENDERING V-01 · EXTERIOR AT DUSK</div>
+    <img src="images/c01-hero.jpg" alt="Concept illustration at dusk: the walled compound from the south-east, with the U-shaped villa wrapped around the central pool.">
+
     <span class="xhair tl"></span><span class="xhair tr"></span><span class="xhair bl"></span><span class="xhair br"></span>
     <div class="hero-over">
       <div class="lbl" style="color:#cfd3d5">A-000 · Project HV-01 · Private residence</div>
@@ -197,7 +197,7 @@ footer{padding:36px 0 60px}
         <h1>HOVLI</h1>
         <p class="sub">A minimalist high-tech villa built around a courtyard pool, inside a walled 3,000 m² plot.</p>
       </div>
-      <div class="corner"><span class="lbl" style="color:#cfd3d5">V-01 · Exterior from the access road · 20:10</span><span class="lbl" style="color:#cfd3d5">N 50 × 60 m</span></div>
+      <div class="corner"><span class="lbl" style="color:#cfd3d5">C-01 · Aerial view from the south-east at dusk</span><span class="lbl" style="color:#cfd3d5">N 50 × 60 m</span></div>
     </div>
   </figure>
   <div class="wrap" style="padding:0">
@@ -216,7 +216,7 @@ footer{padding:36px 0 60px}
     <div class="principles">
       <div><span class="lbl">Monolith</span><p>Pure rectangular volumes with flat roofs. Hidden parapets and concealed gutters leave no visible edge detail.</p></div>
       <div><span class="lbl">Void</span><p>The pool is the centre of the plan. The 7 m lobby void is the one vertical moment, and the stair floats through it.</p></div>
-      <div><span class="lbl">Transparency</span><p>Frameless floor-to-ceiling glass runs 124 m along the courtyard faces. Walls pocket away and the floor continues to the pool edge at the same level.</p></div>
+      <div><span class="lbl">Transparency</span><p>Frameless floor-to-ceiling glass runs 132 m along the courtyard faces. Walls pocket away and the floor continues to the pool edge at the same level.</p></div>
       <div><span class="lbl">Concealment</span><p>Nothing technical shows. Lighting is linear LED in reveals, doors and joinery are handleless, and speakers, sensors and blinds sit flush.</p></div>
     </div>
   </div>
@@ -236,7 +236,7 @@ footer{padding:36px 0 60px}
         <dt>05</dt><dd>Central pool with a flush stone deck, recessed fire trough, low concrete benches and a black steel outdoor kitchen.</dd>
         <dt>06</dt><dd>Olive trees on a strict 6 m grid in gravel beds, with a band of tall grass along the south wall.</dd>
       </dl>
-      <div class="kv"><span>Plot</span><b id="kvPlot"></b></div>
+      <div class="kv"><span>Land area (plot)</span><b id="kvPlot"></b></div>
       <div class="kv"><span>Building footprint</span><b id="kvFoot"></b></div>
       <div class="kv"><span>Site coverage</span><b id="kvCover"></b></div>
     </aside>
@@ -244,30 +244,36 @@ footer{padding:36px 0 60px}
 </div></section>
 
 <section class="sheet" id="a101"><div class="wrap">
-  <div class="shead"><span class="code">A-101–103</span><h2>Floor plans</h2><span class="lbl meta">Scale 1:200 · Every room tagged with number, name and area</span></div>
+  <div class="shead"><span class="code">A-101–103</span><h2>Floor plans</h2><span class="lbl meta">Scale 1:200 · Floor plan and staged plan for each level</span></div>
   <div class="stack" id="plans"></div>
 </div></section>
 
 <section class="sheet" id="a201"><div class="wrap">
-  <div class="shead"><span class="code">A-201–302</span><h2>Section and elevations</h2><span class="lbl meta">Floor-to-floor 3.50 m · Parapet +7.60</span></div>
+  <div class="shead"><span class="code">A-201–304</span><h2>Section and elevations</h2><span class="lbl meta">Floor-to-floor 3.50 m · Parapet +7.60</span></div>
   <div class="stack">
     <div><div class="paper" id="dwgSection"></div><div class="cap"><span class="lbl">Section A–A · cut east–west through the pool</span><span class="lbl">Basement −3.50 · Ground ±0.00 · First +3.50 · Roof +7.00</span></div></div>
-    <div><div class="paper" id="dwgElN"></div><div class="cap"><span class="lbl">North elevation · the street face</span><span class="lbl">Lobby glass 7.0 m high</span></div></div>
-    <div><div class="paper" id="dwgElE"></div><div class="cap"><span class="lbl">East elevation · side</span><span class="lbl">Master suite cantilever 4.0 m</span></div></div>
+    <div><div class="paper" id="dwgElN"></div><div class="cap"><span class="lbl">Front elevation · north · the street face</span><span class="lbl">Lobby glass 7.0 m high</span></div></div>
+    <div><div class="paper" id="dwgElS"></div><div class="cap"><span class="lbl">Back elevation · south · the courtyard</span><span class="lbl">Wing ends and the master cantilever</span></div></div>
+    <div><div class="paper" id="dwgElE"></div><div class="cap"><span class="lbl">Right elevation · east</span><span class="lbl">Master suite cantilever 4.0 m</span></div></div>
+    <div><div class="paper" id="dwgElW"></div><div class="cap"><span class="lbl">Left elevation · west</span><span class="lbl">Bedroom windows along the west wing</span></div></div>
   </div>
 </div></section>
 
 <section class="sheet" id="a400"><div class="wrap">
-  <div class="shead"><span class="code">A-400</span><h2>Renders</h2><span class="lbl meta">Rendered live in your browser from the plan data · WebGL</span></div>
+  <div class="shead"><span class="code">A-400</span><h2>Design concept images</h2><span class="lbl meta">Ink and watercolour concept illustrations · drawn from the plans</span></div>
   <div class="renders">
-    <figure class="rfig"><div class="frame"><img data-view="V-01" alt="Exterior at dusk from the street"><div class="pending">RENDERING V-01</div></div>
-      <figcaption><span class="lbl">V-01</span><b>Exterior at dusk</b><span>The wall, gate and canopy with the black upper box behind them. The lobby glass and soffit LED lines glow warm.</span></figcaption></figure>
-    <figure class="rfig"><div class="frame"><img data-view="V-02" alt="Pool courtyard at dusk from the south garden"><div class="pending">RENDERING V-02</div></div>
-      <figcaption><span class="lbl">V-02</span><b>Pool courtyard</b><span>Looking north over the overflow pool and fire trough, between the two wings, with the master suite cantilevered on the right.</span></figcaption></figure>
-    <figure class="rfig"><div class="frame"><img data-view="V-03" alt="Double-height lobby with floating stair"><div class="pending">RENDERING V-03</div></div>
-      <figcaption><span class="lbl">V-03</span><b>Entrance lobby</b><span>Stone treads cantilever from a concrete wall with LED under each tread. The 7 m glass front faces the canopy.</span></figcaption></figure>
-    <figure class="rfig"><div class="frame"><img data-view="V-04" alt="Master bedroom looking west over the pool"><div class="pending">RENDERING V-04</div></div>
-      <figcaption><span class="lbl">V-04</span><b>Master bedroom</b><span>A floating bed platform faces west through frameless glass to the private terrace and the pool below.</span></figcaption></figure>
+    <figure class="rfig"><div class="frame"><img src="images/c01.jpg" alt="Aerial concept illustration of the walled compound at dusk"></div>
+      <figcaption><span class="lbl">C-01</span><b>The compound from above</b><span>The 3 m wall encloses the plot, and the U-shaped villa wraps three sides of the pool. The black first floor sits on the concrete ground floor.</span></figcaption></figure>
+    <figure class="rfig"><div class="frame"><img src="images/c02.jpg" alt="Arrival forecourt with steel canopy and double-height lobby glass"></div>
+      <figcaption><span class="lbl">C-02</span><b>Arrival</b><span>Inside the main gate, the steel blade canopy leads to the 7 m frameless glass front of the lobby.</span></figcaption></figure>
+    <figure class="rfig"><div class="frame"><img src="images/c03.jpg" alt="Pool courtyard at dusk from the south garden"></div>
+      <figcaption><span class="lbl">C-03</span><b>Pool courtyard</b><span>Looking north over the overflow pool and fire trough between the wings. The master suite cantilevers on the right.</span></figcaption></figure>
+    <figure class="rfig"><div class="frame"><img src="images/c04.jpg" alt="Double-height lobby with floating stair"></div>
+      <figcaption><span class="lbl">C-04</span><b>Entrance lobby</b><span>Stone treads cantilever from a concrete wall with LED under each tread, rising through the double-height void.</span></figcaption></figure>
+    <figure class="rfig"><div class="frame"><img src="images/c05.jpg" alt="Master bedroom looking west to the terrace and pool"></div>
+      <figcaption><span class="lbl">C-05</span><b>Master bedroom</b><span>The bed faces south and west through frameless glass to the private terrace and the pool below.</span></figcaption></figure>
+    <figure class="rfig"><div class="frame"><img src="images/c06.jpg" alt="Family living room opening to the pool terrace"></div>
+      <figcaption><span class="lbl">C-06</span><b>Family room</b><span>The glass wall onto the pool pockets away, and the stone floor runs out flush to the deck.</span></figcaption></figure>
   </div>
 </div></section>
 
@@ -346,7 +352,7 @@ footer{padding:36px 0 60px}
       <div class="tbl"><table>
         <thead><tr><th>Smart glass option</th><th>Where</th><th>Trade-off</th></tr></thead>
         <tbody>
-          <tr><td>Electrochromic tint</td><td>West faces: majlis, master bedroom</td><td>Cuts glare and heat without blinds. Tint changes take 5–15 minutes.</td></tr>
+          <tr><td>Electrochromic tint</td><td>West faces: bedrooms, master bedroom</td><td>Cuts glare and heat without blinds. Tint changes take 5–15 minutes.</td></tr>
           <tr><td>Switchable privacy (PDLC)</td><td>Bathrooms facing the courtyard</td><td>Goes clear to opaque instantly. Gives privacy but little heat control.</td></tr>
           <tr><td>Spectrally selective low-iron</td><td>All remaining glass</td><td>Clearest view and lowest cost, relying on motorised sheers for control.</td></tr>
         </tbody>
@@ -386,11 +392,12 @@ footer{padding:36px 0 60px}
   </div>
 </div></footer>
 
-<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
 <script src="data.js"></script>
+<script src="plan-data.js"></script>
 <script src="draw-plans.js"></script>
 <script src="draw-sections.js"></script>
-<script src="render.js"></script>
+<script src="draw-cad.js"></script>
+<script src="draw-elev.js"></script>
 <script>
 (function(){
   const $ = id => document.getElementById(id);
@@ -398,7 +405,7 @@ footer{padding:36px 0 60px}
   const gfa = ['B','G','F'].reduce((s,k)=>s+levelTotal(k),0);
   const foot = polyArea(LEVELS.F.outline);
   $('stats').innerHTML = [
-    ['Plot', `3,000<small>m² · 50 × 60</small>`],
+    ['Land area', `3,000<small>m² plot · 50 × 60</small>`],
     ['Levels', `3<small>B · G · F</small>`],
     ['Central pool', `10 × 20<small>m · overflow</small>`],
     ['Enclosure', `3.0<small>m walled compound</small>`],
@@ -410,16 +417,15 @@ footer{padding:36px 0 60px}
   $('dwgSite').innerHTML = sitePlanSVG();
   const NOTES = {
     B:['Garage, plant, server, staff and leisure all sit below grade, so the floors above hold only living space.','The service corridor runs under the terrace to connect every basement room without passing a family space.','Ramp ≤ 20 % with transitions, heated.'],
-    G:['The public, family and guest wings each open to the pool.','All courtyard glass pockets fully into the walls, and the floor continues to the deck at ±0.00.','The majlis has its own gallery from the lobby.'],
+    G:['Every room from the reference plan is here: garage, office, den, living, dining, kitchen, nook, sunroom, family room, six bedrooms, three bathrooms, seven closets, storage and the primary suite, plus a pantry.','The rooms are rearranged around the pool. Bedrooms line the west wing, the family rooms and primary suite fill the east wing, and the den and sunroom are glass pavilions at the pool corners.','All courtyard glass pockets fully into the walls, and the floor continues to the deck at ±0.00.'],
     F:['Five en-suite bedrooms, including the master suite that cantilevers 4 m.','The lobby void and floating stair connect the two floors.','Galleries along both wings overlook the pool.']
   };
   $('plans').innerHTML = ['B','G','F'].map(k=>{ const L=LEVELS[k], rs=levelRooms(k);
-    return `<div class="dwg-row"><div class="paper">${planSVG(k)}</div><aside class="notes"><span class="lbl" style="color:var(--led)">${L.sheet}</span><h3>${L.name}</h3>
+    return `<div class="paper">${planCAD(k)}</div><div class="dwg-row"><div class="paper">${planStaged(k)}</div><aside class="notes"><span class="lbl" style="color:var(--led)">${L.sheet}</span><h3>${L.name}</h3>
       <dl>${NOTES[k].map((n,i)=>`<dt>${String(i+1).padStart(2,'0')}</dt><dd>${n}</dd>`).join('')}</dl>
       <div class="kv"><span>Finished floor level</span><b>${zl(L.ffl)}</b></div><div class="kv"><span>Rooms</span><b>${rs.length}</b></div><div class="kv"><span>Net area</span><b>${fmt(levelTotal(k))} m²</b></div></aside></div>`; }).join('');
   $('dwgSection').innerHTML = sectionSVG();
-  $('dwgElN').innerHTML = elevationSVG('N');
-  $('dwgElE').innerHTML = elevationSVG('E');
+  for(const v of ['N','S','E','W']) $('dwgEl'+v).innerHTML = elevationPrecise(v);
   $('dgRiser').innerHTML = riserSVG();
   $('dgPool').innerHTML = poolLoopSVG();
   $('roomCount').textContent = `${ROOMS.length} rooms · 3 levels`;
@@ -434,10 +440,6 @@ footer{padding:36px 0 60px}
   rows += `<tr class="lvlh"><td colspan="4">External areas · not counted in floor area</td></tr>`;
   for(const e of EXTERNAL) rows += `<tr><td class="id">${e.id}</td><td>${e.n} <span style="color:var(--faint)">· ${e.d}</span></td><td class="num">${fmt(area(e))}</td><td class="num"></td></tr>`;
   $('sched').innerHTML = rows + '</tbody>';
-  const hero = $('heroFig'), heroImg = hero.querySelector('img');
-  new MutationObserver(()=>{ if(heroImg.src) hero.classList.add('done'); }).observe(heroImg,{attributes:true,attributeFilter:['src']});
-  const go = () => renderAll().catch(e=>{ console.error(e); document.querySelectorAll('.rfig,.hero-fig').forEach(f=>f.classList.add('fail')); });
-  if(document.readyState==='complete') setTimeout(go,50); else addEventListener('load',()=>setTimeout(go,50));
 })();
 </script>
 </body>

@@ -117,7 +117,7 @@ function sitePlanSVG(){
   s += rc(16,19,18,27,{f:`url(#${p}-pav)`,s:'none'}) + rc(20,22,10,20,{f:`url(#${p}-water)`,sw:1.3});
   for(let y=46.8;y<57;y+=1.25) s += rc(24.2,y,1.6,.6,{f:'#dcdedb',sw:.4});
   // building roof
-  s += pg(LEVELS.F.outline,{f:'#d4d7d6',sw:2}) + `<polygon points="${LEVELS.F.outline.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${INK}" stroke-width=".4" ${NSS} transform="translate(0 0)"/>`;
+  s += pg(LEVELS.G.outline,{f:'#dcdfde',sw:1.2}) + pg(LEVELS.F.outline,{f:'#d4d7d6',sw:2}) + `<polygon points="${LEVELS.F.outline.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${INK}" stroke-width=".4" ${NSS} transform="translate(0 0)"/>`;
   s += rc(27,10,3.5,5.5,{f:`url(#${p}-core)`,sw:.6}) + rc(16,10,9,4,{sw:.6,f:'#e6e8e7'}) + tx(20.5,12.3,'LOBBY ROOFLIGHT',{size:.3,cls:'m'});
   s += rc(17,3,13,7,{sw:.7,x:'stroke-dasharray="3 2"'}) + rc(18,8.6,.25,.25,{f:INK})+rc(28.8,8.6,.25,.25,{f:INK});
   // perimeter wall with gate openings

@@ -37,7 +37,7 @@ function sectionSVG(){
   s += wing(8,16,[1,1],[0,1]) + wing(34,42,[1,1],[1,0]);
   // rooms
   const lab=(x,z,t,sub)=> tx(x,-z,t,{size:.4,w:500,cls:'m'}) + (sub?tx(x,-z+.6,sub,{size:.32,fill:MUTE,cls:'m'}):'');
-  s += lab(12,5.6,'BEDROOM 5','F.14') + lab(12,1.9,'MAJLIS','G.06') + lab(8.7,-1.6,'GARAGE · 6 CARS','B.08') + lab(38,5.6,'MASTER BATH','F.18') + lab(38,1.9,'FAMILY LIVING','G.15') + lab(38.9,-1.6,'STAFF ROOM A','B.14') + lab(32.25,-1.2,'POOL','') + lab(32.25,-1.75,'PLANT','') + lab(25,-.9,'POOL · 1.5 m WATER','');
+  s += lab(12,5.6,'BEDROOM 5','F.14') + lab(10.5,1.9,'BEDROOM','G.27') + lab(8.7,-1.6,'GARAGE · 6 CARS','B.08') + lab(38,5.6,'MASTER BATH','F.18') + lab(38,1.9,'FAMILY ROOM','G.15') + lab(38.9,-1.6,'STAFF ROOM A','B.14') + lab(32.25,-1.2,'POOL','') + lab(32.25,-1.75,'PLANT','') + lab(25,-.9,'POOL · 1.5 m WATER','');
   s += lab(18,.45,'TERRACE',''); s += tree(46,.9) + tree(4.3,.7);
   s += datums(-3,53,53.3,LEVEL_DATUMS);
   s += dimChain([-3.5,0,3.5,7],-2.3,false,{off:.55});
