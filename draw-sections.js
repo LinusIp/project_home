@@ -37,7 +37,7 @@ function sectionSVG(){
   s += wing(8,16,[1,1],[0,1]) + wing(34,42,[1,1],[1,0]);
   // rooms
   const lab=(x,z,t,sub)=> tx(x,-z,t,{size:.4,w:500,cls:'m'}) + (sub?tx(x,-z+.6,sub,{size:.32,fill:MUTE,cls:'m'}):'');
-  s += lab(12,5.6,'BEDROOM 5','F.14') + lab(10.5,1.9,'BEDROOM','G.27') + lab(8.7,-1.6,'GARAGE · 6 CARS','B.08') + lab(38,5.6,'MASTER BATH','F.18') + lab(38,1.9,'FAMILY ROOM','G.15') + lab(38.9,-1.6,'STAFF ROOM A','B.14') + lab(32.25,-1.2,'POOL','') + lab(32.25,-1.75,'PLANT','') + lab(25,-.9,'POOL · 1.5 m WATER','');
+  s += lab(12,5.6,'BEDROOM 5','F.14') + lab(10.5,1.9,'BEDROOM','G.27') + lab(8.7,-1.6,'GARAGE · 4 CARS','B.01') + lab(38,5.6,'MASTER BATH','F.18') + lab(38,1.9,'FAMILY ROOM','G.15') + lab(38.9,-1.6,'ELECTRONICS LAB','B.03') + lab(32.25,-1.2,'POOL','') + lab(32.25,-1.75,'PLANT','') + lab(25,-.9,'POOL · 1.5 m WATER','');
   s += lab(18,.45,'TERRACE',''); s += tree(46,.9) + tree(4.3,.7);
   s += datums(-3,53,53.3,LEVEL_DATUMS);
   s += dimChain([-3.5,0,3.5,7,9.8],-2.3,false,{off:.55});
@@ -94,8 +94,8 @@ function riserSVG(){
   const bands = [['ROOF · EAVES +7.00',2,11],['UPPER FLOOR · 2ND +3.50',13,25],['GROUND FLOOR · 1ST ±0.00',27,39],['BASEMENT −3.50',41,70]];
   for(const [t,y1,y2] of bands) s += `<rect x="0" y="${y1}" width="120" height="${y2-y1}" fill="#15191b" stroke="#2a2f33" stroke-width=".6" ${NSS}/><text x="1" y="${y1+1.8}" font-size="1.15" fill="${D}" class="m" letter-spacing=".12">${t}</text>`;
   s += `<rect x="88" y="2" width="8" height="68" fill="none" stroke="${D}" stroke-width=".7" ${NSS} stroke-dasharray="2 1.2"/><text x="92" y="72.6" font-size="1.1" fill="${D}" text-anchor="middle" class="m">CORE RISER</text>`;
-  s += B(3,44,40,24,'ENGINEERING ROOM  B.05','') + B(5,49,17,7,'CHW PLANT + AHU','chiller · 2 pumps') + B(24,49,17,7,'WATER 2×15 m³','booster set · UV') + B(5,58,17,8,'MAIN LV BOARD','250 kVA gen · ATS') + B(24,58,17,8,'BMS / KNX RACK','controller · PoE');
-  s += B(46,49,18,11,'SERVER ROOM  B.11','2×42U · UPS 10 kVA') + B(67,49,17,11,'POOL PLANT  B.10','filter · UV · heat pump');
+  s += B(3,44,40,24,'MECHANICAL + ELECTRICAL  B.18 · B.07','') + B(5,49,17,7,'CHW PLANT + AHU','chiller · 2 pumps') + B(24,49,17,7,'WATER TANKS  B.08','booster set · UV') + B(5,58,17,8,'MAIN LV BOARD','250 kVA gen · ATS') + B(24,58,17,8,'BMS / KNX RACK','controller · PoE');
+  s += B(46,49,18,11,'SERVER ROOM  B.04','2×42U · UPS 10 kVA') + B(67,49,17,11,'POOL PLANT  B.19','filter · UV · heat pump');
   s += B(40,3,24,7,'DRY COOLERS + PV','service yard · south roof') + B(100,15,18,8,'FCUs · FF','bed + bath zones') + B(100,29,18,8,'FCUs · GF','living · kitchen') + B(66,3,18,7,'CCTV · GATE LPR','perimeter + gate');
   // chilled water: CHW plant → riser → FCUs; roof dry cooler
   s += L(13.5,49,13.5,46,ST.chw,W,1.4) + L(13.5,46,89.5,46,ST.chw,W,1.4) + L(89.5,46,89.5,19,ST.chw,W,1.4) + L(89.5,19,100,19,ST.chw,W,1.4) + L(89.5,33,100,33,ST.chw,W,1.4);

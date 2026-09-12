@@ -203,14 +203,71 @@ td{color:var(--ink-2)} td:first-child{color:var(--ink);font-weight:500;white-spa
 .foot-bot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:22px;font-size:13px;color:#8d9399}
 .foot-bot a{color:#fff}
 @media (max-width:900px){.foot-top{grid-template-columns:1fr}.tblock{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* concept boards */
+.wrap.wide{max-width:1560px}
+.boards{display:grid;gap:34px}
+.board-scroll{overflow-x:auto;border-radius:18px;border:1px solid var(--line);background:#e9e9e6}
+.board{min-width:1240px;background:#f4f4f2;padding:22px;color:#1b1d20;font-family:var(--sans)}
+.board .b-title{font-weight:300;font-size:38px;letter-spacing:.2em;line-height:1;margin:0;font-family:var(--sans)}
+.board .b-title.sm{font-size:24px;letter-spacing:.14em}
+.board .b-sub{font:400 14px var(--mono);letter-spacing:.5em;margin-top:10px;color:#2a2d30}
+.board h4{font:500 12px/1.3 var(--mono);letter-spacing:.14em;margin:0 0 12px;color:#1b1d20}
+.board h4 small{font-size:11px;letter-spacing:.06em;color:#6d7277}
+.b-facts{font:500 11.5px var(--mono);letter-spacing:.14em;margin-top:8px;color:#2a2d30}
+.b-facts i,.b-foot i{font-style:normal;margin:0 10px;color:#9a9ea3}
+.bf{display:grid;grid-template-columns:minmax(0,1fr) 400px;grid-template-areas:"head side" "plan side" "strip strip" "foot foot";column-gap:16px}
+.b-head{grid-area:head;display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding:18px 22px 10px;background:#fbfbfa;border:1px solid #cdd0cc;border-bottom:0}
+.b-plan{grid-area:plan;background:#fbfbfa;border:1px solid #cdd0cc;border-top:0;padding:4px 18px 12px}
+.b-plan svg{display:block;width:100%;height:auto}
+.b-plan-cap{font:500 10.5px var(--mono);letter-spacing:.12em;color:#55595e;padding-top:6px}
+.b-side{grid-area:side;background:#fbfbfa;border:1px solid #cdd0cc;display:flex;flex-direction:column}
+.b-side>section{padding:18px 20px;border-bottom:1px solid #cdd0cc}
+.b-side>section:last-child{border-bottom:0}
+.bl-rooms{list-style:none;margin:0;padding:0;display:grid;gap:5px;font:400 11.5px/1.25 var(--mono)}
+.bl-rooms.two{grid-template-columns:1fr 1fr;column-gap:14px}
+.bl-rooms li{display:grid;grid-template-columns:20px minmax(0,1fr) auto;gap:6px;align-items:baseline}
+.bl-rooms span{color:#8a8f94}
+.bl-rooms em{font-style:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bl-rooms b{font-weight:400;white-space:nowrap;font-variant-numeric:tabular-nums}
+.bl-total{display:flex;justify-content:space-between;border-top:1px solid #1b1d20;margin-top:12px;padding-top:8px;font:600 12px var(--mono);letter-spacing:.06em}
+.b-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.b-stats h4{font-size:10px;margin-bottom:6px}
+.b-stats b{display:block;font:300 22px var(--sans);letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.b-stats small{display:block;color:#6d7277;font:400 10px var(--mono);margin-top:2px}
+.b-axo img{width:100%;height:auto;display:block}
+.b-strip{grid-area:strip;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:12px;margin-top:16px}
+.b-strip figure,.bo-renders figure{margin:0;background:#fbfbfa;border:1px solid #cdd0cc;padding:6px}
+.b-strip img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block}
+.b-strip figcaption,.bo-renders figcaption{font:500 10.5px var(--mono);letter-spacing:.12em;padding:8px 4px 3px;color:#2a2d30}
+.b-foot{grid-area:foot;display:flex;justify-content:space-between;gap:12px;font:500 10.5px var(--mono);letter-spacing:.14em;padding:16px 4px 0;color:#55595e}
+.bo{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:14px;grid-template-areas:"hero hero facts" "site plans axo" "site plans sec" "rend rend sun"}
+.bo .p{background:#fbfbfa;border:1px solid #cdd0cc;padding:16px 18px}
+.bo svg{display:block;width:100%;height:auto}
+.bo-hero{grid-area:hero;padding:0!important;overflow:hidden;min-height:440px;position:relative}
+.bo-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bo-facts{grid-area:facts;display:flex;flex-direction:column;gap:12px}
+.bo-axo{grid-area:axo}.bo-axo img{width:100%;display:block}
+.bo-site{grid-area:site}.bo-plans{grid-area:plans}.bo-sec{grid-area:sec}.bo-sun{grid-area:sun}
+.bo-renders{grid-area:rend;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.bo-renders img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.bo-list{font:400 15px/1.6 var(--mono);letter-spacing:.08em;margin:6px 0 4px}
+.bo-sw{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.bo-sw .sw{display:block;aspect-ratio:1;border:1px solid #cdd0cc}
+.bo-sw small{display:block;font:500 9.5px var(--mono);letter-spacing:.06em;margin-top:5px}
+.bo-sm{font:500 11px var(--mono);letter-spacing:.1em;margin:-6px 0 8px;color:#55595e}
+.bo-fp{border-top:1px solid #cdd0cc;padding:10px 0}
+.bo-fp:first-of-type{border-top:0;padding-top:0}
+.bo-fp-h{display:flex;justify-content:space-between;font:500 11px var(--mono);letter-spacing:.12em;margin-bottom:6px}
+.bo-fp-b{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:10px;align-items:center}
+.bo-fp-b ol{margin:0;padding-left:18px;font:400 10.5px/1.5 var(--mono)}
 </style>
 </head>
 <body>
 <header class="hero" id="top">
-  <img src="images/c01-hero.jpg" alt="Concept illustration at dusk: the walled compound from the south-east, three black gabled wings around the central pool.">
+  <img src="images/c01.jpg" alt="Concept render at dusk: the walled compound from the south-east, three black gabled wings around the central pool.">
   <nav class="nav" aria-label="Main">
     <a class="brand" href="#top"><svg viewBox="0 0 34 22" aria-hidden="true"><path d="M1 21V9L6 3l5 6v12M12 21V9l5-6 5 6v12M23 21V9l5-6 5 6v12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="miter"/></svg>Hovli</a>
-    <div class="links"><a href="#a001">Concept</a><a href="#a400">Images</a><a href="#a100">Site</a><a href="#a101">Plans</a><a href="#a201">Elevations</a><a href="#m100">Systems</a><a href="#a700">Areas</a></div>
+    <div class="links"><a href="#boards">Boards</a><a href="#a001">Concept</a><a href="#a400">Images</a><a href="#a100">Site</a><a href="#a101">Plans</a><a href="#a201">Elevations</a><a href="#m100">Systems</a><a href="#a700">Areas</a></div>
     <div class="nav-r"><a class="txt" href="#a101">View the plans</a><a class="round" href="#a700" aria-label="Go to the area schedule"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.6"/></svg></a></div>
   </nav>
   <div class="hero-body">
@@ -235,6 +292,11 @@ td{color:var(--ink-2)} td:first-child{color:var(--ink);font-weight:500;white-spa
 </div>
 
 <main>
+<section class="sec" id="boards"><div class="wrap wide">
+  <div class="head"><span class="tag">Concept boards</span><h2>The Villa on <em>Four Sheets</em></h2><p>An overview sheet and one sheet per level: the staged plan in its walled site, a numbered room list with areas, plot figures, the exploded axonometric and renders of the key rooms.</p></div>
+  <div class="boards" id="boardList"></div>
+</div></section>
+
 <section class="sec" id="a001"><div class="wrap">
   <div class="head"><span class="tag">A-001 · Design concept</span><h2>A Courtyard House, Rebuilt in <em>Concrete and Glass</em></h2></div>
   <div class="split">
@@ -254,14 +316,20 @@ td{color:var(--ink-2)} td:first-child{color:var(--ink);font-weight:500;white-spa
 </div></section>
 
 <section class="sec" id="a400"><div class="wrap">
-  <div class="head"><span class="tag">A-400 · Concept images</span><h2>Six Views of <em>the Villa</em></h2><p>Ink and watercolour illustrations drawn from the same model as the plans, so every wall, window and piece of furniture sits where the drawings put it.</p></div>
+  <div class="head"><span class="tag">A-400 · Concept images</span><h2>Twelve Views of <em>the Villa</em></h2><p>Renders computed from the same model as the plans, so every wall, window and piece of furniture sits where the drawings put it.</p></div>
   <div class="gallery">
-    <figure class="shot"><div class="img"><img src="images/c01.jpg" alt="Aerial view of the walled compound at dusk"><span class="chip">C-01</span></div><figcaption><b>The compound from above</b><span>The wall encloses the plot and three gabled bars wrap the pool.</span></figcaption></figure>
     <figure class="shot"><div class="img"><img src="images/c02.jpg" alt="Arrival forecourt with the steel canopy and lobby glass"><span class="chip">C-02</span></div><figcaption><b>Arrival</b><span>The steel blade canopy leads to the 7 m glass front of the lobby.</span></figcaption></figure>
     <figure class="shot"><div class="img"><img src="images/c03.jpg" alt="Pool courtyard from the south garden"><span class="chip">C-03</span></div><figcaption><b>Pool courtyard</b><span>The overflow pool between the wings, with the master suite cantilevered on the right.</span></figcaption></figure>
     <figure class="shot"><div class="img"><img src="images/c04.jpg" alt="Double-height lobby with floating stair"><span class="chip">C-04</span></div><figcaption><b>Entrance lobby</b><span>Stone treads cantilever from a concrete wall with LED under each tread.</span></figcaption></figure>
     <figure class="shot"><div class="img"><img src="images/c05.jpg" alt="Master bedroom looking to the terrace and pool"><span class="chip">C-05</span></div><figcaption><b>Master bedroom</b><span>Frameless glass on two sides opens to the private terrace and the pool below.</span></figcaption></figure>
     <figure class="shot"><div class="img"><img src="images/c06.jpg" alt="Family room opening to the pool"><span class="chip">C-06</span></div><figcaption><b>Family room</b><span>The glass wall pockets away and the floor runs out flush to the deck.</span></figcaption></figure>
+    <figure class="shot"><div class="img"><img src="images/c07.jpg" alt="Walk-in closet on the upper floor" loading="lazy"><span class="chip">C-07</span></div><figcaption><b>Walk-in closet</b><span>Smoked-glass wardrobes around an aluminium island on the 2nd floor.</span></figcaption></figure>
+    <figure class="shot"><div class="img"><img src="images/c08.jpg" alt="Family lounge at the top of the stair" loading="lazy"><span class="chip">C-08</span></div><figcaption><b>Family lounge</b><span>The lounge at the top of the floating stair, open to the lobby void.</span></figcaption></figure>
+    <figure class="shot"><div class="img"><img src="images/c09.jpg" alt="Master terrace over the pool" loading="lazy"><span class="chip">C-09</span></div><figcaption><b>Master terrace</b><span>The cantilevered terrace looking back over the pool and the west wing.</span></figcaption></figure>
+    <figure class="shot"><div class="img"><img src="images/c10.jpg" alt="Basement garage with four cars" loading="lazy"><span class="chip">C-10</span></div><figcaption><b>Garage · 4 cars</b><span>Four bays off the ramp aisle, with an EV and wash bay.</span></figcaption></figure>
+    <figure class="shot"><div class="img"><img src="images/c11.jpg" alt="Engineering workshop in the basement" loading="lazy"><span class="chip">C-11</span></div><figcaption><b>Engineering workshop</b><span>Central workbench, tool wall, CNC mill and a robot test cell.</span></figcaption></figure>
+    <figure class="shot"><div class="img"><img src="images/c12.jpg" alt="Basement cinema" loading="lazy"><span class="chip">C-12</span></div><figcaption><b>Cinema</b><span>Nine recliners facing a 4 m acoustically transparent screen.</span></figcaption></figure>
+    <figure class="shot"><div class="img"><img src="images/c13.jpg" alt="Basement gym" loading="lazy"><span class="chip">C-13</span></div><figcaption><b>Gym</b><span>Cardio row, free weights and a stretching zone beside the sauna.</span></figcaption></figure>
   </div>
 </div></section>
 
@@ -311,7 +379,7 @@ td{color:var(--ink-2)} td:first-child{color:var(--ink);font-weight:500;white-spa
   <div class="head"><span class="tag">M-100 · Technical systems</span><h2>The Systems <em>You Never See</em></h2></div>
   <div class="card">
     <div class="sys">
-      <div><span class="lbl">01 · Engineering room B.05</span><h3>One basement room serves all three floors</h3></div>
+      <div><span class="lbl">01 · Plant rooms B.18 · B.07 · B.08</span><h3>The basement plant serves all three floors</h3></div>
       <div class="body">
         <div class="diagbox" id="dgRiser"></div>
         <p><b>Cooling.</b> A water-cooled chiller makes chilled water at 6/12 °C, and dry coolers in the screened service yard reject its heat. Pumps push the water up the riser in the concrete core to fan-coil units hidden in ceiling bulkheads, one per room, each with its own thermostat. The air-handling unit supplies filtered fresh air through a heat-recovery wheel.</p>
@@ -320,7 +388,7 @@ td{color:var(--ink-2)} td:first-child{color:var(--ink);font-weight:500;white-spa
       </div>
     </div>
     <div class="sys">
-      <div><span class="lbl">02 · Server room B.11</span><h3>Cooling, UPS and fire safety</h3></div>
+      <div><span class="lbl">02 · Server room B.04</span><h3>Cooling, UPS and fire safety</h3></div>
       <div class="body">
         <p>The network, security recording and AV sources all live here, so the room is built to keep running when everything else fails.</p>
         <div class="spec">
@@ -329,12 +397,12 @@ td{color:var(--ink-2)} td:first-child{color:var(--ink);font-weight:500;white-spa
           <div><b>Fire</b>Aspirating smoke detection triggers a clean-agent gas release. No water is used and the walls are 2-hour rated.</div>
           <div><b>Cabling</b>Overhead ladder tray keeps copper and fibre apart. Fibre and Cat 6A run to a rack on each floor.</div>
           <div><b>Monitoring</b>Leak detection, door access and temperature alarms report to the building management system and your phone.</div>
-          <div><b>Adjacent storage</b>Room B.12 holds spares and shares the server room's controlled atmosphere.</div>
+          <div><b>Next door</b>The electronics lab B.03 sits beside it, and spares live in storage B.12.</div>
         </div>
       </div>
     </div>
     <div class="sys">
-      <div><span class="lbl">03 · Pool plant B.10</span><h3>Filtration and the hidden plant room</h3></div>
+      <div><span class="lbl">03 · Pool plant B.19</span><h3>Filtration and the hidden plant room</h3></div>
       <div class="body">
         <div class="diagbox" id="dgPool"></div>
         <p>The water surface sits flush with the deck and spills over all four edges into a slotted stone grate. It drains to a 12 m³ balance tank under the east deck. Variable-speed pumps draw from the tank through glass-media filters, a UV steriliser, a heat pump and a salt chlorinator, and clean water returns through jets in the pool floor.</p>
@@ -428,6 +496,7 @@ td{color:var(--ink-2)} td:first-child{color:var(--ink);font-weight:500;white-spa
 <script src="draw-sections.js"></script>
 <script src="draw-cad.js"></script>
 <script src="draw-elev.js"></script>
+<script src="draw-boards.js"></script>
 <script>
 (function(){
   const $ = id => document.getElementById(id);
@@ -440,9 +509,13 @@ td{color:var(--ink-2)} td:first-child{color:var(--ink);font-weight:500;white-spa
   $('kvPlot').textContent = `${fmt(land,0)} m²`;
   $('kvFoot').textContent = `${fmt(foot,0)} m²`;
   $('kvCover').textContent = `${fmt(foot/land*100,1)} %`;
+  $('boardList').innerHTML = boardOverview()
+    + boardFloor('G',[['c03','POOL COURTYARD — 1ST FLOOR'],['c04','DOUBLE-HEIGHT LOBBY'],['c06','FAMILY ROOM'],['c02','ARRIVAL · FORECOURT']])
+    + boardFloor('F',[['c05','MASTER BEDROOM — 2ND FLOOR'],['c07','WALK-IN CLOSET — 2ND FLOOR'],['c08','FAMILY LOUNGE — 2ND FLOOR'],['c09','MASTER TERRACE — 2ND FLOOR']])
+    + boardFloor('B',[['c10','GARAGE — 4 CARS'],['c11','ENGINEERING WORKSHOP'],['c12','CINEMA ROOM'],['c13','GYM']]);
   $('dwgSite').innerHTML = sitePlanSVG();
   const NOTES = {
-    B:['Garage, plant, server, staff and leisure sit below grade, so the floors above hold living space.','The service corridor runs under the terrace and connects every basement room without passing a family space.','The ramp is at most 20 % with transitions, and heated.'],
+    B:['Every room of the engineering-lab basement board is here: 4-car garage, engineering workshop, electronics lab, server room, gym, cinema, sauna, shower, wine cellar, electrical and water tank rooms, storage, staff room and bathroom.','The service corridor runs under the terrace and connects every basement room without passing a family space.','The ramp is at most 20 % with transitions, and heated.'],
     G:['Every room from the reference plan is here: garage, office, den, living, dining, kitchen, nook, sunroom, family room, six bedrooms, three bathrooms, seven closets, storage and the primary suite, plus a pantry.','Bedrooms line the west wing, the family rooms and primary suite fill the east wing, and the den and sunroom are glass pavilions at the pool corners.','All courtyard glass pockets fully into the walls, and the floor continues to the deck at ±0.00.'],
     F:['Five en-suite bedrooms, including the master suite that cantilevers 4 m.','The lobby void and floating stair connect the two floors.','Galleries along both wings overlook the pool behind white fins.']
   };

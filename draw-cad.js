@@ -120,10 +120,13 @@ function floorDefs(){
   <pattern id="fl-deck" width="1.2" height=".6" patternUnits="userSpaceOnUse"><rect width="1.2" height=".6" fill="#c9c7c1"/><path d="M1.2 0H0V.6" fill="none" stroke="#b3b0a9" stroke-width=".02"/></pattern>
   <linearGradient id="fl-water" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6fb0bd"/><stop offset=".55" stop-color="#3f8797"/><stop offset="1" stop-color="#2b6977"/></linearGradient>
   <pattern id="fl-ripple" width="2" height="1.2" patternUnits="userSpaceOnUse"><path d="M0 .6Q.5 .45 1 .6T2 .6" fill="none" stroke="#9fd0da" stroke-width=".03" opacity=".6"/></pattern>
+  <pattern id="fl-grav" width="1" height="1" patternUnits="userSpaceOnUse"><rect width="1" height="1" fill="#dcd8ce"/><g fill="#b9b4a8"><circle cx=".15" cy=".2" r=".05"/><circle cx=".6" cy=".1" r=".04"/><circle cx=".42" cy=".55" r=".05"/><circle cx=".85" cy=".62" r=".04"/><circle cx=".2" cy=".85" r=".04"/><circle cx=".7" cy=".92" r=".05"/></g></pattern>
+  <pattern id="fl-grass" width=".5" height=".6" patternUnits="userSpaceOnUse"><rect width=".5" height=".6" fill="#b7bd93"/><path d="M.1 .55L.05 .1M.25 .55L.25 .05M.4 .55L.45 .15" stroke="#7f8a5c" stroke-width=".03" fill="none"/></pattern>
+  <radialGradient id="fl-tree" cx=".38" cy=".35" r=".72"><stop offset="0" stop-color="#95b37b"/><stop offset=".6" stop-color="#60804f"/><stop offset="1" stop-color="#3e5936"/></radialGradient>
   <filter id="shd" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx=".07" dy=".09" stdDeviation=".06" flood-color="#000" flood-opacity=".28"/></filter>
   </defs>`;
 }
-function floorFor(r){ if(r.id==='B.01') return 'fl-carpet'; if(r.id==='B.02') return 'fl-rubber';
+function floorFor(r){ if(r.n==='Cinema') return 'fl-carpet'; if(r.n==='Gym') return 'fl-rubber'; if(r.n==='Sauna') return 'fl-oak';
   return {live:'fl-stone',circ:'fl-stone',core:'fl-stone',sleep:'fl-oak',store:'fl-oak',staff:'fl-oak',wet:'fl-tile',service:'fl-tile',garage:'fl-conc',plant:'fl-conc'}[r.k] || 'fl-stone'; }
 
 function cadLabel(r, staged){
@@ -150,10 +153,11 @@ function stairs(k){ let s='';
   s += rc(27.2,10.2,3.1,2.9,{f:WHITE,sw:.5}); for(let y=11.35;y<13.05;y+=.28){ s+=ln(27.2,y,28.7,y,.4)+ln(28.8,y,30.3,y,.4); } s += ln(28.75,11.35,28.75,13.1,.6) + ln(27.2,11.35,30.3,11.35,.5);
   return s; }
 
-function planCAD(k, staged=false){
-  const L=LEVELS[k], vb=[-3.5,0.4,57.5,50.6], bg = staged ? '#f3f2ee' : WHITE, maxY = k==='F'?46:42;
+function planCAD(k, staged=false, opts={}){
+  const L=LEVELS[k], vb=opts.site?[-3.8,-3.4,57.6,67.4]:[-3.5,0.4,57.5,50.6], bg = staged ? '#f3f2ee' : WHITE, maxY = k==='F'?46:42;
   let s = `<svg viewBox="${vb.join(' ')}" class="dwg" role="img" aria-label="${L.name} ${staged?'staged':''} floor plan">${defs('c'+k+(staged?'s':''))}${staged?floorDefs():''}<rect x="${vb[0]}" y="${vb[1]}" width="${vb[2]}" height="${vb[3]}" fill="${bg}"/>`;
-  if(!staged) s += gridAxes(0.4,46.8,2.2,maxY+1.2,maxY);
+  if(!staged && !opts.site) s += gridAxes(0.4,46.8,2.2,maxY+1.2,maxY);
+  if(opts.site) s += siteContext(k, staged);
   if(staged){
     if(k==='G'){ s += `<rect x="16" y="19" width="18" height="27" fill="url(#fl-deck)"/><rect x="19.7" y="21.7" width="10.6" height="20.6" fill="#8d9a9c"/><rect x="20" y="22" width="10" height="20" fill="url(#fl-water)"/><rect x="20" y="22" width="10" height="20" fill="url(#fl-ripple)"/>` + tx(25,32.2,'POOL',{size:.7,w:600,fill:'#e8f4f6',cls:'m'});
       for(const it of FURN.DECK) s += symbol(it,'staged'); }
@@ -176,13 +180,33 @@ function planCAD(k, staged=false){
   for(const [[x1,y1],[x2,y2]] of (BALUSTRADE[k]||[])) s += ln(x1,y1,x2,y2,.5) + (y1===y2? ln(x1,y1+.08,x2,y2+.08,.5) : ln(x1+.08,y1,x2+.08,y2,.5));
   for(const d of DOORS[k]) s += doorSym(d,bg);
   for(const r of levelRooms(k)) s += cadLabel(r, staged);
-  if(!staged){
+  if(!staged && !opts.bare){
     const xs = GRID_X.map(g=>g[1]); const ext = k==='B' ? [1.5,...xs] : xs;
     s += dimChain(ext,1.35,true,{size:.36}) ;
     const ys = GRID_Y.map(g=>g[1]).filter(y=>y<=maxY); s += dimChain(ys,48.3,false,{off:-.5,size:.36}) + dim(49.6,ys[0],49.6,ys[ys.length-1],Math.round((ys[ys.length-1]-ys[0])*1000).toLocaleString('en-US').replace(/,/g,' '),{off:-.5,size:.36});
   }
-  s += north(51.6,6) + scaleBar(0,49.5,10,1,.34);
-  s += tx(53.8,49.9,`${L.sheet}${staged?'S':''} · ${L.name.toUpperCase()} · FFL ${zl(L.ffl)} · ${staged?'STAGED PLAN':'FLOOR PLAN'} · 1:200`,{size:.42,a:'end',w:500,cls:'m'});
+  if(opts.site) s += dim(0,-1.7,50,-1.7,'50.00 m',{size:.62,off:.55}) + dim(-1.7,0,-1.7,60,'60.00 m',{size:.62,off:.7}) + north(52.4,1.6,1.1) + scaleBar(29,61.6,20,5,.55);
+  if(!opts.bare) s += north(51.6,6) + scaleBar(0,49.5,10,1,.34);
+  if(!opts.bare) s += tx(53.8,49.9,`${L.sheet}${staged?'S':''} · ${L.name.toUpperCase()} · FFL ${zl(L.ffl)} · ${staged?'STAGED PLAN':'FLOOR PLAN'} · 1:200`,{size:.42,a:'end',w:500,cls:'m'});
   return s + '</svg>';
 }
 const planStaged = k => planCAD(k,true);
+
+/* site context for the board plans: gravel, grass, forecourt, ramp, trees, perimeter wall and gates */
+function siteContext(k, staged){
+  let s='<g opacity="'+(k==='B'?.4:1)+'">';
+  if(staged){
+    s += '<rect x="0" y="0" width="50" height="60" fill="url(#fl-grav)"/><rect x=".3" y="57.6" width="49.4" height="2.1" fill="url(#fl-grass)"/><rect x=".3" y="26" width="7.7" height="16" fill="url(#fl-grass)"/>';
+    s += '<rect x="1.5" y=".3" width="7.7" height="8" fill="url(#fl-deck)"/><rect x="9.2" y="1.5" width="21.3" height="7.5" fill="url(#fl-deck)"/><rect x="42.3" y="10" width="7.4" height="10" fill="url(#fl-deck)"/>';
+    s += '<rect x="1.5" y="8" width="6" height="18" fill="#b8b6af"/>' + Array.from({length:17},(_,i)=>'<line x1="1.5" y1="'+(9+i)+'" x2="7.5" y2="'+(9+i)+'" stroke="#9d9b94" stroke-width=".05"/>').join('');
+    if(k!=='G') s += '<rect x="16" y="19" width="18" height="27" fill="url(#fl-deck)"/><rect x="20" y="22" width="10" height="20" fill="url(#fl-water)"/>';
+    if(k==='F') s += pg(LEVELS.G.outline,{f:'#b9bdbf',s:'#8d9194',sw:.5});
+    s += '<rect x="17" y="3" width="13" height="7" fill="#2f3336" opacity=".18"/>';
+    for(const c of FORECOURT_CARS) s += symbol(['car',...c],'staged');
+  }
+  s += '<rect x=".15" y=".15" width="49.7" height="59.7" fill="none" stroke="'+INK+'" stroke-width=".3"/>';
+  s += '<rect x="1.8" y="-.1" width="7.4" height=".5" fill="'+(staged?'#5b6064':WHITE)+'"/><rect x="49.6" y="11.5" width=".5" height="4" fill="'+(staged?'#5b6064':WHITE)+'"/>';
+  s += tx(5.5,-.6,'MAIN GATE',{size:.5,cls:'m'}) + tx(51.2,13.5,'SERVICE',{size:.42,cls:'m',rot:90});
+  for(const [x,y] of TREES) s += staged ? '<circle cx="'+x+'" cy="'+y+'" r="1.65" fill="url(#fl-tree)" filter="url(#shd)"/>' : '<circle cx="'+x+'" cy="'+y+'" r="1.5" fill="none" stroke="'+INK+'" stroke-width=".5" '+NSS+'/>';
+  return s + '</g>';
+}

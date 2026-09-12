@@ -126,8 +126,7 @@ function sitePlanSVG(){
   const W=.3; s += rc(0,0,1.8,W,{f:INK,s:'none'}) + rc(9.2,0,40.8,W,{f:INK,s:'none'}) + rc(0,0,W,60,{f:INK,s:'none'}) + rc(0,60-W,50,W,{f:INK,s:'none'}) + rc(50-W,0,W,11.5,{f:INK,s:'none'}) + rc(50-W,15.5,W,44.5,{f:INK,s:'none'});
   s += rc(1.8,-.35,7.4,.2,{f:'#555b60',s:'none'}) + ln(9.2,-.25,16.8,-.25,.6,MUTE,'stroke-dasharray="1.5 1"') + rc(50.15,11.5,.2,4,{f:'#555b60',s:'none'});
   // trees: olive grid
-  const trees=[]; for(let x=4;x<=46;x+=6) for(const y of [50.5,55]) if(x<22||x>28) trees.push([x,y]);
-  for(let y=23;y<=43;y+=5) trees.push([46,y]); for(const y of [29,35,41]) trees.push([4.2,y]);
+  const trees=TREES;
   for(const [x,y] of trees) s += `<circle cx="${x}" cy="${y}" r="1.5" fill="none" stroke="${INK}" stroke-width=".5" ${NSS}/><circle cx="${x}" cy="${y}" r=".12" fill="${INK}"/>`;
   s += rc(21,44.5,8,.35,{f:LEDC,s:'none'}) + rc(17.2,44.4,3,.5,{f:'#bfc3c2',sw:.4}) + rc(29.8,44.4,3,.5,{f:'#bfc3c2',sw:.4}) + rc(16.3,29,.8,8,{f:INK,s:'none'});
   s += rc(31,37,3,9,{sw:.8,f:'#cfd3d2'});
