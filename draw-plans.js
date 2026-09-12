@@ -118,7 +118,9 @@ function sitePlanSVG(){
   for(let y=46.8;y<57;y+=1.25) s += rc(24.2,y,1.6,.6,{f:'#dcdedb',sw:.4});
   // building roof
   s += pg(LEVELS.G.outline,{f:'#dcdfde',sw:1.2}) + pg(LEVELS.F.outline,{f:'#d4d7d6',sw:2}) + `<polygon points="${LEVELS.F.outline.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${INK}" stroke-width=".4" ${NSS} transform="translate(0 0)"/>`;
-  s += rc(27,10,3.5,5.5,{f:`url(#${p}-core)`,sw:.6}) + rc(16,10,9,4,{sw:.6,f:'#e6e8e7'}) + tx(20.5,12.3,'LOBBY ROOFLIGHT',{size:.3,cls:'m'});
+  const rl=(a,b,c,d,dash)=>ln(a,b,c,d,dash?.7:1.1,INK,dash?'stroke-dasharray="4 2"':'');
+  s += rl(8,14.5,42,14.5) + rl(12,15,12,42) + rl(8,19,12,15,1) + rl(16,19,12,15,1) + rl(38,15,38,46) + rl(34,19,38,15,1) + rl(42,19,38,15,1);
+  s += rc(17,10.5,7,1.5,{sw:.6,f:'#e6e8e7'}) + tx(20.5,11.45,'ROOFLIGHT',{size:.28,cls:'m'}) + rc(24,15.4,9,2.8,{sw:.5,f:'#c2c6c7'}) + tx(28.5,17.05,'PV IN SOUTH SLOPE',{size:.28,cls:'m'});
   s += rc(17,3,13,7,{sw:.7,x:'stroke-dasharray="3 2"'}) + rc(18,8.6,.25,.25,{f:INK})+rc(28.8,8.6,.25,.25,{f:INK});
   // perimeter wall with gate openings
   const W=.3; s += rc(0,0,1.8,W,{f:INK,s:'none'}) + rc(9.2,0,40.8,W,{f:INK,s:'none'}) + rc(0,0,W,60,{f:INK,s:'none'}) + rc(0,60-W,50,W,{f:INK,s:'none'}) + rc(50-W,0,W,11.5,{f:INK,s:'none'}) + rc(50-W,15.5,W,44.5,{f:INK,s:'none'});
@@ -132,7 +134,7 @@ function sitePlanSVG(){
   // labels
   const lab = (x,y,t,o={}) => tx(x,y,t,{size:.5,cls:'m',...o});
   s += lab(25,31.2,'CENTRAL POOL',{w:600,size:.7}) + lab(25,32.3,'10 × 20 m · OVERFLOW EDGE',{size:.4,fill:MUTE});
-  s += lab(25,15.8,'NORTH BAR · ROOF +7.60',{size:.42}) + lab(12,31,'WEST WING',{size:.42,rot:-90}) + lab(38,30,'EAST WING',{size:.42,rot:-90}) + lab(38,44.8,'CANTILEVER',{size:.34,fill:MUTE});
+  s += lab(15,13.9,'RIDGE +10.15',{size:.36}) + lab(12,31,'WEST WING',{size:.42,rot:-90}) + lab(38,30,'EAST WING',{size:.42,rot:-90}) + lab(38,44.8,'CANTILEVER',{size:.34,fill:MUTE});
   s += lab(5.5,-1.1,'MAIN GATE · AUTOMATED',{size:.36}) + lab(5.5,-.5,'',{}) + lab(47,16.8,'SERVICE',{size:.34}) + lab(47,17.4,'GATE',{size:.34}) + lab(46,12.6,'SERVICE YARD',{size:.34});
   s += lab(4.5,17,'RAMP TO GARAGE −3.50',{size:.36,rot:-90}) + lab(20,6.6,'FORECOURT + CANOPY',{size:.38}) + lab(25,44.1,'FIRE TROUGH',{size:.3}) + lab(17.8,33,'OUTDOOR KITCHEN',{size:.3,rot:-90});
   s += lab(14,52.8,'GRAVEL + OLIVE GROVE',{size:.4,fill:MUTE}) + lab(36,52.8,'GRAVEL + OLIVE GROVE',{size:.4,fill:MUTE}) + lab(25,58.9,'TALL GRASS BAND',{size:.34,fill:MUTE}) + lab(4.1,34,'LANDSCAPED GARAGE ROOF',{size:.3,rot:-90,fill:MUTE});

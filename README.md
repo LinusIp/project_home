@@ -1,8 +1,8 @@
 # Hovli Courtyard Villa
 
-Architectural presentation for a three-level minimalist high-tech villa built around a central courtyard pool. The land (plot) is 3,000 m², 50 × 60 m, enclosed by a 3 m wall. Floor areas are counted separately for each level.
+Architectural presentation for a three-level minimalist high-tech villa built around a central courtyard pool, with three black gabled wings and white fin screens in the direction of SoNo arhitekti's Mountain Villa. The page design follows the light, rounded UnCabin style. The land (plot) is 3,000 m², 50 × 60 m, enclosed by a 3 m wall. Floor areas are counted separately for each level.
 
-The ground floor contains every room of the reference Drafted.ai plan (six bedrooms, primary suite, three bathrooms, seven closets, garage, office, den, living, dining, kitchen, nook, sunroom, family room, storage and circulation), rearranged around the pool.
+The ground floor (the 1st floor) contains every room of the reference Drafted.ai plan (six bedrooms, primary suite, three bathrooms, seven closets, garage, office, den, living, dining, kitchen, nook, sunroom, family room, storage and circulation), rearranged around the pool.
 
 ## What the page shows
 

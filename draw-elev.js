@@ -7,7 +7,7 @@ const ELEV = {
 };
 function elevFaces(v){
   const V=ELEV[v], faces=[];
-  const Z = {G:[0,3.5], F:[3.5,7.6]};
+  const Z = {G:[0,3.5], F:[3.5,EAVE]};
   for(const k of ['G','F']){ const O=LEVELS[k].outline;
     for(let i=0;i<O.length;i++){ const a=O[i], b=O[(i+1)%O.length], dx=Math.sign(b[0]-a[0]), dy=Math.sign(b[1]-a[1]);
       const n=[dy,-dx]; if(n[0]!==V.face[0]||n[1]!==V.face[1]) continue;
@@ -18,7 +18,15 @@ function elevFaces(v){
     const cx = V.face[0]>0?x2:V.face[0]<0?x1:null, cy = V.face[1]>0?y2:V.face[1]<0?y1:null;
     let u1,u2,d; if(cx!==null){ u1=V.u(cx,y1); u2=V.u(cx,y2); d=V.d(cx,0);} else { u1=V.u(x1,cy); u2=V.u(x2,cy); d=V.d(0,cy); }
     faces.push({kind, u1:Math.min(u1,u2), u2:Math.max(u1,u2), z1, z2, depth:d}); };
-  boxFace(27,30.5,10,15.5,7.0,8.4,'conc');
+  for(const r of ROOFS){ const ym=(r.y1+r.y2)/2, xm=(r.x1+r.x2)/2;
+    const along = r.axis==='x' ? (v==='N'||v==='S') : (v==='E'||v==='W');
+    if(along){ // we see the slope facing us: a band from eaves to ridge
+      if(r.axis==='x'){ const yE=v==='N'?r.y1:r.y2; const a=V.u(r.x1,yE), b=V.u(r.x2,yE); faces.push({kind:'roof',u1:Math.min(a,b),u2:Math.max(a,b),z1:EAVE,z2:r.ridge,depth:V.d(0,yE)+.01}); }
+      else { const xE=v==='E'?r.x2:r.x1; const a=V.u(xE,r.y1), b=V.u(xE,r.y2); faces.push({kind:'roof',u1:Math.min(a,b),u2:Math.max(a,b),z1:EAVE,z2:r.ridge,depth:V.d(xE,0)+.01}); }
+    } else { // gable end triangle
+      if(r.axis==='x'){ const xE=v==='E'?r.x2:r.x1; const a=V.u(xE,r.y1), b=V.u(xE,r.y2), m=V.u(xE,ym); faces.push({kind:'gable',poly:[[a,EAVE],[b,EAVE],[m,r.ridge]],u1:Math.min(a,b),u2:Math.max(a,b),z1:EAVE,z2:r.ridge,depth:V.d(xE,0)}); }
+      else { const yE=v==='S'?r.y2:r.y1; const a=V.u(r.x1,yE), b=V.u(r.x2,yE), m=V.u(xm,yE); faces.push({kind:'gable',poly:[[a,EAVE],[b,EAVE],[m,r.ridge]],u1:Math.min(a,b),u2:Math.max(a,b),z1:EAVE,z2:r.ridge,depth:V.d(0,yE)}); }
+    } }
   boxFace(17,30,3,10,3.35,3.6,'blade'); boxFace(17.9,18.1,8.5,8.7,0,3.35,'blade'); boxFace(28.9,29.1,8.5,8.7,0,3.35,'blade');
   boxFace(31,34,37,46,3.3,3.5,'blade'); boxFace(31,34,37,46,3.5,4.6,'rail');
   return faces.sort((p,q)=>q.depth-p.depth);
@@ -38,7 +46,7 @@ function elevPattern(p){ return `<defs>
   </defs>`; }
 function elevationPrecise(v){
   const V=ELEV[v], p='ev'+v; const W = (v==='N'||v==='S') ? 50 : 60;
-  const vb=[-4.5,-10.6,W+11,15.2];
+  const vb=[-4.5,-12.8,W+11,17.4];
   let s = `<svg viewBox="${vb.join(' ')}" class="dwg" role="img" aria-label="${V.name}">${elevPattern(p)}<rect x="${vb[0]}" y="${vb[1]}" width="${vb[2]}" height="${vb[3]}" fill="${WHITE}"/>`;
   // basement outline below grade (dashed)
   const Bo = LEVELS.B.outline; let bu=[1e9,-1e9]; for(const q of Bo){ const u=V.u(...q); bu=[Math.min(bu[0],u),Math.max(bu[1],u)]; }
@@ -46,7 +54,9 @@ function elevationPrecise(v){
   for(const f of elevFaces(v)){
     const w=f.u2-f.u1, h=f.z2-f.z1, y=-f.z2;
     if(f.kind==='conc') s += `<rect x="${f.u1}" y="${y}" width="${w}" height="${h}" fill="url(#${p}-tie)" stroke="${INK}" stroke-width=".9" ${NSS}/>` + (f.k? ln(f.u1,-3.15,f.u2,-3.15,.5):'');
-    if(f.kind==='metal') s += `<rect x="${f.u1}" y="${y}" width="${w}" height="${h}" fill="url(#${p}-met)" stroke="${INK}" stroke-width=".9" ${NSS}/>` + ln(f.u1,-7.0,f.u2,-7.0,.4) + ln(f.u1,-7.55,f.u2,-7.55,.4);
+    if(f.kind==='metal') s += `<rect x="${f.u1}" y="${y}" width="${w}" height="${h}" fill="url(#${p}-met)" stroke="${INK}" stroke-width=".9" ${NSS}/>`;
+    if(f.kind==='roof'){ s += `<rect x="${f.u1}" y="${y}" width="${w}" height="${h}" fill="#565b60" stroke="${INK}" stroke-width=".9" ${NSS}/>`; for(let u=f.u1+.5;u<f.u2-.05;u+=.5) s += ln(u,y,u,-f.z1,.3,'#8b9297'); s += ln(f.u1,y,f.u2,y,1.3); }
+    if(f.kind==='gable') s += `<polygon points="${f.poly.map(([u,z])=>u+','+(-z)).join(' ')}" fill="url(#${p}-met)" stroke="${INK}" stroke-width=".9" ${NSS} stroke-linejoin="miter"/>`;
     if(f.kind==='blade') s += `<rect x="${f.u1}" y="${y}" width="${w}" height="${h}" fill="#3a3e42" stroke="${INK}" stroke-width=".7" ${NSS}/>`;
     if(f.kind==='rail') s += `<rect x="${f.u1}" y="${y}" width="${w}" height="${h}" fill="#e9eff0" fill-opacity=".6" stroke="${INK}" stroke-width=".5" ${NSS}/>`;
     if(!f.k) continue;
@@ -54,7 +64,8 @@ function elevationPrecise(v){
       if(o.t==='glass'||o.t==='win'){ s += `<rect x="${o.u1}" y="${oy}" width="${ow}" height="${oh}" fill="#e6edef" stroke="${INK}" stroke-width=".8" ${NSS}/>`;
         s += rc(o.u1+.06,oy+.06,ow-.12,oh-.12,{sw:.3});
         const n=Math.max(1,Math.round(ow/(o.t==='glass'?2.6:1.6))); for(let i=1;i<n;i++){ const u=o.u1+ow*i/n; s += ln(u,oy,u,-o.z1,.45); }
-        for(let i=0;i<n;i++){ const u0=o.u1+ow*i/n, pw=ow/n; const a=Math.min(.55*pw,.9); s += ln(u0+pw*.2,oy+oh*.35,u0+pw*.2+a,oy+oh*.35-a*.9,.3,MUTE) + ln(u0+pw*.32,oy+oh*.42,u0+pw*.32+a*.7,oy+oh*.42-a*.63,.3,MUTE); } }
+        if(f.k==='F'){ for(let u=o.u1+.15;u<o.u2;u+=.3) s += ln(u,oy-.08,u,-o.z1+.08,.55,'#59616a'); s += ln(o.u1,oy-.08,o.u2,oy-.08,.6) + ln(o.u1,-o.z1+.08,o.u2,-o.z1+.08,.6); }
+        else for(let i=0;i<n;i++){ const u0=o.u1+ow*i/n, pw=ow/n; const a=Math.min(.55*pw,.9); s += ln(u0+pw*.2,oy+oh*.35,u0+pw*.2+a,oy+oh*.35-a*.9,.3,MUTE) + ln(u0+pw*.32,oy+oh*.42,u0+pw*.32+a*.7,oy+oh*.42-a*.63,.3,MUTE); } }
       if(o.t==='door'){ s += `<rect x="${o.u1}" y="${oy}" width="${ow}" height="${oh}" fill="#3a3e42" stroke="${INK}" stroke-width=".8" ${NSS}/>` + ln(o.u1+.08,oy,o.u1+.08,-o.z1,.3,'#9aa0a4'); }
       if(o.t==='pivot'){ s += `<rect x="${o.u1}" y="${oy}" width="${ow}" height="${oh}" fill="#2b2e31" stroke="${INK}" stroke-width="1.1" ${NSS}/>` + ln(o.u1+ow*.18,oy,o.u1+ow*.18,-o.z1,.35,'#9aa0a4'); }
     }
@@ -66,11 +77,11 @@ function elevationPrecise(v){
   // grid bubbles
   for(const [n,u] of V.axes()){ s += ln(u,.2,u,1.6,.45,'#9aa0a4','stroke-dasharray="3 1.5"') + `<circle cx="${u}" cy="2.2" r=".58" fill="${WHITE}" stroke="${INK}" stroke-width=".7" ${NSS}/>` + tx(u,2.4,n,{size:.5,w:600,cls:'m'}); }
   // level datums
-  s += datums(-3.5,W+2.5,W+2.8,[[8.4,'+8.40 LIFT OVERRUN'],[7.6,'+7.60 PARAPET'],[7.0,'+7.00 ROOF'],[3.5,'+3.50 FIRST FLOOR',1],[0,'±0.00 GROUND FLOOR',1]]);
-  s += dimChain([0,3.5,7.0,7.6],-3.3,false,{off:.55,size:.34}).replace(/y="(-?[\d.]+)"/g,(m,y)=>m) ;
+  s += datums(-3.5,W+2.5,W+2.8,[[10.15,'+10.15 RIDGE · NORTH'],[9.8,'+9.80 RIDGE · WINGS'],[7.0,'+7.00 EAVES'],[3.5,'+3.50 UPPER FLOOR · 2ND',1],[0,'±0.00 GROUND FLOOR · 1ST',1]]);
+  s += dimChain([0,3.5,7.0,10.15],-3.3,false,{off:.55,size:.34}).replace(/y="(-?[\d.]+)"/g,(m,y)=>m) ;
   // overall width dimension
   let uu=[1e9,-1e9]; for(const f of elevFaces(v)){ if(f.k){ uu=[Math.min(uu[0],f.u1),Math.max(uu[1],f.u2)]; } }
   s += dim(uu[0],3.5,uu[1],3.5,Math.round((uu[1]-uu[0])*1000).toLocaleString('en-US').replace(/,/g,' '),{size:.38});
-  s += tx(vb[0]+.6,-9.6,`${V.code} · ${V.name.toUpperCase()} · 1:200`,{size:.5,a:'start',w:600,cls:'m'}) + tx(vb[0]+.6,-9.0,'Perimeter wall omitted for clarity · concrete ground floor · matte black metal first floor · frameless low-iron glass',{size:.3,a:'start',cls:'m',fill:MUTE});
+  s += tx(vb[0]+.6,-11.9,`${V.code} · ${V.name.toUpperCase()} · 1:200`,{size:.5,a:'start',w:600,cls:'m'}) + tx(vb[0]+.6,-11.3,'Perimeter wall omitted · concrete ground floor · black metal upper floor with white fins · three 35° black standing-seam gables · low-iron glass',{size:.3,a:'start',cls:'m',fill:MUTE});
   return s + '</svg>';
 }

@@ -3,11 +3,19 @@ const PLOT = { w: 50, h: 60, wall: 0.3, wallH: 3.0 };
 const LEVELS = {
   B: { key:'B', name:'Basement', sheet:'A-101', ffl:-3.5, h:3.5,
        outline:[[8,10],[42,10],[42,42],[34,42],[34,32],[30.5,32],[30.5,21],[16,21],[16,42],[1.5,42],[1.5,26],[8,26]] },
-  G: { key:'G', name:'Ground Floor', sheet:'A-102', ffl:0, h:3.5,
+  G: { key:'G', name:'Ground Floor · 1st floor', sheet:'A-102', ffl:0, h:3.5,
        outline:[[8,10],[42,10],[42,42],[34,42],[34,24],[30,24],[30,19],[20,19],[20,24],[16,24],[16,46],[8,46]] },
-  F: { key:'F', name:'First Floor', sheet:'A-103', ffl:3.5, h:3.5,
+  F: { key:'F', name:'Upper Floor · 2nd floor', sheet:'A-103', ffl:3.5, h:3.5,
        outline:[[8,10],[42,10],[42,46],[34,46],[34,19],[16,19],[16,42],[8,42]] }
 };
+/* three sharp gables, one per bar (after SoNo's Mountain Villa). Eaves +7.00, 35° pitch.
+   Wing ridges start at y=15 so they run into the north roof and form true valleys. */
+const EAVE = 7.0;
+const ROOFS = [
+  {name:'North bar', axis:'x', x1:8,  x2:42, y1:10, y2:19, ridge:10.15},
+  {name:'West wing', axis:'y', x1:8,  x2:16, y1:15, y2:42, ridge:9.8},
+  {name:'East wing', axis:'y', x1:34, x2:42, y1:15, y2:46, ridge:9.8}
+];
 /* frameless floor-to-ceiling glazing runs, drawn over the wall line */
 const GLAZING = {
   B: [],

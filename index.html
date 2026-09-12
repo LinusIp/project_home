@@ -4,393 +4,423 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hovli Courtyard Villa</title>
-<meta name="description" content="Minimalist high-tech courtyard villa on a 3,000 m² walled plot: plans, sections, renders, systems and area schedule.">
+<meta name="description" content="Minimalist high-tech courtyard villa on a 3,000 m² walled plot: concept images, precise floor plans, elevations, systems and area schedule.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 :root{
-  --ground:#0c0e0f; --panel:#121517; --raise:#171b1d;
-  --line:rgba(226,230,232,.12); --line-2:rgba(226,230,232,.28);
-  --text:#e4e7e9; --muted:#8a9095; --faint:#5d6469;
-  --led:#e0a458; --water:#7fb3bf; --paper:#ecedea; --ink:#15181b;
-  --mono:'IBM Plex Mono',ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;
-  --sans:'Archivo','Helvetica Neue',Arial,sans-serif;
-  --gut:clamp(20px,4vw,56px);
-  color-scheme:dark;
+  --bg:#f5f5f2; --card:#ffffff; --ink:#121417; --ink-2:#3a3e44; --muted:#7a8088; --line:#e4e5e1; --chip:#eeefeb;
+  --accent:#e2553b; --dark:#121417; --dark-2:#1b1e22; --paper:#ecedea; --led:#e0a458; --water:#7fb3bf; --ink-d:#e8eaec;
+  --sans:'Inter Tight','Helvetica Neue',Arial,sans-serif; --serif:'Instrument Serif',Georgia,'Times New Roman',serif;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:56px}
-body{margin:0;background:var(--ground);color:var(--text);font:400 16px/1.6 var(--sans);font-stretch:100%;
-  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
-  background-size:120px 120px;background-position:-1px -1px;background-attachment:fixed}
-body::before{content:"";position:fixed;inset:0;pointer-events:none;background:
-  linear-gradient(rgba(226,230,232,.035) 1px,transparent 1px) 0 0/24px 24px,linear-gradient(90deg,rgba(226,230,232,.035) 1px,transparent 1px) 0 0/24px 24px;z-index:0}
-main,header,footer{position:relative;z-index:1}
+html{scroll-behavior:smooth;scroll-padding-top:20px}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--sans)}
 a{color:inherit}
-:focus-visible{outline:1px solid var(--led);outline-offset:3px}
-.m,.mono{font-family:var(--mono)}
-.lbl{font:500 11px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-h1,h2,h3{font-family:var(--sans);font-weight:250;font-stretch:125%;margin:0;text-wrap:balance;letter-spacing:.01em}
-h2{font-size:clamp(28px,3.6vw,46px);line-height:1.08}
-h3{font-size:19px;font-weight:400;font-stretch:112%;line-height:1.3}
-p{margin:0;max-width:66ch;color:#c9cdd0}
-.wrap{max-width:1440px;margin:0 auto;padding:0 var(--gut)}
-
-/* top bar: drawing-set index */
-.bar{position:sticky;top:0;z-index:20;background:rgba(12,14,15,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-.bar .wrap{display:flex;align-items:center;gap:24px;height:48px}
-.bar b{font:500 12px var(--mono);letter-spacing:.2em;white-space:nowrap}
-.bar nav{display:flex;gap:2px;overflow-x:auto;margin-left:auto;scrollbar-width:none}
-.bar nav a{font:400 11px var(--mono);letter-spacing:.08em;color:var(--muted);text-decoration:none;padding:6px 9px;border:1px solid transparent;white-space:nowrap}
-.bar nav a:hover{color:var(--text);border-color:var(--line-2)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+img{display:block}
+.wrap{max-width:1320px;margin:0 auto;padding:0 24px}
+h1,h2,h3{margin:0;font-family:var(--sans);text-wrap:balance}
+h2{font-size:clamp(32px,4.2vw,54px);font-weight:500;letter-spacing:-.03em;line-height:1.04}
+h2 em,h1 em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.01em}
+h3{font-size:19px;font-weight:500;letter-spacing:-.01em;line-height:1.3}
+p{margin:0}
+.tag{display:inline-block;padding:6px 14px;border-radius:999px;background:var(--chip);font-size:12.5px;font-weight:500;color:var(--ink-2)}
+.lbl{font:500 11px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 
 /* hero */
-.hero{border-bottom:1px solid var(--line)}
-.hero-fig{position:relative;margin:0;aspect-ratio:9/5;max-height:82vh;width:100%;background:#07090a;overflow:hidden}
-.hero-fig img{width:100%;height:100%;object-fit:cover;display:block}
-.hero-over{position:absolute;inset:0;display:grid;grid-template-rows:auto 1fr auto;padding:clamp(20px,3vw,40px) var(--gut);pointer-events:none;
-  background:linear-gradient(180deg,rgba(7,9,10,.72) 0%,rgba(7,9,10,0) 34%,rgba(7,9,10,0) 70%,rgba(7,9,10,.8) 100%)}
-.hero h1{font-size:clamp(56px,11vw,168px);font-weight:150;line-height:.86;letter-spacing:.06em;margin-top:6px}
-.hero .sub{font:300 clamp(15px,1.5vw,20px)/1.4 var(--sans);font-stretch:112%;color:#d6d9db;margin-top:14px;max-width:40ch}
-.hero .corner{display:flex;justify-content:space-between;gap:20px;align-items:end}
-.xhair{position:absolute;width:22px;height:22px;border-color:rgba(255,255,255,.55);border-style:solid;border-width:0}
-.xhair.tl{top:14px;left:14px;border-top-width:1px;border-left-width:1px}.xhair.tr{top:14px;right:14px;border-top-width:1px;border-right-width:1px}
-.xhair.bl{bottom:14px;left:14px;border-bottom-width:1px;border-left-width:1px}.xhair.br{bottom:14px;right:14px;border-bottom-width:1px;border-right-width:1px}
-.stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid var(--line)}
-.stats div{padding:18px 20px;border-right:1px solid var(--line)}
-.stats div:last-child{border-right:0}
-.stats .v{font:300 clamp(22px,2.4vw,32px)/1.1 var(--sans);font-stretch:118%;font-variant-numeric:tabular-nums;margin-top:6px}
-.stats .v small{font:400 12px var(--mono);color:var(--muted);letter-spacing:.06em;margin-left:6px}
-@media (max-width:860px){.stats{grid-template-columns:repeat(2,1fr)}.stats div{border-bottom:1px solid var(--line)}}
+.hero{position:relative;margin:14px;border-radius:30px;overflow:hidden;min-height:min(88vh,840px);background:#1c2024;color:#fff;isolation:isolate}
+.hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(10,12,14,.55) 0%,rgba(10,12,14,.05) 30%,rgba(10,12,14,.1) 62%,rgba(10,12,14,.7) 100%)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 28px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:18px;letter-spacing:-.01em;text-decoration:none}
+.brand svg{width:34px;height:22px}
+.links{display:flex;gap:26px;font-size:14px}
+.links a{text-decoration:none;opacity:.86}
+.links a:hover{opacity:1;text-decoration:underline;text-underline-offset:4px}
+.nav-r{display:flex;align-items:center;gap:14px;font-size:13px;font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+.nav-r a.txt{text-decoration:underline;text-underline-offset:5px}
+.round{width:42px;height:42px;border-radius:50%;background:#fff;color:var(--ink);display:grid;place-items:center;text-decoration:none}
+.hero-body{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 24px;pointer-events:none}
+.glass-pill{display:inline-block;padding:7px 16px;border-radius:999px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.34);backdrop-filter:blur(10px);font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase}
+.hero h1{margin-top:20px;font-size:clamp(50px,8.6vw,118px);font-weight:500;line-height:.94;letter-spacing:-.045em;text-shadow:0 2px 30px rgba(0,0,0,.25)}
+.hero-foot{position:absolute;left:28px;right:28px;bottom:26px;display:flex;justify-content:space-between;align-items:flex-end;gap:24px}
+.hero-foot .l{display:grid;gap:18px;max-width:320px}
+.hero-foot .l p{font-size:15px;line-height:1.45;font-weight:500}
+.btn{display:inline-flex;align-items:center;gap:10px;justify-self:start;background:#fff;color:var(--ink);border-radius:999px;padding:12px 22px;font-weight:500;font-size:14px;text-decoration:none;transition:transform .2s}
+.btn:hover{transform:translateY(-1px)}
+.stats{display:flex;gap:4px;padding:6px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(14px)}
+.stat{padding:8px 18px;border-radius:999px}
+.stat:first-child{background:rgba(255,255,255,.14)}
+.stat span{display:block;font-size:11px;opacity:.78;letter-spacing:.04em}
+.stat b{font-weight:500;font-size:15px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.hero-body{padding-bottom:150px}
+@media (max-width:980px){.links{display:none}}
+@media (max-width:820px){
+  .hero{min-height:0;display:flex;flex-direction:column}
+  .hero-body{position:static;padding:64px 20px 36px;flex:1}
+  .hero-foot{position:static;flex-direction:column;align-items:flex-start;padding:0 20px 22px}
+  .stats{flex-wrap:wrap;border-radius:22px}
+}
 
-/* sheets */
-.sheet{padding:clamp(56px,8vw,112px) 0;border-bottom:1px solid var(--line)}
-.shead{display:grid;grid-template-columns:120px minmax(0,1fr) auto;gap:24px;align-items:end;padding-bottom:22px;margin-bottom:36px;border-bottom:1px solid var(--line-2)}
-.shead .code{font:500 13px var(--mono);letter-spacing:.12em;color:var(--led)}
-.shead .meta{text-align:right}
-@media (max-width:760px){.shead{grid-template-columns:1fr}.shead .meta{text-align:left}}
-.cols{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(28px,5vw,80px)}
-@media (max-width:960px){.cols{grid-template-columns:1fr}}
-.prose{display:grid;gap:18px}
+/* fact strip */
+.facts{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px 32px;padding:34px 24px;max-width:1320px;margin:0 auto;border-bottom:1px solid var(--line)}
+.facts span{display:flex;align-items:center;gap:10px;color:#8b9097;font-weight:500;font-size:16px}
+.facts svg{width:22px;height:22px;flex:none}
 
-/* drawings on paper */
-.paper{background:var(--paper);border:1px solid var(--line-2);overflow-x:auto;position:relative}
-.paper svg{display:block;width:100%;min-width:760px;height:auto}
-.dwg text,.diag text{font-family:var(--mono)}
-.dwg-row{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:0;border:1px solid var(--line-2)}
-.dwg-row .paper{border:0}
-.notes{background:var(--panel);border-left:1px solid var(--line-2);padding:22px;display:flex;flex-direction:column;gap:16px}
-.notes dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font:400 12.5px/1.45 var(--mono)}
-.notes dt{color:var(--led)} .notes dd{margin:0;color:#c2c6c9}
-.kv{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:10px;font:400 12px var(--mono);color:var(--muted)}
-.kv b{color:var(--text);font-weight:500;font-variant-numeric:tabular-nums}
-@media (max-width:1100px){.dwg-row{grid-template-columns:1fr}.notes{border-left:0;border-top:1px solid var(--line-2)}}
-.stack{display:grid;grid-template-columns:minmax(0,1fr);gap:40px}
-.dwg-row{grid-template-columns:minmax(0,1fr) 300px}
-@media (max-width:1100px){.dwg-row{grid-template-columns:minmax(0,1fr)}}
-.cap{display:flex;justify-content:space-between;gap:16px;margin-top:10px}
+/* sections */
+.sec{padding:104px 0 0}
+.head{text-align:center;max-width:780px;margin:0 auto 52px;display:grid;justify-items:center;gap:18px}
+.head p{color:var(--muted);max-width:60ch}
+.card{background:var(--card);border:1px solid var(--line);border-radius:26px;overflow:hidden}
 
-/* concept */
-.principles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--line-2);margin-top:8px}
-.principles div{padding:22px 22px 24px 0;border-bottom:1px solid var(--line)}
-.principles div:nth-child(odd){padding-right:28px;border-right:1px solid var(--line)}
-.principles div:nth-child(even){padding-left:28px}
-.principles p{font-size:15px;margin-top:8px}
-@media (max-width:640px){.principles{grid-template-columns:1fr}.principles div:nth-child(n){padding:20px 0;border-right:0}}
+/* concept split */
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:stretch}
+.lead{font-size:22px;line-height:1.45;letter-spacing:-.01em;color:var(--ink)}
+.lead em{font-family:var(--serif);font-size:1.12em}
+.intro{display:grid;gap:18px;color:var(--ink-2);margin-bottom:30px}
+.feat{border-top:1px solid var(--line);padding:20px 0;display:grid;grid-template-columns:24px 1fr;gap:4px 12px}
+.feat i{width:8px;height:8px;border-radius:50%;background:var(--accent);margin-top:9px}
+.feat p{grid-column:2;color:var(--muted);font-size:15px;max-width:52ch}
+.tall{border-radius:26px;overflow:hidden;position:relative;min-height:520px}
+.tall img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tall .chip{position:absolute;left:16px;bottom:16px}
+.chip{background:#fff;color:var(--ink);border-radius:999px;padding:6px 14px;font-size:12.5px;font-weight:500;box-shadow:0 2px 12px rgba(0,0,0,.12)}
+@media (max-width:900px){.split{grid-template-columns:1fr}.tall{min-height:380px}}
 
-/* renders */
-.renders{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;background:var(--line)}
-.rfig{margin:0;background:#07090a;position:relative}
-.rfig .frame{aspect-ratio:9/5;position:relative;overflow:hidden}
-.rfig img{width:100%;height:100%;object-fit:cover;display:block;background:#f4f2eb}
-.pending{position:absolute;inset:0;display:grid;place-items:center;font:400 11px var(--mono);letter-spacing:.16em;color:var(--faint)}
-.done .pending{display:none}
-.fail .pending::after{content:" · WebGL unavailable in this browser"}
-.rfig figcaption{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;padding:14px 16px 18px;background:var(--ground)}
-.rfig figcaption .lbl{grid-row:span 2;color:var(--led)}
-.rfig figcaption span{font-size:14px;color:#c2c6c9}
-@media (max-width:860px){.renders{grid-template-columns:1fr}}
+/* gallery */
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.shot{margin:0}
+.shot .img{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:4/3;background:#dfe1dd}
+.shot img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.shot:hover img{transform:scale(1.03)}
+.shot .chip{position:absolute;left:12px;bottom:12px}
+.shot figcaption{padding:14px 4px 0;display:grid;gap:4px}
+.shot figcaption b{font-weight:500}
+.shot figcaption span{color:var(--muted);font-size:14.5px}
+@media (max-width:1000px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.gallery{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
-/* room breakdown */
-.lvl{display:grid;grid-template-columns:220px minmax(0,1fr);gap:32px;padding:28px 0;border-top:1px solid var(--line-2)}
+/* drawings */
+.paper{background:#fff;overflow-x:auto}
+.paper svg{display:block;width:100%;min-width:760px;height:auto}
+.dwg text,.diag text{font-family:var(--mono)}
+.stack{display:grid;grid-template-columns:minmax(0,1fr);gap:22px}
+.dwg-row{display:grid;grid-template-columns:minmax(0,1fr) 310px;border-top:1px solid var(--line)}
+.notes{background:#fafaf8;border-left:1px solid var(--line);padding:24px;display:flex;flex-direction:column;gap:16px}
+.notes dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:10px 14px;font-size:14px;line-height:1.5}
+.notes dt{color:var(--accent);font:500 12px var(--mono);padding-top:3px}
+.notes dd{margin:0;color:var(--ink-2)}
+.kv{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:10px;font-size:14px;color:var(--muted)}
+.kv b{color:var(--ink);font-weight:500;font-variant-numeric:tabular-nums}
+@media (max-width:1100px){.dwg-row{grid-template-columns:minmax(0,1fr)}.notes{border-left:0;border-top:1px solid var(--line)}}
+.level-head{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:20px 24px;border-bottom:1px solid var(--line)}
+.level-head div{display:flex;align-items:center;gap:14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chips span{padding:6px 12px;border-radius:999px;background:var(--chip);font-size:13px;font-weight:500;font-variant-numeric:tabular-nums}
+.cap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:16px 22px;border-top:1px solid var(--line);font-size:14px}
+.cap span:last-child{color:var(--muted)}
+
+/* rooms */
+.lvl{display:grid;grid-template-columns:240px minmax(0,1fr);gap:36px;padding:34px 0;border-top:1px solid var(--line)}
 .lvl:first-child{border-top:0;padding-top:0}
-.lvl h3{position:sticky;top:72px}
+.lvl h3{position:sticky;top:24px;font-size:24px;letter-spacing:-.02em}
+.lvl h3 .lbl{display:block;margin-bottom:6px;color:var(--accent)}
 .rooms{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 36px}
-.room{padding:14px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:52px 1fr auto;gap:2px 12px;align-items:baseline}
-.room .id{font:400 11px var(--mono);color:var(--faint)} .room .n{font-weight:500;font-size:15px}
-.room .a{font:400 12px var(--mono);color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
-.room p{grid-column:2/4;font-size:14px;line-height:1.55;color:#aeb3b7}
+.room{padding:14px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:50px 1fr auto;gap:2px 12px;align-items:baseline}
+.room .id{font:400 11px var(--mono);color:#a3a8ad}
+.room .n{font-weight:500}
+.room .a{font:400 12.5px var(--mono);color:var(--muted);white-space:nowrap}
+.room p{grid-column:2/4;font-size:14px;line-height:1.55;color:var(--muted)}
 @media (max-width:960px){.lvl{grid-template-columns:1fr}.lvl h3{position:static}.rooms{grid-template-columns:1fr}}
 
 /* systems */
-.sys{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:clamp(24px,4vw,64px);padding:40px 0;border-top:1px solid var(--line)}
-.sys:first-of-type{border-top:0;padding-top:0}
-.sys .body{display:grid;gap:18px}
-.diagbox{background:var(--panel);border:1px solid var(--line-2);overflow-x:auto;padding:14px}
+.sys{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:40px;padding:34px;border-bottom:1px solid var(--line)}
+.sys:last-child{border-bottom:0}
+.sys .body{display:grid;gap:18px;color:var(--ink-2)}
+.sys h3{margin-top:10px;font-size:22px;letter-spacing:-.02em}
+.diagbox{background:var(--dark);border-radius:20px;overflow-x:auto;padding:16px}
 .diagbox svg{display:block;width:100%;min-width:720px;height:auto}
-.spec{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--line)}
-.spec div{padding:12px 16px 12px 0;border-bottom:1px solid var(--line);font-size:14px;color:#c2c6c9}
-.spec div b{display:block;font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
-@media (max-width:960px){.sys{grid-template-columns:1fr}.spec{grid-template-columns:1fr}}
-table{border-collapse:collapse;width:100%;font-size:14px}
-th,td{text-align:left;padding:10px 14px 10px 0;border-bottom:1px solid var(--line);vertical-align:top}
-th{font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border-bottom-color:var(--line-2)}
-td:first-child{color:var(--text);white-space:nowrap}
-td{color:#b9bec1}
+.spec{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.spec div{background:#fafaf8;border:1px solid var(--line);border-radius:16px;padding:14px 16px;font-size:14.5px}
+.spec b{display:block;font-size:12.5px;font-weight:600;color:var(--accent);margin-bottom:4px;letter-spacing:.02em}
+@media (max-width:960px){.sys{grid-template-columns:1fr;padding:24px}.spec{grid-template-columns:1fr}}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;padding:11px 14px 11px 0;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+td{color:var(--ink-2)} td:first-child{color:var(--ink);font-weight:500;white-space:nowrap}
 .tbl{overflow-x:auto}
 
 /* materials */
-.mats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2px;background:var(--line);border:1px solid var(--line)}
-.mat{background:var(--ground);display:flex;flex-direction:column}
+.mats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+.mat{background:var(--card);border:1px solid var(--line);border-radius:22px;overflow:hidden;display:flex;flex-direction:column}
 .sw{aspect-ratio:4/3;position:relative}
 .mat .t{padding:14px 16px 18px;display:grid;gap:6px}
-.mat .t .lbl{color:var(--faint)} .mat .t p{font-size:13.5px;color:#aeb3b7}
-@media (max-width:1000px){.mats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.mat .t p{font-size:13.5px;color:var(--muted)}
+.mat h3{font-size:16px}
+@media (max-width:1100px){.mats{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:700px){.mats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .noise{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 .sw-conc{background-color:#9b9a94}
-.sw-conc::after{content:"";position:absolute;inset:0;background:radial-gradient(circle,#55544f 0 3px,transparent 3.5px) 30px 30px/120px 60px,linear-gradient(90deg,transparent 119px,rgba(40,40,38,.35) 119px 120px) 0 0/120px 100%,linear-gradient(transparent 59px,rgba(40,40,38,.25) 59px 60px) 0 0/100% 120px}
+.sw-conc::after{content:"";position:absolute;inset:0;background:radial-gradient(circle,#55544f 0 3px,transparent 3.5px) 30px 30px/120px 60px}
 .sw-alu{background:repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px),linear-gradient(160deg,#3a3e42,#24272a 55%,#2f3336)}
 .sw-steel{background-color:#1a1b1c}
+.sw-seam{background:repeating-linear-gradient(90deg,#26292c 0 26px,#3b4044 26px 28px,#26292c 28px 30px)}
+.sw-fin{background:repeating-linear-gradient(90deg,#f1f1ed 0 5px,#1c2226 5px 22px)}
 .sw-smoke{background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.07) 41% 47%,transparent 48%),linear-gradient(180deg,#2a3134,#1a1f21)}
-.sw-lowi{background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.55) 31% 36%,transparent 37%),linear-gradient(180deg,#dfe7e8,#c8d3d5);box-shadow:inset -6px 0 0 #b9c7c8}
+.sw-lowi{background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.55) 31% 36%,transparent 37%),linear-gradient(180deg,#dfe7e8,#c8d3d5)}
 .sw-micro{background-color:#a7a6a0}
 .sw-tile{background:linear-gradient(rgba(127,179,191,.22) 1px,transparent 1px) 0 0/22px 22px,linear-gradient(90deg,rgba(127,179,191,.22) 1px,transparent 1px) 0 0/22px 22px,#0e252a}
 .sw-led{background:#0a0b0c}
-.sw-led::after{content:"";position:absolute;left:12%;right:12%;top:50%;height:2px;background:#ffd199;box-shadow:0 0 6px 1px #ffb566,0 0 28px 6px rgba(224,164,88,.45),0 0 70px 20px rgba(224,164,88,.12)}
+.sw-led::after{content:"";position:absolute;left:12%;right:12%;top:50%;height:2px;background:#ffd199;box-shadow:0 0 6px 1px #ffb566,0 0 28px 6px rgba(224,164,88,.45)}
 
 /* schedule */
+.sums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:22px}
+.sums div{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 20px}
+.sums .lbl{letter-spacing:.06em}
+.sums .v{font-size:30px;font-weight:500;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-top:4px}
+.sums div:last-child{background:var(--dark);color:#fff;border-color:var(--dark)}
+.sums div:last-child .lbl{color:#9aa0a6}
+@media (max-width:760px){.sums{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.sched-card{padding:10px 26px 20px}
 .sched td.num,.sched th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;padding-right:0}
-.sched tr.sub td{border-bottom:1px solid var(--line-2);color:var(--text);font-weight:500;padding-top:12px}
-.sched tr.lvlh td{padding-top:26px;font:500 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--led);border-bottom:1px solid var(--line-2)}
-.sched tr.grand td{font:500 15px var(--mono);color:var(--text);border-bottom:0;border-top:1px solid var(--text);padding-top:14px}
-.sched td.id{font:400 12px var(--mono);color:var(--faint)}
-.sums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line-2);margin-bottom:36px}
-.sums div{padding:16px 18px;border-right:1px solid var(--line)} .sums div:last-child{border-right:0}
-.sums .v{font:300 26px var(--sans);font-stretch:118%;font-variant-numeric:tabular-nums;margin-top:4px}
-@media (max-width:760px){.sums{grid-template-columns:repeat(2,1fr)}}
-footer{padding:36px 0 60px}
-.tblock{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border:1px solid var(--line-2)}
-.tblock div{padding:12px 14px;border-right:1px solid var(--line);font:400 12px/1.5 var(--mono);color:#c2c6c9}
-.tblock div:last-child{border-right:0}
-@media (max-width:860px){.tblock{grid-template-columns:1fr 1fr}}
+.sched tr.lvlh td{padding-top:28px;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--ink)}
+.sched tr.sub td{color:var(--ink);font-weight:600;border-bottom:1px solid var(--ink)}
+.sched tr.grand td{font-weight:600;font-size:16px;color:var(--ink);border-bottom:0;padding-top:16px}
+.sched td.id{font:400 12px var(--mono);color:#a3a8ad}
+
+/* footer */
+.foot{margin:104px 14px 14px;border-radius:30px;background:var(--dark);color:var(--ink-d);padding:56px clamp(24px,4vw,56px) 34px}
+.foot-top{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,2fr);gap:48px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.12)}
+.foot-top p{color:#b9bec3;font-size:18px;line-height:1.5;max-width:40ch}
+.foot-top .brand{margin-bottom:18px;color:#fff}
+.tblock{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;font-size:14px;color:#b9bec3}
+.tblock b{display:block;color:#fff;font-weight:500;margin-bottom:6px}
+.foot-bot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:22px;font-size:13px;color:#8d9399}
+.foot-bot a{color:#fff}
+@media (max-width:900px){.foot-top{grid-template-columns:1fr}.tblock{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body>
-<header class="bar"><div class="wrap">
-  <b>HOVLI · HV-01</b>
-  <nav aria-label="Drawing set">
-    <a href="#a001">A-001 Concept</a><a href="#a100">A-100 Site</a><a href="#a101">A-101–103 Plans</a><a href="#a201">A-201–304 Elevations</a><a href="#a400">A-400 Concept images</a><a href="#a500">A-500 Rooms</a><a href="#m100">M-100 Systems</a><a href="#a600">A-600 Materials</a><a href="#a700">A-700 Areas</a>
+<header class="hero" id="top">
+  <img src="images/c01-hero.jpg" alt="Concept illustration at dusk: the walled compound from the south-east, three black gabled wings around the central pool.">
+  <nav class="nav" aria-label="Main">
+    <a class="brand" href="#top"><svg viewBox="0 0 34 22" aria-hidden="true"><path d="M1 21V9L6 3l5 6v12M12 21V9l5-6 5 6v12M23 21V9l5-6 5 6v12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="miter"/></svg>Hovli</a>
+    <div class="links"><a href="#a001">Concept</a><a href="#a400">Images</a><a href="#a100">Site</a><a href="#a101">Plans</a><a href="#a201">Elevations</a><a href="#m100">Systems</a><a href="#a700">Areas</a></div>
+    <div class="nav-r"><a class="txt" href="#a101">View the plans</a><a class="round" href="#a700" aria-label="Go to the area schedule"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.6"/></svg></a></div>
   </nav>
-</div></header>
-
-<main>
-<section class="hero" id="a000">
-  <figure class="hero-fig" id="heroFig">
-    <img src="images/c01-hero.jpg" alt="Concept illustration at dusk: the walled compound from the south-east, with the U-shaped villa wrapped around the central pool.">
-
-    <span class="xhair tl"></span><span class="xhair tr"></span><span class="xhair bl"></span><span class="xhair br"></span>
-    <div class="hero-over">
-      <div class="lbl" style="color:#cfd3d5">A-000 · Project HV-01 · Private residence</div>
-      <div>
-        <h1>HOVLI</h1>
-        <p class="sub">A minimalist high-tech villa built around a courtyard pool, inside a walled 3,000 m² plot.</p>
-      </div>
-      <div class="corner"><span class="lbl" style="color:#cfd3d5">C-01 · Aerial view from the south-east at dusk</span><span class="lbl" style="color:#cfd3d5">N 50 × 60 m</span></div>
+  <div class="hero-body">
+    <span class="glass-pill">Private residence · Concept design</span>
+    <h1>Three Gables,<br>One <em>Courtyard</em></h1>
+  </div>
+  <div class="hero-foot">
+    <div class="l">
+      <p>A minimalist high-tech villa built around a central pool, inside a walled 3,000 m² plot.</p>
+      <a class="btn" href="#a101">Explore the plans <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 11L11 3M5 3h6v6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
     </div>
-  </figure>
-  <div class="wrap" style="padding:0">
     <div class="stats" id="stats"></div>
   </div>
-</section>
+</header>
 
-<section class="sheet" id="a001"><div class="wrap">
-  <div class="shead"><span class="code">A-001</span><h2>Design concept</h2><span class="lbl meta">Minimalist high-tech</span></div>
-  <div class="cols">
-    <div class="prose">
-      <p style="font:300 21px/1.5 var(--sans);font-stretch:108%;color:var(--text)">In a Central Asian <em>hovli</em>, rooms face inward onto a private yard and the street sees only a wall. This villa keeps that plan and rebuilds it in concrete, black metal and glass.</p>
-      <p>A 3 m monolithic wall encloses the whole plot. Inside it, a U-shaped house wraps three sides of a 10 × 20 m pool. Every family room opens onto the water through glass that slides away completely. From the street you see one steel gate and a glowing slot of lobby glass.</p>
-      <p>The ground floor is a heavy concrete base. The first floor is a lighter matte-black box that sits on it and cantilevers 4 m past it at the master bedroom. All plant, parking and staff space goes into the basement, so the two floors above hold nothing but living space.</p>
+<div class="facts" aria-label="Key facts">
+  <span><svg viewBox="0 0 22 22" aria-hidden="true"><rect x="2" y="2" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Walled 3,000 m² plot</span>
+  <span><svg viewBox="0 0 22 22" aria-hidden="true"><rect x="6" y="3" width="10" height="16" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 8h6M8 11h6M8 14h6" stroke="currentColor" stroke-width="1.2"/></svg>10 × 20 m central pool</span>
+  <span><svg viewBox="0 0 22 22" aria-hidden="true"><path d="M1 19V10l3.5-5L8 10v9M8 19V10l3.5-5 3.5 5v9M15 19V10l3.5-5L21 10v9" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>Three 35° gables</span>
+  <span><svg viewBox="0 0 22 22" aria-hidden="true"><path d="M4 3v16M8 3v16M12 3v16M16 3v16" stroke="currentColor" stroke-width="1.6"/></svg>White fin screens</span>
+  <span><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="11" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="11" cy="11" r="2.5" fill="currentColor"/></svg>One smart-home system</span>
+</div>
+
+<main>
+<section class="sec" id="a001"><div class="wrap">
+  <div class="head"><span class="tag">A-001 · Design concept</span><h2>A Courtyard House, Rebuilt in <em>Concrete and Glass</em></h2></div>
+  <div class="split">
+    <div>
+      <div class="intro">
+        <p class="lead">In a Central Asian <em>hovli</em>, rooms face inward onto a private yard and the street sees only a wall. This villa keeps that plan and rebuilds it in concrete, black metal and glass.</p>
+        <p>A 3 m monolithic wall encloses the whole plot. Inside it, a U-shaped house wraps three sides of a 10 × 20 m pool, and every family room opens onto the water through glass that slides away completely.</p>
+        <p>The ground floor is a pale concrete base. The upper floor is a matte-black volume screened by white vertical fins, and it cantilevers 4 m at the master bedroom. Each of the three bars carries its own sharp gable, so one roof shape repeats three times. The palette, the fins and the repeated gable follow the direction of SoNo arhitekti's Mountain Villa in Kitzbühel.</p>
+      </div>
+      <div class="feat"><i></i><h3>Three gables</h3><p>Each bar is a pure rectangular volume under its own 35° gable in black standing-seam metal. Gutters are concealed at the eaves, so no edge detail shows.</p></div>
+      <div class="feat"><i></i><h3>The void</h3><p>The pool is the centre of the plan. The 7 m lobby void is the one vertical moment, and the stair floats through it.</p></div>
+      <div class="feat"><i></i><h3>Transparency</h3><p>Frameless floor-to-ceiling glass runs 132 m along the courtyard faces. Walls pocket away and the floor continues to the pool edge at the same level.</p></div>
+      <div class="feat"><i></i><h3>Concealment</h3><p>Nothing technical shows. Lighting is linear LED in reveals, doors and joinery are handleless, and speakers, sensors and blinds sit flush.</p></div>
     </div>
-    <div class="principles">
-      <div><span class="lbl">Monolith</span><p>Pure rectangular volumes with flat roofs. Hidden parapets and concealed gutters leave no visible edge detail.</p></div>
-      <div><span class="lbl">Void</span><p>The pool is the centre of the plan. The 7 m lobby void is the one vertical moment, and the stair floats through it.</p></div>
-      <div><span class="lbl">Transparency</span><p>Frameless floor-to-ceiling glass runs 132 m along the courtyard faces. Walls pocket away and the floor continues to the pool edge at the same level.</p></div>
-      <div><span class="lbl">Concealment</span><p>Nothing technical shows. Lighting is linear LED in reveals, doors and joinery are handleless, and speakers, sensors and blinds sit flush.</p></div>
-    </div>
+    <div class="tall"><img src="images/c03.jpg" alt="Concept illustration of the pool courtyard at dusk between the two gabled wings"><span class="chip">C-03 · Pool courtyard</span></div>
   </div>
 </div></section>
 
-<section class="sheet" id="a100"><div class="wrap">
-  <div class="shead"><span class="code">A-100</span><h2>Master site plan</h2><span class="lbl meta">Scale 1:500 · Plot 50 × 60 m</span></div>
-  <div class="dwg-row">
+<section class="sec" id="a400"><div class="wrap">
+  <div class="head"><span class="tag">A-400 · Concept images</span><h2>Six Views of <em>the Villa</em></h2><p>Ink and watercolour illustrations drawn from the same model as the plans, so every wall, window and piece of furniture sits where the drawings put it.</p></div>
+  <div class="gallery">
+    <figure class="shot"><div class="img"><img src="images/c01.jpg" alt="Aerial view of the walled compound at dusk"><span class="chip">C-01</span></div><figcaption><b>The compound from above</b><span>The wall encloses the plot and three gabled bars wrap the pool.</span></figcaption></figure>
+    <figure class="shot"><div class="img"><img src="images/c02.jpg" alt="Arrival forecourt with the steel canopy and lobby glass"><span class="chip">C-02</span></div><figcaption><b>Arrival</b><span>The steel blade canopy leads to the 7 m glass front of the lobby.</span></figcaption></figure>
+    <figure class="shot"><div class="img"><img src="images/c03.jpg" alt="Pool courtyard from the south garden"><span class="chip">C-03</span></div><figcaption><b>Pool courtyard</b><span>The overflow pool between the wings, with the master suite cantilevered on the right.</span></figcaption></figure>
+    <figure class="shot"><div class="img"><img src="images/c04.jpg" alt="Double-height lobby with floating stair"><span class="chip">C-04</span></div><figcaption><b>Entrance lobby</b><span>Stone treads cantilever from a concrete wall with LED under each tread.</span></figcaption></figure>
+    <figure class="shot"><div class="img"><img src="images/c05.jpg" alt="Master bedroom looking to the terrace and pool"><span class="chip">C-05</span></div><figcaption><b>Master bedroom</b><span>Frameless glass on two sides opens to the private terrace and the pool below.</span></figcaption></figure>
+    <figure class="shot"><div class="img"><img src="images/c06.jpg" alt="Family room opening to the pool"><span class="chip">C-06</span></div><figcaption><b>Family room</b><span>The glass wall pockets away and the floor runs out flush to the deck.</span></figcaption></figure>
+  </div>
+</div></section>
+
+<section class="sec" id="a100"><div class="wrap">
+  <div class="head"><span class="tag">A-100 · Master site plan</span><h2>The Plot, <em>Walled and Planted</em></h2><p>The land is 3,000 m², 50 × 60 m. Floor areas are counted separately for each level.</p></div>
+  <div class="card"><div class="dwg-row" style="border-top:0">
     <div class="paper" id="dwgSite"></div>
     <aside class="notes">
       <span class="lbl">Site elements</span>
       <dl>
-        <dt>01</dt><dd>Perimeter wall: 300 mm board-marked concrete, 3.0 m high, with a flush coping and no visible joints.</dd>
-        <dt>02</dt><dd>Main gate: 7.4 m dark steel sliding leaf. It opens automatically for recognised number plates.</dd>
-        <dt>03</dt><dd>Service gate: 4 m leaf flush with the east wall. It leads to the service yard, kitchen deliveries and plant louvres.</dd>
-        <dt>04</dt><dd>Forecourt under a 13 × 7 m steel blade canopy, with a heated ramp down to the 6-car garage.</dd>
-        <dt>05</dt><dd>Central pool with a flush stone deck, recessed fire trough, low concrete benches and a black steel outdoor kitchen.</dd>
-        <dt>06</dt><dd>Olive trees on a strict 6 m grid in gravel beds, with a band of tall grass along the south wall.</dd>
+        <dt>01</dt><dd>Perimeter wall: 300 mm board-marked concrete, 3.0 m high, with a flush coping.</dd>
+        <dt>02</dt><dd>Main gate: a 7.4 m dark steel sliding leaf that opens for recognised number plates.</dd>
+        <dt>03</dt><dd>Service gate: a 4 m leaf flush with the east wall, leading to the service yard.</dd>
+        <dt>04</dt><dd>Forecourt under a 13 × 7 m steel blade canopy, with the 2-car garage and a heated ramp to the basement garage.</dd>
+        <dt>05</dt><dd>Central pool with a flush stone deck, recessed fire trough, low benches and a black steel outdoor kitchen.</dd>
+        <dt>06</dt><dd>Olive trees on a strict 6 m grid in gravel beds, with tall grass along the south wall.</dd>
       </dl>
       <div class="kv"><span>Land area (plot)</span><b id="kvPlot"></b></div>
       <div class="kv"><span>Building footprint</span><b id="kvFoot"></b></div>
       <div class="kv"><span>Site coverage</span><b id="kvCover"></b></div>
     </aside>
-  </div>
+  </div></div>
 </div></section>
 
-<section class="sheet" id="a101"><div class="wrap">
-  <div class="shead"><span class="code">A-101–103</span><h2>Floor plans</h2><span class="lbl meta">Scale 1:200 · Floor plan and staged plan for each level</span></div>
+<section class="sec" id="a101"><div class="wrap">
+  <div class="head"><span class="tag">A-101–103 · Floor plans</span><h2>Every Room, <em>Drawn to Scale</em></h2><p>Each level has a precise floor plan and a staged plan at 1:200. Walls, door swings, glazing, grid axes and dimensions are drawn from the same data as the area schedule.</p></div>
   <div class="stack" id="plans"></div>
 </div></section>
 
-<section class="sheet" id="a201"><div class="wrap">
-  <div class="shead"><span class="code">A-201–304</span><h2>Section and elevations</h2><span class="lbl meta">Floor-to-floor 3.50 m · Parapet +7.60</span></div>
+<section class="sec" id="a201"><div class="wrap">
+  <div class="head"><span class="tag">A-201–304 · Section and elevations</span><h2>One Section, <em>Four Elevations</em></h2><p>Floor-to-floor height is 3.50 m. The eaves sit at +7.00, the wing ridges at +9.80 and the north ridge at +10.15.</p></div>
   <div class="stack">
-    <div><div class="paper" id="dwgSection"></div><div class="cap"><span class="lbl">Section A–A · cut east–west through the pool</span><span class="lbl">Basement −3.50 · Ground ±0.00 · First +3.50 · Roof +7.00</span></div></div>
-    <div><div class="paper" id="dwgElN"></div><div class="cap"><span class="lbl">Front elevation · north · the street face</span><span class="lbl">Lobby glass 7.0 m high</span></div></div>
-    <div><div class="paper" id="dwgElS"></div><div class="cap"><span class="lbl">Back elevation · south · the courtyard</span><span class="lbl">Wing ends and the master cantilever</span></div></div>
-    <div><div class="paper" id="dwgElE"></div><div class="cap"><span class="lbl">Right elevation · east</span><span class="lbl">Master suite cantilever 4.0 m</span></div></div>
-    <div><div class="paper" id="dwgElW"></div><div class="cap"><span class="lbl">Left elevation · west</span><span class="lbl">Bedroom windows along the west wing</span></div></div>
+    <div class="card"><div class="paper" id="dwgSection"></div><div class="cap"><span>Section A–A, cut east–west through the pool</span><span>Basement −3.50 · Ground ±0.00 · Upper +3.50 · Eaves +7.00 · Ridge +9.80</span></div></div>
+    <div class="card"><div class="paper" id="dwgElN"></div><div class="cap"><span>Front elevation, north, the street face</span><span>Lobby glass 7.0 m high</span></div></div>
+    <div class="card"><div class="paper" id="dwgElS"></div><div class="cap"><span>Back elevation, south, the courtyard</span><span>Wing gables and the master cantilever</span></div></div>
+    <div class="card"><div class="paper" id="dwgElE"></div><div class="cap"><span>Right elevation, east</span><span>Master suite cantilever 4.0 m</span></div></div>
+    <div class="card"><div class="paper" id="dwgElW"></div><div class="cap"><span>Left elevation, west</span><span>Bedroom windows along the west wing</span></div></div>
   </div>
 </div></section>
 
-<section class="sheet" id="a400"><div class="wrap">
-  <div class="shead"><span class="code">A-400</span><h2>Design concept images</h2><span class="lbl meta">Ink and watercolour concept illustrations · drawn from the plans</span></div>
-  <div class="renders">
-    <figure class="rfig"><div class="frame"><img src="images/c01.jpg" alt="Aerial concept illustration of the walled compound at dusk"></div>
-      <figcaption><span class="lbl">C-01</span><b>The compound from above</b><span>The 3 m wall encloses the plot, and the U-shaped villa wraps three sides of the pool. The black first floor sits on the concrete ground floor.</span></figcaption></figure>
-    <figure class="rfig"><div class="frame"><img src="images/c02.jpg" alt="Arrival forecourt with steel canopy and double-height lobby glass"></div>
-      <figcaption><span class="lbl">C-02</span><b>Arrival</b><span>Inside the main gate, the steel blade canopy leads to the 7 m frameless glass front of the lobby.</span></figcaption></figure>
-    <figure class="rfig"><div class="frame"><img src="images/c03.jpg" alt="Pool courtyard at dusk from the south garden"></div>
-      <figcaption><span class="lbl">C-03</span><b>Pool courtyard</b><span>Looking north over the overflow pool and fire trough between the wings. The master suite cantilevers on the right.</span></figcaption></figure>
-    <figure class="rfig"><div class="frame"><img src="images/c04.jpg" alt="Double-height lobby with floating stair"></div>
-      <figcaption><span class="lbl">C-04</span><b>Entrance lobby</b><span>Stone treads cantilever from a concrete wall with LED under each tread, rising through the double-height void.</span></figcaption></figure>
-    <figure class="rfig"><div class="frame"><img src="images/c05.jpg" alt="Master bedroom looking west to the terrace and pool"></div>
-      <figcaption><span class="lbl">C-05</span><b>Master bedroom</b><span>The bed faces south and west through frameless glass to the private terrace and the pool below.</span></figcaption></figure>
-    <figure class="rfig"><div class="frame"><img src="images/c06.jpg" alt="Family living room opening to the pool terrace"></div>
-      <figcaption><span class="lbl">C-06</span><b>Family room</b><span>The glass wall onto the pool pockets away, and the stone floor runs out flush to the deck.</span></figcaption></figure>
-  </div>
-</div></section>
-
-<section class="sheet" id="a500"><div class="wrap">
-  <div class="shead"><span class="code">A-500</span><h2>Room by room</h2><span class="lbl meta" id="roomCount"></span></div>
+<section class="sec" id="a500"><div class="wrap">
+  <div class="head"><span class="tag">A-500 · Room by room</span><h2>Room by <em>Room</em></h2><p id="roomCount"></p></div>
   <div id="roomList"></div>
 </div></section>
 
-<section class="sheet" id="m100"><div class="wrap">
-  <div class="shead"><span class="code">M-100</span><h2>Technical systems</h2><span class="lbl meta">Mechanical · Electrical · Plumbing · Controls</span></div>
-
-  <div class="sys">
-    <div><span class="lbl">01 · Engineering room B.05</span><h3 style="margin-top:8px">How one basement room serves all three floors</h3></div>
-    <div class="body">
-      <div class="diagbox" id="dgRiser"></div>
-      <p><b>Cooling.</b> A water-cooled chiller makes chilled water at 6/12 °C, and dry coolers on the roof deck reject its heat. Pumps push the water up the riser in the concrete core to fan-coil units hidden in ceiling bulkheads, one per room, each with its own thermostat. The air-handling unit supplies filtered fresh air through a heat-recovery wheel to every room.</p>
-      <p><b>Water.</b> Mains water fills two 15 m³ tanks, which hold one day of supply plus a firefighting reserve. It passes a UV steriliser, and a booster set holds 4 bar at every tap. Heat-pump cylinders on each floor provide hot water.</p>
-      <p><b>Power.</b> The utility feed enters the main LV switchboard. If the grid fails, an automatic transfer switch starts the 250 kVA generator within 10 seconds. Sub-boards on each floor run off the riser, and roof PV offsets daytime load.</p>
-    </div>
-  </div>
-
-  <div class="sys">
-    <div><span class="lbl">02 · Server room B.11</span><h3 style="margin-top:8px">Cooling, UPS and fire safety</h3></div>
-    <div class="body">
-      <p>The network, security recording and AV sources all live here, so the room is built to keep running when everything else fails.</p>
-      <div class="spec">
-        <div><b>Cooling</b>In-row precision units, N+1, holding 22 °C ± 1 and 45 % RH. The hot aisle is contained, and the cooling is independent of the house chilled water.</div>
-        <div><b>Power</b>A 10 kVA online double-conversion UPS gives about 30 minutes at full load, long enough for the generator to take over.</div>
-        <div><b>Fire</b>Aspirating smoke detection triggers a clean-agent gas release. No water is used, walls are 2-hour rated and doors seal automatically.</div>
-        <div><b>Cabling</b>Overhead ladder tray keeps copper and fibre apart. Fibre and Cat 6A run to a rack on each floor, and all cameras and sensors are PoE.</div>
-        <div><b>Monitoring</b>Leak-detection tape, door access control and temperature alarms all report to the building management system and your phone.</div>
-        <div><b>Adjacent storage</b>Room B.12 holds spares and shares the server room's controlled atmosphere.</div>
+<section class="sec" id="m100"><div class="wrap">
+  <div class="head"><span class="tag">M-100 · Technical systems</span><h2>The Systems <em>You Never See</em></h2></div>
+  <div class="card">
+    <div class="sys">
+      <div><span class="lbl">01 · Engineering room B.05</span><h3>One basement room serves all three floors</h3></div>
+      <div class="body">
+        <div class="diagbox" id="dgRiser"></div>
+        <p><b>Cooling.</b> A water-cooled chiller makes chilled water at 6/12 °C, and dry coolers in the screened service yard reject its heat. Pumps push the water up the riser in the concrete core to fan-coil units hidden in ceiling bulkheads, one per room, each with its own thermostat. The air-handling unit supplies filtered fresh air through a heat-recovery wheel.</p>
+        <p><b>Water.</b> Mains water fills two 15 m³ tanks, which hold a day of supply plus a firefighting reserve. It passes a UV steriliser, and a booster set holds 4 bar at every tap. Heat-pump cylinders on each floor provide hot water.</p>
+        <p><b>Power.</b> The utility feed enters the main LV switchboard. If the grid fails, an automatic transfer switch starts the 250 kVA generator within 10 seconds. Sub-boards on each floor run off the riser, and PV in the south roof slope offsets daytime load.</p>
       </div>
     </div>
-  </div>
-
-  <div class="sys">
-    <div><span class="lbl">03 · Pool plant B.10</span><h3 style="margin-top:8px">Filtration and the hidden plant room</h3></div>
-    <div class="body">
-      <div class="diagbox" id="dgPool"></div>
-      <p>The water surface sits flush with the deck. It spills over all four edges into a slotted stone grate and drains to a 12 m³ balance tank under the east deck. Variable-speed pumps draw from the tank through glass-media filters, a UV steriliser, a heat pump and a salt chlorinator. Clean water returns through jets in the pool floor, so nothing shows on the walls.</p>
-      <p>Probes track chlorine, pH and temperature continuously and dose automatically. The plant is reached from the service corridor or through a flush stainless hatch in the deck. From the courtyard there is nothing to see.</p>
-    </div>
-  </div>
-
-  <div class="sys">
-    <div><span class="lbl">04 · Smart home</span><h3 style="margin-top:8px">One system for the whole house</h3></div>
-    <div class="body">
-      <p>Every system runs on one KNX/IP backbone with its server in B.11. Flush touch panels on each floor, a phone app and presence sensors all control it, and each scene touches lighting, climate, blinds and audio together.</p>
-      <div class="tbl"><table>
-        <thead><tr><th>System</th><th>What it does</th><th>Automation</th></tr></thead>
-        <tbody>
-          <tr><td>Lighting</td><td>DALI-2 dimming of every linear LED run, 2700–4000 K tunable</td><td>Scenes: Arrive, Dine, Cinema, Pool night, Sleep, Away</td></tr>
-          <tr><td>Climate</td><td>Fan-coil unit per room, CO₂ and humidity sensors</td><td>Unoccupied rooms set back automatically, with pre-cooling before arrival</td></tr>
-          <tr><td>Blinds</td><td>Motorised sheers and blackouts in ceiling pockets</td><td>Track the sun on the west face and close automatically in the Sleep scene</td></tr>
-          <tr><td>Security</td><td>Intrusion zones plus a beam along the top of the perimeter wall</td><td>Arm and disarm with the Away scene, with alerts to phones</td></tr>
-          <tr><td>CCTV</td><td>12 × 4K PoE cameras, recorder in the server room</td><td>30-day recording and object detection on the perimeter</td></tr>
-          <tr><td>Gate access</td><td>Number-plate recognition camera at the main gate, video intercom at the service gate</td><td>Recognised plates open the gate and bring the lobby lights up. Visitors get one-time codes.</td></tr>
-          <tr><td>Pool + energy</td><td>Pool chemistry and heating, PV output, generator status</td><td>Heating runs on schedules and on surplus solar</td></tr>
-        </tbody>
-      </table></div>
-    </div>
-  </div>
-
-  <div class="sys">
-    <div><span class="lbl">05 · Structure + envelope</span><h3 style="margin-top:8px">Frame, insulation and smart glass</h3></div>
-    <div class="body">
-      <div class="spec">
-        <div><b>Frame</b>Reinforced concrete columns and cores with 300 mm post-tensioned flat slabs. Spans reach 10 m with no downstand beams, so ceilings stay flat for the LED reveals.</div>
-        <div><b>Cantilever</b>The master suite projects 4 m on post-tensioned upstand beams hidden inside the first-floor walls, and the terrace uses thermally broken steel.</div>
-        <div><b>Basement</b>Watertight concrete box inside a secant-piled perimeter. The pool has its own concrete shell on a separate raft, isolated by a movement joint.</div>
-        <div><b>Roof</b>Inverted roof with 150 mm insulation and concealed gutters behind a 600 mm parapet. It doubles as the plant and PV deck.</div>
-        <div><b>Walls</b>100 mm mineral wool behind ventilated concrete and black metal rainscreens. Slab edges are thermally broken.</div>
-        <div><b>Glazing</b>Double low-iron solar-control glass (Ug 1.0, g 0.28) in minimal flush tracks that pocket fully into the walls.</div>
+    <div class="sys">
+      <div><span class="lbl">02 · Server room B.11</span><h3>Cooling, UPS and fire safety</h3></div>
+      <div class="body">
+        <p>The network, security recording and AV sources all live here, so the room is built to keep running when everything else fails.</p>
+        <div class="spec">
+          <div><b>Cooling</b>In-row precision units, N+1, holding 22 °C ± 1 and 45 % RH, independent of the house chilled water.</div>
+          <div><b>Power</b>A 10 kVA online double-conversion UPS gives about 30 minutes at full load while the generator takes over.</div>
+          <div><b>Fire</b>Aspirating smoke detection triggers a clean-agent gas release. No water is used and the walls are 2-hour rated.</div>
+          <div><b>Cabling</b>Overhead ladder tray keeps copper and fibre apart. Fibre and Cat 6A run to a rack on each floor.</div>
+          <div><b>Monitoring</b>Leak detection, door access and temperature alarms report to the building management system and your phone.</div>
+          <div><b>Adjacent storage</b>Room B.12 holds spares and shares the server room's controlled atmosphere.</div>
+        </div>
       </div>
-      <div class="tbl"><table>
-        <thead><tr><th>Smart glass option</th><th>Where</th><th>Trade-off</th></tr></thead>
-        <tbody>
-          <tr><td>Electrochromic tint</td><td>West faces: bedrooms, master bedroom</td><td>Cuts glare and heat without blinds. Tint changes take 5–15 minutes.</td></tr>
-          <tr><td>Switchable privacy (PDLC)</td><td>Bathrooms facing the courtyard</td><td>Goes clear to opaque instantly. Gives privacy but little heat control.</td></tr>
-          <tr><td>Spectrally selective low-iron</td><td>All remaining glass</td><td>Clearest view and lowest cost, relying on motorised sheers for control.</td></tr>
-        </tbody>
-      </table></div>
+    </div>
+    <div class="sys">
+      <div><span class="lbl">03 · Pool plant B.10</span><h3>Filtration and the hidden plant room</h3></div>
+      <div class="body">
+        <div class="diagbox" id="dgPool"></div>
+        <p>The water surface sits flush with the deck and spills over all four edges into a slotted stone grate. It drains to a 12 m³ balance tank under the east deck. Variable-speed pumps draw from the tank through glass-media filters, a UV steriliser, a heat pump and a salt chlorinator, and clean water returns through jets in the pool floor.</p>
+        <p>Probes track chlorine, pH and temperature and dose automatically. The plant is reached from the service corridor or a flush stainless hatch in the deck, so nothing shows in the courtyard.</p>
+      </div>
+    </div>
+    <div class="sys">
+      <div><span class="lbl">04 · Smart home</span><h3>One system for the whole house</h3></div>
+      <div class="body">
+        <p>Every system runs on one KNX/IP backbone with its server in B.11. Flush touch panels, a phone app and presence sensors control it, and each scene sets lighting, climate, blinds and audio together.</p>
+        <div class="tbl"><table>
+          <thead><tr><th>System</th><th>What it does</th><th>Automation</th></tr></thead>
+          <tbody>
+            <tr><td>Lighting</td><td>DALI-2 dimming of every linear LED run, 2700–4000 K tunable</td><td>Scenes: Arrive, Dine, Cinema, Pool night, Sleep, Away</td></tr>
+            <tr><td>Climate</td><td>Fan-coil unit per room, CO₂ and humidity sensors</td><td>Empty rooms set back automatically, with pre-cooling before arrival</td></tr>
+            <tr><td>Blinds</td><td>Motorised sheers and blackouts in ceiling pockets</td><td>Track the sun on the west face and close in the Sleep scene</td></tr>
+            <tr><td>Security</td><td>Intrusion zones plus a beam along the top of the perimeter wall</td><td>Arm and disarm with the Away scene, with alerts to phones</td></tr>
+            <tr><td>CCTV</td><td>12 × 4K PoE cameras, recorder in the server room</td><td>30-day recording and object detection on the perimeter</td></tr>
+            <tr><td>Gate access</td><td>Number-plate recognition at the main gate, video intercom at the service gate</td><td>Recognised plates open the gate and bring the lobby lights up</td></tr>
+            <tr><td>Pool + energy</td><td>Pool chemistry and heating, PV output, generator status</td><td>Heating runs on schedules and on surplus solar</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+    <div class="sys">
+      <div><span class="lbl">05 · Structure + envelope</span><h3>Frame, roof, insulation and smart glass</h3></div>
+      <div class="body">
+        <div class="spec">
+          <div><b>Frame</b>Reinforced concrete columns and cores with 300 mm post-tensioned flat slabs spanning up to 10 m, so ceilings stay flat for the LED reveals.</div>
+          <div><b>Cantilever</b>The master suite projects 4 m on post-tensioned upstand beams hidden inside the upper-floor walls.</div>
+          <div><b>Basement</b>Watertight concrete box inside a secant-piled perimeter. The pool has its own shell on a separate raft.</div>
+          <div><b>Roof</b>Three 35° gables in black standing-seam aluminium over a ventilated deck with 200 mm insulation, with box gutters concealed at the eaves.</div>
+          <div><b>Walls</b>100 mm mineral wool behind ventilated concrete and black metal rainscreens, with thermally broken slab edges.</div>
+          <div><b>Glazing</b>Double low-iron solar-control glass (Ug 1.0, g 0.28) in flush pocket tracks. White aluminium fins at 300 mm centres shade every upper-floor opening.</div>
+        </div>
+        <div class="tbl"><table>
+          <thead><tr><th>Smart glass option</th><th>Where</th><th>Trade-off</th></tr></thead>
+          <tbody>
+            <tr><td>Electrochromic tint</td><td>West faces: bedrooms, master bedroom</td><td>Cuts glare and heat without blinds. Tint changes take 5–15 minutes.</td></tr>
+            <tr><td>Switchable privacy (PDLC)</td><td>Bathrooms facing the courtyard</td><td>Goes clear to opaque instantly, with little heat control.</td></tr>
+            <tr><td>Spectrally selective low-iron</td><td>All remaining glass</td><td>Clearest view and lowest cost, relying on the fins and sheers.</td></tr>
+          </tbody>
+        </table></div>
+      </div>
     </div>
   </div>
 </div></section>
 
-<section class="sheet" id="a600"><div class="wrap">
-  <div class="shead"><span class="code">A-600</span><h2>Materials and finishes</h2><span class="lbl meta">Eight materials, used everywhere</span></div>
+<section class="sec" id="a600"><div class="wrap">
+  <div class="head"><span class="tag">A-600 · Materials and finishes</span><h2>Ten Materials, <em>Nothing Else</em></h2></div>
   <div class="mats">
-    <div class="mat"><div class="sw sw-conc noise"></div><div class="t"><span class="lbl">Structure · walls</span><h3>Architectural concrete</h3><p>Fair-faced, smooth steel formwork with tie holes on a 1200 × 600 mm grid. Used for the perimeter wall, ground floor and core.</p></div></div>
-    <div class="mat"><div class="sw sw-alu"></div><div class="t"><span class="lbl">Framing</span><h3>Dark anodised aluminium</h3><p>Bronze-black anodised, 25 µm. Used for glazing tracks, the closet island and reveals.</p></div></div>
-    <div class="mat"><div class="sw sw-steel noise"></div><div class="t"><span class="lbl">Cladding · gate</span><h3>Matte black steel</h3><p>Powder-coated, 5 % gloss. Used for first-floor panels, the gate, canopy and outdoor kitchen.</p></div></div>
-    <div class="mat"><div class="sw sw-smoke"></div><div class="t"><span class="lbl">Glass</span><h3>Smoked glass</h3><p>Grey-tinted, 30 % light transmission. Used for the study slot, wardrobe fronts and gym mirror wall.</p></div></div>
-    <div class="mat"><div class="sw sw-lowi"></div><div class="t"><span class="lbl">Glass</span><h3>Low-iron glass</h3><p>Low-iron glass has no green edge. Used for every courtyard wall, the lobby front and the balustrades.</p></div></div>
-    <div class="mat"><div class="sw sw-micro noise"></div><div class="t"><span class="lbl">Floors</span><h3>Grey microcement and stone</h3><p>3 mm microcement, or 1200 × 600 mm honed limestone that runs out onto the deck.</p></div></div>
+    <div class="mat"><div class="sw sw-conc noise"></div><div class="t"><span class="lbl">Walls</span><h3>Architectural concrete</h3><p>Fair-faced, with tie holes on a 1200 × 600 mm grid. Perimeter wall, ground floor and core.</p></div></div>
+    <div class="mat"><div class="sw sw-seam"></div><div class="t"><span class="lbl">Roof</span><h3>Black standing-seam metal</h3><p>Aluminium with seams at 500 mm centres on the three 35° gables.</p></div></div>
+    <div class="mat"><div class="sw sw-steel noise"></div><div class="t"><span class="lbl">Cladding</span><h3>Matte black steel</h3><p>Powder-coated, 5 % gloss. Upper-floor panels, gate, canopy and outdoor kitchen.</p></div></div>
+    <div class="mat"><div class="sw sw-fin"></div><div class="t"><span class="lbl">Screens</span><h3>White vertical fins</h3><p>40 × 240 mm aluminium blades at 300 mm centres over every upper-floor opening.</p></div></div>
+    <div class="mat"><div class="sw sw-alu"></div><div class="t"><span class="lbl">Framing</span><h3>Dark anodised aluminium</h3><p>Bronze-black anodised. Glazing tracks, closet island and reveals.</p></div></div>
+    <div class="mat"><div class="sw sw-lowi"></div><div class="t"><span class="lbl">Glass</span><h3>Low-iron glass</h3><p>No green edge. Every courtyard wall, the lobby front and the balustrades.</p></div></div>
+    <div class="mat"><div class="sw sw-smoke"></div><div class="t"><span class="lbl">Glass</span><h3>Smoked glass</h3><p>Grey-tinted, 30 % light transmission. Wardrobe fronts and the gym mirror wall.</p></div></div>
+    <div class="mat"><div class="sw sw-micro noise"></div><div class="t"><span class="lbl">Floors</span><h3>Grey microcement and stone</h3><p>3 mm microcement, or 1200 × 600 mm honed limestone running out to the deck.</p></div></div>
     <div class="mat"><div class="sw sw-tile"></div><div class="t"><span class="lbl">Pool</span><h3>Dark pool tile</h3><p>50 mm glass mosaic in deep blue-black, so the water reads as a mirror.</p></div></div>
-    <div class="mat"><div class="sw sw-led"></div><div class="t"><span class="lbl">Light</span><h3>Linear LED</h3><p>Concealed in 20 mm reveals with a diffuser. 2700 K outside and tunable inside, with no visible fittings.</p></div></div>
+    <div class="mat"><div class="sw sw-led"></div><div class="t"><span class="lbl">Light</span><h3>Linear LED</h3><p>Concealed in 20 mm reveals. 2700 K outside and tunable inside.</p></div></div>
   </div>
 </div></section>
 
-<section class="sheet" id="a700"><div class="wrap">
-  <div class="shead"><span class="code">A-700</span><h2>Area schedule</h2><span class="lbl meta">Net room areas, computed from the plan geometry</span></div>
+<section class="sec" id="a700"><div class="wrap">
+  <div class="head"><span class="tag">A-700 · Area schedule</span><h2>Area <em>Schedule</em></h2><p>Net room areas computed from the plan geometry. The 3,000 m² is the land; the floor areas below are counted per level.</p></div>
   <div class="sums" id="sums"></div>
-  <div class="tbl"><table class="sched" id="sched"></table></div>
+  <div class="card sched-card"><div class="tbl"><table class="sched" id="sched"></table></div></div>
 </div></section>
 </main>
 
-<footer><div class="wrap">
-  <div class="tblock">
-    <div><span class="lbl">Project</span><br>HOVLI · HV-01<br>Courtyard villa</div>
-    <div><span class="lbl">Stage</span><br>Concept design<br>Issue 01 · 2026-09-12</div>
-    <div><span class="lbl">Units</span><br>Metres / mm<br>Areas in m², net</div>
-    <div><span class="lbl">Datum</span><br>GF FFL ±0.00<br>Floor-to-floor 3.50</div>
-    <div><span class="lbl">Note</span><br>Concept only. Not for construction. Areas and systems to be confirmed by consultants.</div>
+<footer class="foot">
+  <div class="foot-top">
+    <div>
+      <a class="brand" href="#top"><svg viewBox="0 0 34 22" aria-hidden="true"><path d="M1 21V9L6 3l5 6v12M12 21V9l5-6 5 6v12M23 21V9l5-6 5 6v12" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Hovli</a>
+      <p>A courtyard villa on a walled 3,000 m² plot: three gabled bars around a pool, a basement that holds every system, and a ground floor with every room of the reference plan.</p>
+    </div>
+    <div class="tblock">
+      <div><b>Project</b>HV-01 · Private courtyard villa</div>
+      <div><b>Stage</b>Concept design · Issue 03 · 2026-09-13</div>
+      <div><b>Units</b>Metres and millimetres · areas net in m²</div>
+      <div><b>Datum</b>Ground floor ±0.00 · floor-to-floor 3.50</div>
+    </div>
   </div>
-</div></footer>
+  <div class="foot-bot"><span>Concept only. Not for construction. Areas and systems to be confirmed by consultants.</span><a href="#top">Back to top ↑</a></div>
+</footer>
 
 <script src="data.js"></script>
 <script src="plan-data.js"></script>
@@ -401,44 +431,41 @@ footer{padding:36px 0 60px}
 <script>
 (function(){
   const $ = id => document.getElementById(id);
-  const polyArea = pts => Math.abs(pts.reduce((s,[x,y],i)=>{const [u,v]=pts[(i+1)%pts.length]; return s + x*v - u*y;},0))/2;
+  const inPoly = (x,y,pts) => { let c=false; for(let i=0,j=pts.length-1;i<pts.length;j=i++){ const [xi,yi]=pts[i],[xj,yj]=pts[j]; if(((yi>y)!==(yj>y)) && x < (xj-xi)*(y-yi)/(yj-yi)+xi) c=!c; } return c; };
+  let cells=0; for(let x=.25;x<PLOT.w;x+=.5) for(let y=.25;y<PLOT.h;y+=.5) if(inPoly(x,y,LEVELS.G.outline)||inPoly(x,y,LEVELS.F.outline)) cells++;
+  const foot = cells*.25, land = PLOT.w*PLOT.h;
   const gfa = ['B','G','F'].reduce((s,k)=>s+levelTotal(k),0);
-  const foot = polyArea(LEVELS.F.outline);
-  $('stats').innerHTML = [
-    ['Land area', `3,000<small>m² plot · 50 × 60</small>`],
-    ['Levels', `3<small>B · G · F</small>`],
-    ['Central pool', `10 × 20<small>m · overflow</small>`],
-    ['Enclosure', `3.0<small>m walled compound</small>`],
-    ['Net floor area', `${fmt(gfa,0)}<small>m² · 3 levels</small>`]
-  ].map(([l,v])=>`<div><span class="lbl">${l}</span><div class="v">${v}</div></div>`).join('');
-  $('kvPlot').textContent = `${fmt(PLOT.w*PLOT.h,0)} m²`;
+  $('stats').innerHTML = [['Land area','3,000 m²'],['Levels','3'],['Central pool','10 × 20 m'],['Net floor area',`${fmt(gfa,0)} m²`]]
+    .map(([l,v])=>`<div class="stat"><span>${l}</span><b>${v}</b></div>`).join('');
+  $('kvPlot').textContent = `${fmt(land,0)} m²`;
   $('kvFoot').textContent = `${fmt(foot,0)} m²`;
-  $('kvCover').textContent = `${fmt(foot/(PLOT.w*PLOT.h)*100,1)} %`;
+  $('kvCover').textContent = `${fmt(foot/land*100,1)} %`;
   $('dwgSite').innerHTML = sitePlanSVG();
   const NOTES = {
-    B:['Garage, plant, server, staff and leisure all sit below grade, so the floors above hold only living space.','The service corridor runs under the terrace to connect every basement room without passing a family space.','Ramp ≤ 20 % with transitions, heated.'],
-    G:['Every room from the reference plan is here: garage, office, den, living, dining, kitchen, nook, sunroom, family room, six bedrooms, three bathrooms, seven closets, storage and the primary suite, plus a pantry.','The rooms are rearranged around the pool. Bedrooms line the west wing, the family rooms and primary suite fill the east wing, and the den and sunroom are glass pavilions at the pool corners.','All courtyard glass pockets fully into the walls, and the floor continues to the deck at ±0.00.'],
-    F:['Five en-suite bedrooms, including the master suite that cantilevers 4 m.','The lobby void and floating stair connect the two floors.','Galleries along both wings overlook the pool.']
+    B:['Garage, plant, server, staff and leisure sit below grade, so the floors above hold living space.','The service corridor runs under the terrace and connects every basement room without passing a family space.','The ramp is at most 20 % with transitions, and heated.'],
+    G:['Every room from the reference plan is here: garage, office, den, living, dining, kitchen, nook, sunroom, family room, six bedrooms, three bathrooms, seven closets, storage and the primary suite, plus a pantry.','Bedrooms line the west wing, the family rooms and primary suite fill the east wing, and the den and sunroom are glass pavilions at the pool corners.','All courtyard glass pockets fully into the walls, and the floor continues to the deck at ±0.00.'],
+    F:['Five en-suite bedrooms, including the master suite that cantilevers 4 m.','The lobby void and floating stair connect the two floors.','Galleries along both wings overlook the pool behind white fins.']
   };
   $('plans').innerHTML = ['B','G','F'].map(k=>{ const L=LEVELS[k], rs=levelRooms(k);
-    return `<div class="paper">${planCAD(k)}</div><div class="dwg-row"><div class="paper">${planStaged(k)}</div><aside class="notes"><span class="lbl" style="color:var(--led)">${L.sheet}</span><h3>${L.name}</h3>
-      <dl>${NOTES[k].map((n,i)=>`<dt>${String(i+1).padStart(2,'0')}</dt><dd>${n}</dd>`).join('')}</dl>
-      <div class="kv"><span>Finished floor level</span><b>${zl(L.ffl)}</b></div><div class="kv"><span>Rooms</span><b>${rs.length}</b></div><div class="kv"><span>Net area</span><b>${fmt(levelTotal(k))} m²</b></div></aside></div>`; }).join('');
+    return `<article class="card"><header class="level-head"><div><span class="tag">${L.sheet}</span><h3>${L.name}</h3></div><div class="chips"><span>FFL ${zl(L.ffl)}</span><span>${rs.length} rooms</span><span>${fmt(levelTotal(k))} m² net</span></div></header>
+      <div class="paper">${planCAD(k)}</div>
+      <div class="dwg-row"><div class="paper">${planStaged(k)}</div><aside class="notes"><span class="lbl">Staged plan · notes</span><dl>${NOTES[k].map((n,i)=>`<dt>${String(i+1).padStart(2,'0')}</dt><dd>${n}</dd>`).join('')}</dl></aside></div></article>`; }).join('');
   $('dwgSection').innerHTML = sectionSVG();
   for(const v of ['N','S','E','W']) $('dwgEl'+v).innerHTML = elevationPrecise(v);
   $('dgRiser').innerHTML = riserSVG();
   $('dgPool').innerHTML = poolLoopSVG();
-  $('roomCount').textContent = `${ROOMS.length} rooms · 3 levels`;
-  $('roomList').innerHTML = ['B','G','F'].map(k=>`<div class="lvl"><h3><span class="lbl" style="display:block;color:var(--led)">${LEVELS[k].sheet} · ${zl(LEVELS[k].ffl)}</span>${LEVELS[k].name}</h3><div class="rooms">${
+  $('roomCount').textContent = `${ROOMS.length} rooms across three levels, each with its number, area and a short description.`;
+  $('roomList').innerHTML = ['B','G','F'].map(k=>`<div class="lvl"><h3><span class="lbl">${LEVELS[k].sheet} · ${zl(LEVELS[k].ffl)}</span>${LEVELS[k].name}</h3><div class="rooms">${
     levelRooms(k).map(r=>`<div class="room"><span class="id">${r.id}</span><span class="n">${r.n}</span><span class="a">${fmt(area(r))} m²</span><p>${r.d}</p></div>`).join('')}</div></div>`).join('');
-  $('sums').innerHTML = [['Basement',levelTotal('B')],['Ground floor',levelTotal('G')],['First floor',levelTotal('F')],['Total, 3 levels',gfa]].map(([l,v])=>`<div><span class="lbl">${l}</span><div class="v">${fmt(v)} m²</div></div>`).join('');
+  $('sums').innerHTML = [['Basement',levelTotal('B')],['Ground floor · 1st',levelTotal('G')],['Upper floor · 2nd',levelTotal('F')],['Total, 3 levels',gfa]].map(([l,v])=>`<div><span class="lbl">${l}</span><div class="v">${fmt(v)} m²</div></div>`).join('');
   let rows = `<thead><tr><th>No.</th><th>Room</th><th class="num">Area m²</th><th class="num">% of level</th></tr></thead><tbody>`;
   for(const k of ['B','G','F']){ const t=levelTotal(k); rows += `<tr class="lvlh"><td colspan="4">${LEVELS[k].sheet} · ${LEVELS[k].name} · FFL ${zl(LEVELS[k].ffl)}</td></tr>`;
     for(const r of levelRooms(k)) rows += `<tr><td class="id">${r.id}</td><td>${r.n}</td><td class="num">${fmt(area(r))}</td><td class="num">${fmt(area(r)/t*100)}</td></tr>`;
     rows += `<tr class="sub"><td></td><td>${LEVELS[k].name} total</td><td class="num">${fmt(t)}</td><td class="num">100.0</td></tr>`; }
   rows += `<tr class="grand"><td></td><td>Total net floor area · 3 levels</td><td class="num">${fmt(gfa)}</td><td class="num"></td></tr>`;
   rows += `<tr class="lvlh"><td colspan="4">External areas · not counted in floor area</td></tr>`;
-  for(const e of EXTERNAL) rows += `<tr><td class="id">${e.id}</td><td>${e.n} <span style="color:var(--faint)">· ${e.d}</span></td><td class="num">${fmt(area(e))}</td><td class="num"></td></tr>`;
+  for(const e of EXTERNAL) rows += `<tr><td class="id">${e.id}</td><td>${e.n} <span style="color:var(--muted);font-weight:400">· ${e.d}</span></td><td class="num">${fmt(area(e))}</td><td class="num"></td></tr>`;
+  rows += `<tr class="lvlh"><td colspan="4">Land</td></tr><tr><td class="id">P.01</td><td>Plot inside the perimeter wall · 50 × 60 m</td><td class="num">${fmt(land)}</td><td class="num"></td></tr>`;
   $('sched').innerHTML = rows + '</tbody>';
 })();
 </script>
