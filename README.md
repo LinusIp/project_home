@@ -32,3 +32,7 @@ node serve.js
 Open http://localhost:4817 for the page, or http://localhost:4817/bake.html to re-bake the images after changing the design.
 
 The renders are computed from the design model in the browser (three.js). They are concept visualisations, not photographs.
+
+## Showcase landing page
+
+`showcase/index.html` is a separate cinematic landing page built only from the concept pictures and sheets (no 3D model): a photo-filled wordmark, a slow-zoom panorama, glass cards, marquee bands, scroll reveals, parallax, a pinned horizontal gallery of the concept sheets, a self-drawing elevation sketch and a level switcher with each sheet's room list. Open it through any static server, for example `node serve.js` and then http://localhost:4817/showcase/.
