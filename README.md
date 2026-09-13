@@ -15,7 +15,7 @@ Every drawing, area, board and render is generated from one data model (`data.js
 
 ## Files
 
-- `index.html`: layout, styles and written content
+- `drawings.html`: layout, styles and written content of the technical drawing set
 - `data.js`: plot, levels, rooms, roofs, glazing and external areas
 - `plan-data.js`: doors, windows, open-plan edges, furniture, trees
 - `draw-plans.js`, `draw-sections.js`, `draw-cad.js`, `draw-elev.js`, `draw-boards.js`: SVG and board generators
@@ -29,10 +29,13 @@ Every drawing, area, board and render is generated from one data model (`data.js
 node serve.js
 ```
 
-Open http://localhost:4817 for the page, or http://localhost:4817/bake.html to re-bake the images after changing the design.
+Open http://localhost:4817 for the showcase, http://localhost:4817/drawings.html for the drawings, or http://localhost:4817/bake.html to re-bake the images after changing the design.
 
 The renders are computed from the design model in the browser (three.js). They are concept visualisations, not photographs.
 
-## Showcase landing page
+## Pages
 
-`showcase/index.html` is a separate cinematic landing page built only from the concept pictures and sheets (no 3D model): a photo-filled wordmark, a slow-zoom panorama, glass cards, marquee bands, scroll reveals, parallax, a pinned horizontal gallery of the concept sheets, a self-drawing elevation sketch and a level switcher with each sheet's room list. Open it through any static server, for example `node serve.js` and then http://localhost:4817/showcase/.
+- `index.html` is the showcase landing page, built only from the concept pictures and sheets (images in `img/`).
+- `drawings.html` is the technical drawing set: concept boards, CAD and staged plans, section, elevations, systems and area schedule (images in `images/`).
+
+Both are published with GitHub Pages from the repository root. `.nojekyll` makes Pages serve the files as they are.

@@ -1,5 +1,5 @@
 const http=require('http'),fs=require('fs'),path=require('path');const root=__dirname;
-const T={'.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css','.jpg':'image/jpeg','.png':'image/png'};
+const T={'.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css','.jpg':'image/jpeg','.png':'image/png','.svg':'image/svg+xml'};
 http.createServer((q,s)=>{
   let p=decodeURIComponent(q.url.split('?')[0]);
   if(q.method==='POST' && p==='/save'){ const name=(new URL(q.url,'http://x')).searchParams.get('name')||'';
