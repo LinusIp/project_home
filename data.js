@@ -1,5 +1,9 @@
 /* HOVLI — single source of truth. Metres. x → east, y → south. Origin = NW corner of plot. */
-const PLOT = { w: 50, h: 60, wall: 0.3, wallH: 3.0 };
+/* Land: flat, 3,000 m², sides in a 2 : 3 ratio, so 2√500 × 3√500 = 44.72 × 67.08 m.
+   x0 / y0 place the plot's north-west corner in model space; the house keeps its coordinates. */
+const PLOT = { x0: 0.9, y0: 0, w: 2*Math.sqrt(500), h: 3*Math.sqrt(500), wall: 0.3, wallH: 3.0 };
+PLOT.x1 = PLOT.x0 + PLOT.w; PLOT.y1 = PLOT.y0 + PLOT.h; PLOT.area = PLOT.w * PLOT.h;
+const plotDims = (sep = ' × ') => PLOT.w.toFixed(2) + sep + PLOT.h.toFixed(2);
 const LEVELS = {
   B: { key:'B', name:'Basement', sheet:'A-101', ffl:-3.5, h:3.5,
        outline:[[8,10],[42,10],[42,42],[34,42],[34,32],[30.5,32],[30.5,21],[16,21],[16,37],[1.5,37],[1.5,26],[8,26]] },
@@ -8,7 +12,11 @@ const LEVELS = {
   F: { key:'F', name:'Upper Floor · 2nd floor', sheet:'A-103', ffl:3.5, h:3.5,
        outline:[[8,10],[42,10],[42,46],[34,46],[34,19],[16,19],[16,42],[8,42]] }
 };
-/* three sharp gables, one per bar (after SoNo's Mountain Villa). Eaves +7.00, 35° pitch.
+/* Roof style: 'flat' (current: flat concrete roofs with 1.2 m overhangs, top +7.05, after the client's reference images)
+   or 'gable' (the earlier three 35° gables after SoNo's Mountain Villa). Every drawing and render follows this switch. */
+const ROOF_STYLE = 'flat';
+const FLAT_ROOF = ROOF_STYLE !== 'gable', ROOF_TOP = 7.05, ROOF_OVERHANG = 1.2, OVERRUN_TOP = 8.1;
+/* gable option: three sharp gables, one per bar. Eaves +7.00, 35° pitch.
    Wing ridges start at y=15 so they run into the north roof and form true valleys. */
 const EAVE = 7.0;
 const ROOFS = [
@@ -149,7 +157,11 @@ const EXTERNAL = [
   {id:'X.02', n:'Main Terrace', r:[[20,19,10,3]], d:'Covered, flush with the living floor, between the den and sunroom pavilions.'},
   {id:'X.03', n:'Pool Deck', r:[[16,24,4,18],[30,24,4,18],[16,42,18,4]], d:'1200 × 600 mm grey stone pavers.'},
   {id:'X.04', n:'Master Terrace (FF)', r:[[31,37,3,9]], d:'Cantilevered steel and glass.'},
-  {id:'X.05', n:'Entrance Canopy', r:[[17,3,13,7]], d:'250 mm steel blade on two columns.'}
+  {id:'X.05', n:'Entrance Canopy', r:[[17,3,13,7]], d:'250 mm steel blade on two columns.'},
+  {id:'X.06', n:'South Lawn', r:[[16,47.5,18,10.5]], d:'Level lawn on the pool axis.'},
+  {id:'X.07', n:'Sport Court', r:[[2.5,49,13,15]], d:'Half basketball court, acrylic on asphalt.'},
+  {id:'X.08', n:'Greenhouse', r:[[36.5,49,7,5]], d:'Black steel and clear glass.'},
+  {id:'X.09', n:'Sunken Fire Pit', r:[[21.5,59,7,5]], d:'Lounge 450 mm below the lawn around a gas fire.'}
 ];
 const area = o => o.r.reduce((s,[,,w,h]) => s + w*h, 0);
 const levelRooms = k => ROOMS.filter(r => r.lvl === k);

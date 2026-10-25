@@ -5,7 +5,7 @@ function datums(x1,x2,lblX,list){ let s='';
     s += `<path d="M${lblX-.35} ${-z-.45}L${lblX+.35} ${-z-.45}L${lblX} ${-z}Z" fill="${strong?INK:'none'}" stroke="${INK}" stroke-width=".6" ${NSS}/>` + tx(lblX+.7,-z-.12,t,{size:.42,a:'start',cls:'m'}); }
   return s; }
 const zl = z => (z>0?'+':z<0?'−':'±') + Math.abs(z).toFixed(2);
-const LEVEL_DATUMS = [[10.15,'+10.15 RIDGE · NORTH BAR'],[9.8,'+9.80 RIDGE · WINGS'],[7.0,'+7.00 EAVES'],[3.5,'+3.50 UPPER FLOOR · 2ND',1],[0,'±0.00 GROUND FLOOR · 1ST',1],[-3.5,'−3.50 BASEMENT',1]];
+const LEVEL_DATUMS = FLAT_ROOF ? [[8.1,'+8.10 LIFT OVERRUN'],[7.05,'+7.05 ROOF'],[3.5,'+3.50 UPPER FLOOR · 2ND',1],[0,'±0.00 GROUND FLOOR · 1ST',1],[-3.5,'−3.50 BASEMENT',1]] : [[10.15,'+10.15 RIDGE · NORTH BAR'],[9.8,'+9.80 RIDGE · WINGS'],[7.0,'+7.00 EAVES'],[3.5,'+3.50 UPPER FLOOR · 2ND',1],[0,'±0.00 GROUND FLOOR · 1ST',1],[-3.5,'−3.50 BASEMENT',1]];
 function tree(x,s=1){ return ln(x,0,x,-1.9*s,.7) + `<ellipse cx="${x}" cy="${-3*s}" rx="${1.6*s}" ry="${1.25*s}" fill="none" stroke="${MUTE}" stroke-width=".6" ${NSS}/>`; }
 function glassV(x,z1,z2){ return rc(x-.06,-z2,.12,z2-z1,{f:GLS,sw:.45}); }
 
@@ -22,13 +22,13 @@ function sectionSVG(){
   // ground line
   s += ln(-3,0,1.2,0,1.4) + ln(16.3,0,19.7,0,1.4) + ln(30.3,0,30.2,0,1.4) + ln(42.3,0,53,0,1.4);
   // perimeter walls
-  s += rc(0,-3,.3,3.9,{f:INK,s:'none'}) + rc(49.7,-3,.3,3.9,{f:INK,s:'none'});
+  s += rc(PLOT.x0,-3,.3,3.9,{f:INK,s:'none'}) + rc(PLOT.x1-.3,-3,.3,3.9,{f:INK,s:'none'}) + tx(PLOT.x0+.15,-3.5,'WALL',{size:.3,cls:'m',fill:MUTE}) + tx(PLOT.x1-.15,-3.5,'WALL',{size:.3,cls:'m',fill:MUTE});
   // north bar beyond
-  s += rc(16,-10.15,18,3.15,{f:'#d9dbdc',sw:.5,s:MUTE}) + Array.from({length:35},(_,i)=>ln(16.5+i*.5,-10.15,16.5+i*.5,-7,.25,MUTE)).join('') + rc(16,-7,18,7,{f:'#e7e8e5',sw:.5,s:MUTE}) + ln(16,-3.5,34,-3.5,.4,MUTE); for(let x=19;x<34;x+=3) s += ln(x,-7,x,0,.3,MUTE);
+  s += (FLAT_ROOF ? rc(14.8,-7.05,20.4,.4,{f:'#d9dbdc',sw:.5,s:MUTE}) + rc(27.2,-8.1,3.1,1.05,{f:'#e7e8e5',sw:.5,s:MUTE}) : rc(16,-10.15,18,3.15,{f:'#d9dbdc',sw:.5,s:MUTE}) + Array.from({length:35},(_,i)=>ln(16.5+i*.5,-10.15,16.5+i*.5,-7,.25,MUTE)).join('')) + rc(16,-7,18,7,{f:'#e7e8e5',sw:.5,s:MUTE}) + ln(16,-3.5,34,-3.5,.4,MUTE); for(let x=19;x<34;x+=3) s += ln(x,-7,x,0,.3,MUTE);
   s += tx(25,-5.3,'NORTH BAR BEYOND · GLASS FACE',{size:.34,cls:'m',fill:MUTE});
   // wings cut
   const wing=(x1,x2,glassGF,glassFF)=>{ let w='';
-    w += rc(x1-.2,-3.5,x2-x1+.4,.35,{f:INK,s:'none'}) + rc(x1-.2,-7,x2-x1+.4,.35,{f:INK,s:'none'}) + `<polygon points="${x1-.25},-7 ${(x1+x2)/2},-9.8 ${x2+.25},-7" fill="none" stroke="${INK}" stroke-width="2.2" ${NSS} stroke-linejoin="miter"/><polygon points="${x1+.4},-7.08 ${(x1+x2)/2},-9.42 ${x2-.4},-7.08" fill="none" stroke="${INK}" stroke-width=".45" ${NSS}/>`;
+    w += rc(x1-.2,-3.5,x2-x1+.4,.35,{f:INK,s:'none'}) + (FLAT_ROOF ? rc(x1-ROOF_OVERHANG,-ROOF_TOP,x2-x1+2*ROOF_OVERHANG,.4,{f:INK,s:'none'}) + rc(x1-.9,-3.5,x2-x1+1.8,.28,{f:INK,s:'none'}) + ln(x1-ROOF_OVERHANG+.1,-6.62,x1-.1,-6.62,1.2,LEDC) + ln(x2+.1,-6.62,x2+ROOF_OVERHANG-.1,-6.62,1.2,LEDC) : rc(x1-.2,-7,x2-x1+.4,.35,{f:INK,s:'none'}) + `<polygon points="${x1-.25},-7 ${(x1+x2)/2},-9.8 ${x2+.25},-7" fill="none" stroke="${INK}" stroke-width="2.2" ${NSS} stroke-linejoin="miter"/><polygon points="${x1+.4},-7.08 ${(x1+x2)/2},-9.42 ${x2-.4},-7.08" fill="none" stroke="${INK}" stroke-width=".45" ${NSS}/>`);
     for(const [x,g,z1,z2] of [[x1,glassGF[0],0,3.15],[x2,glassGF[1],0,3.15],[x1,glassFF[0],3.5,6.65],[x2,glassFF[1],3.5,6.65]])
       w += g ? glassV(x,z1,z2) : rc(x-.15,-z2,.3,z2-z1,{f:INK,s:'none'});
     w += ln(x1+.4,-6.62,x2-.4,-6.62,1.2,LEDC) + ln(x1+.4,-3.12,x2-.4,-3.12,1.2,LEDC);
@@ -38,9 +38,9 @@ function sectionSVG(){
   // rooms
   const lab=(x,z,t,sub)=> tx(x,-z,t,{size:.4,w:500,cls:'m'}) + (sub?tx(x,-z+.6,sub,{size:.32,fill:MUTE,cls:'m'}):'');
   s += lab(12,5.6,'BEDROOM 5','F.14') + lab(10.5,1.9,'BEDROOM','G.27') + lab(8.7,-1.6,'GARAGE · 4 CARS','B.01') + lab(38,5.6,'MASTER BATH','F.18') + lab(38,1.9,'FAMILY ROOM','G.15') + lab(38.9,-1.6,'ELECTRONICS LAB','B.03') + lab(32.25,-1.2,'POOL','') + lab(32.25,-1.75,'PLANT','') + lab(25,-.9,'POOL · 1.5 m WATER','');
-  s += lab(18,.45,'TERRACE',''); s += tree(46,.9) + tree(4.3,.7);
+  s += lab(18,.45,'TERRACE',''); s += tree(43.6,.9) + tree(4.3,.7);
   s += datums(-3,53,53.3,LEVEL_DATUMS);
-  s += dimChain([-3.5,0,3.5,7,9.8],-2.3,false,{off:.55});
+  s += dimChain(FLAT_ROOF ? [-3.5,0,3.5,ROOF_TOP] : [-3.5,0,3.5,7,9.8],-2.3,false,{off:.55});
   s += tx(-3.4,6.4,'A-201 · SECTION A–A · CUT E–W THROUGH POOL AT y = 30 m · 1:200',{size:.45,a:'start',w:500,cls:'m'});
   return s + '</svg>';
 }
@@ -91,7 +91,7 @@ function riserSVG(){
   const B = (x,y,w,h,t,sub) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#111416" stroke="${W}" stroke-width=".8" ${NSS}/>` + `<text x="${x+.8}" y="${y+2.1}" font-size="1.35" fill="${W}" class="m" letter-spacing=".1">${t}</text>` + (sub?`<text x="${x+.8}" y="${y+3.8}" font-size="1.05" fill="${D}" class="m">${sub}</text>`:'');
   const ST = {chw:'', dw:'stroke-dasharray="3 1.6"', pw:'', data:'stroke-dasharray=".6 1.2"'};
   let s = `<svg viewBox="0 0 120 74" class="diag" role="img" aria-label="Building services riser diagram">`;
-  const bands = [['ROOF · EAVES +7.00',2,11],['UPPER FLOOR · 2ND +3.50',13,25],['GROUND FLOOR · 1ST ±0.00',27,39],['BASEMENT −3.50',41,70]];
+  const bands = [[FLAT_ROOF ? 'ROOF +7.05' : 'ROOF · EAVES +7.00',2,11],['UPPER FLOOR · 2ND +3.50',13,25],['GROUND FLOOR · 1ST ±0.00',27,39],['BASEMENT −3.50',41,70]];
   for(const [t,y1,y2] of bands) s += `<rect x="0" y="${y1}" width="120" height="${y2-y1}" fill="#15191b" stroke="#2a2f33" stroke-width=".6" ${NSS}/><text x="1" y="${y1+1.8}" font-size="1.15" fill="${D}" class="m" letter-spacing=".12">${t}</text>`;
   s += `<rect x="88" y="2" width="8" height="68" fill="none" stroke="${D}" stroke-width=".7" ${NSS} stroke-dasharray="2 1.2"/><text x="92" y="72.6" font-size="1.1" fill="${D}" text-anchor="middle" class="m">CORE RISER</text>`;
   s += B(3,44,40,24,'MECHANICAL + ELECTRICAL  B.18 · B.07','') + B(5,49,17,7,'CHW PLANT + AHU','chiller · 2 pumps') + B(24,49,17,7,'WATER TANKS  B.08','booster set · UV') + B(5,58,17,8,'MAIN LV BOARD','250 kVA gen · ATS') + B(24,58,17,8,'BMS / KNX RACK','controller · PoE');

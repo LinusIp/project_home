@@ -107,38 +107,45 @@ function planSVG(k){
 }
 
 function sitePlanSVG(){
-  const p='site', vb=[-4.5,-7,59,73.5];
-  let s = `<svg viewBox="${vb.join(' ')}" class="dwg" role="img" aria-label="Master site plan, scale 1:500">${defs(p)}${gridBg(p,vb)}`;
-  s += tx(25,-5.2,'ACCESS ROAD',{size:.6,cls:'m',fill:MUTE,ls:.3}) + ln(-4.5,-4.2,54.5,-4.2,.6,MUTE);
-  // landscape grounds
-  s += rc(.3,46,49.4,13.7,{f:`url(#${p}-grav)`,s:'none'}) + rc(.3,57.6,49.4,2.1,{f:`url(#${p}-grass)`,s:'none'}) + rc(42.3,20,7.4,26,{f:`url(#${p}-grav)`,s:'none'}) + rc(.3,26,7.7,16,{f:`url(#${p}-grass)`,s:'none'}) + rc(.3,42,7.7,4,{f:`url(#${p}-grav)`,s:'none'});
-  s += rc(1.5,.3,7.7,8,{f:'#e1e2df',s:'none'}) + rc(9.2,1.5,21.3,7.5,{f:'#e1e2df',s:'none'}) + rc(42.3,10,7.4,10,{f:'#e1e2df',s:'none'});
-  s += rc(1.5,8,6,18,{f:`url(#${p}-ramp)`,sw:.7});
-  s += rc(16,19,18,27,{f:`url(#${p}-pav)`,s:'none'}) + rc(20,22,10,20,{f:`url(#${p}-water)`,sw:1.3});
-  for(let y=46.8;y<57;y+=1.25) s += rc(24.2,y,1.6,.6,{f:'#dcdedb',sw:.4});
+  const {x0,x1,y1,w} = PLOT, W=.3, p='site', vb=[x0-5.6,-7,w+11.4,y1+13.8];
+  const mm = v => Math.round(v*1000).toLocaleString('en-US').replace(/,/g,' ');
+  let s = '<svg viewBox="'+vb.join(' ')+'" class="dwg" role="img" aria-label="Master site plan, scale 1:500">'+defs(p)+gridBg(p,vb);
+  s += tx((x0+x1)/2,-5.2,'ACCESS ROAD',{size:.6,cls:'m',fill:MUTE,ls:.3}) + ln(vb[0],-4.2,vb[0]+vb[2],-4.2,.6,MUTE);
+  // flat ground: gravel inside the wall, then the hard and soft landscape on top
+  s += rc(x0+W,W,w-2*W,y1-2*W,{f:'url(#'+p+'-grav)',s:'none'}) + rc(x0+W,26,8-x0-W,16,{f:'url(#'+p+'-grass)',s:'none'}) + rc(x0+W,y1-2.3,w-2*W,2.3-W,{f:'url(#'+p+'-grass)',s:'none'});
+  s += rc(1.5,W,7.7,8,{f:'#e1e2df',s:'none'}) + rc(9.2,1.5,21.3,7.5,{f:'#e1e2df',s:'none'}) + rc(42.3,10,x1-W-42.3,10,{f:'#e1e2df',s:'none'});
+  s += rc(1.5,8,6,18,{f:'url(#'+p+'-ramp)',sw:.7});
+  s += rc(16,19,18,27,{f:'url(#'+p+'-pav)',s:'none'}) + rc(20,22,10,20,{f:'url(#'+p+'-water)',sw:1.3});
+  s += gardenSVG({lawn:'url(#'+p+'-grass)', court:'#d9dcd8', house:'#eef1f0', pit:'#e1e2df', line:INK});
+  for(let y=46.8;y<58.6;y+=1.25) s += rc(24.2,y,1.6,.6,{f:'#dcdedb',sw:.4});
+  for(let x=34.4;x<36.4;x+=1.25) s += rc(x,51.2,.6,1.6,{f:'#dcdedb',sw:.4});
   // building roof
-  s += pg(LEVELS.G.outline,{f:'#dcdfde',sw:1.2}) + pg(LEVELS.F.outline,{f:'#d4d7d6',sw:2}) + `<polygon points="${LEVELS.F.outline.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${INK}" stroke-width=".4" ${NSS} transform="translate(0 0)"/>`;
+  s += pg(LEVELS.G.outline,{f:'#dcdfde',sw:1.2}) + pg(LEVELS.F.outline,{f:'#d4d7d6',sw:2});
   const rl=(a,b,c,d,dash)=>ln(a,b,c,d,dash?.7:1.1,INK,dash?'stroke-dasharray="4 2"':'');
-  s += rl(8,14.5,42,14.5) + rl(12,15,12,42) + rl(8,19,12,15,1) + rl(16,19,12,15,1) + rl(38,15,38,46) + rl(34,19,38,15,1) + rl(42,19,38,15,1);
-  s += rc(17,10.5,7,1.5,{sw:.6,f:'#e6e8e7'}) + tx(20.5,11.45,'ROOFLIGHT',{size:.28,cls:'m'}) + rc(24,15.4,9,2.8,{sw:.5,f:'#c2c6c7'}) + tx(28.5,17.05,'PV IN SOUTH SLOPE',{size:.28,cls:'m'});
+  if(FLAT_ROOF){ const O = LEVELS.F.outline, d = ROOF_OVERHANG; const inP = (x,y) => { let c=false; for(let i=0,j=O.length-1;i<O.length;j=i++){ const [xi,yi]=O[i],[xj,yj]=O[j]; if(((yi>y)!==(yj>y)) && x<(xj-xi)*(y-yi)/(yj-yi)+xi) c=!c; } return c; };
+    for(let i=0;i<O.length;i++){ const a=O[i], b=O[(i+1)%O.length], hz=a[1]===b[1]; let n = hz?[0,1]:[1,0]; if(inP((a[0]+b[0])/2+n[0]*.1,(a[1]+b[1])/2+n[1]*.1)) n=[-n[0],-n[1]];
+      if(hz) s += rl(Math.min(a[0],b[0])-d,a[1]+n[1]*d,Math.max(a[0],b[0])+d,a[1]+n[1]*d,1); else s += rl(a[0]+n[0]*d,Math.min(a[1],b[1])-d,a[0]+n[0]*d,Math.max(a[1],b[1])+d,1); }
+    for(const [x,y,w,h] of [[18,11,5,1.6],[35.5,12,3,2],[10,28,2.6,4],[36,30,2.6,4]]) s += rc(x,y,w,h,{sw:.6,f:'#e6e8e7'});
+    s += rc(27.2,10.2,3.1,5.1,{sw:.6,f:'#c9ccca'}) + tx(28.75,13,'OVERRUN',{size:.26,rot:-90,cls:'m'}) + tx(20.5,13.3,'ROOFLIGHT',{size:.28,cls:'m'}) + rc(31,15.4,8,2.6,{sw:.5,f:'#c2c6c7'}) + tx(35,16.95,'PV ARRAY',{size:.28,cls:'m'}); }
+  else { s += rl(8,14.5,42,14.5) + rl(12,15,12,42) + rl(8,19,12,15,1) + rl(16,19,12,15,1) + rl(38,15,38,46) + rl(34,19,38,15,1) + rl(42,19,38,15,1);
+    s += rc(17,10.5,7,1.5,{sw:.6,f:'#e6e8e7'}) + tx(20.5,11.45,'ROOFLIGHT',{size:.28,cls:'m'}) + rc(24,15.4,9,2.8,{sw:.5,f:'#c2c6c7'}) + tx(28.5,17.05,'PV IN SOUTH SLOPE',{size:.28,cls:'m'}); }
   s += rc(17,3,13,7,{sw:.7,x:'stroke-dasharray="3 2"'}) + rc(18,8.6,.25,.25,{f:INK})+rc(28.8,8.6,.25,.25,{f:INK});
   // perimeter wall with gate openings
-  const W=.3; s += rc(0,0,1.8,W,{f:INK,s:'none'}) + rc(9.2,0,40.8,W,{f:INK,s:'none'}) + rc(0,0,W,60,{f:INK,s:'none'}) + rc(0,60-W,50,W,{f:INK,s:'none'}) + rc(50-W,0,W,11.5,{f:INK,s:'none'}) + rc(50-W,15.5,W,44.5,{f:INK,s:'none'});
-  s += rc(1.8,-.35,7.4,.2,{f:'#555b60',s:'none'}) + ln(9.2,-.25,16.8,-.25,.6,MUTE,'stroke-dasharray="1.5 1"') + rc(50.15,11.5,.2,4,{f:'#555b60',s:'none'});
-  // trees: olive grid
-  const trees=TREES;
-  for(const [x,y] of trees) s += `<circle cx="${x}" cy="${y}" r="1.5" fill="none" stroke="${INK}" stroke-width=".5" ${NSS}/><circle cx="${x}" cy="${y}" r=".12" fill="${INK}"/>`;
+  s += rc(x0,0,1.8-x0,W,{f:INK,s:'none'}) + rc(9.2,0,x1-9.2,W,{f:INK,s:'none'}) + rc(x0,0,W,y1,{f:INK,s:'none'}) + rc(x0,y1-W,w,W,{f:INK,s:'none'}) + rc(x1-W,0,W,11.5,{f:INK,s:'none'}) + rc(x1-W,15.5,W,y1-15.5,{f:INK,s:'none'});
+  s += rc(1.8,-.35,7.4,.2,{f:'#555b60',s:'none'}) + ln(9.2,-.25,16.8,-.25,.6,MUTE,'stroke-dasharray="1.5 1"') + rc(x1+.15,11.5,.2,4,{f:'#555b60',s:'none'});
+  for(const [x,y] of TREES) s += '<circle cx="'+x+'" cy="'+y+'" r="1.5" fill="none" stroke="'+INK+'" stroke-width=".5" '+NSS+'/><circle cx="'+x+'" cy="'+y+'" r=".12" fill="'+INK+'"/>';
   s += rc(21,44.5,8,.35,{f:LEDC,s:'none'}) + rc(17.2,44.4,3,.5,{f:'#bfc3c2',sw:.4}) + rc(29.8,44.4,3,.5,{f:'#bfc3c2',sw:.4}) + rc(16.3,29,.8,8,{f:INK,s:'none'});
   s += rc(31,37,3,9,{sw:.8,f:'#cfd3d2'});
   // labels
   const lab = (x,y,t,o={}) => tx(x,y,t,{size:.5,cls:'m',...o});
   s += lab(25,31.2,'CENTRAL POOL',{w:600,size:.7}) + lab(25,32.3,'10 × 20 m · OVERFLOW EDGE',{size:.4,fill:MUTE});
-  s += lab(15,13.9,'RIDGE +10.15',{size:.36}) + lab(12,31,'WEST WING',{size:.42,rot:-90}) + lab(38,30,'EAST WING',{size:.42,rot:-90}) + lab(38,44.8,'CANTILEVER',{size:.34,fill:MUTE});
-  s += lab(5.5,-1.1,'MAIN GATE · AUTOMATED',{size:.36}) + lab(5.5,-.5,'',{}) + lab(47,16.8,'SERVICE',{size:.34}) + lab(47,17.4,'GATE',{size:.34}) + lab(46,12.6,'SERVICE YARD',{size:.34});
+  s += lab(15,13.9,FLAT_ROOF ? 'FLAT ROOF +7.05' : 'RIDGE +10.15',{size:.36}) + lab(12,31,'WEST WING',{size:.42,rot:-90}) + lab(38,30,'EAST WING',{size:.42,rot:-90}) + lab(38,44.8,'CANTILEVER',{size:.34,fill:MUTE});
+  s += lab(5.5,-1.1,'MAIN GATE · AUTOMATED',{size:.36}) + lab(x1+1.4,13.5,'SERVICE GATE',{size:.32,rot:90}) + lab(43.9,15,'SERVICE YARD',{size:.3,rot:-90});
   s += lab(4.5,17,'RAMP TO GARAGE −3.50',{size:.36,rot:-90}) + lab(20,6.6,'FORECOURT + CANOPY',{size:.38}) + lab(25,44.1,'FIRE TROUGH',{size:.3}) + lab(17.8,33,'OUTDOOR KITCHEN',{size:.3,rot:-90});
-  s += lab(14,52.8,'GRAVEL + OLIVE GROVE',{size:.4,fill:MUTE}) + lab(36,52.8,'GRAVEL + OLIVE GROVE',{size:.4,fill:MUTE}) + lab(25,58.9,'TALL GRASS BAND',{size:.34,fill:MUTE}) + lab(4.1,34,'LANDSCAPED GARAGE ROOF',{size:.3,rot:-90,fill:MUTE});
+  s += lab(25,53,'SOUTH LAWN',{size:.45}) + lab(9,56.2,'SPORT COURT',{size:.45}) + lab(9,57,'HALF COURT 13 × 15 m',{size:.32,fill:MUTE}) + lab(40,51.7,'GREENHOUSE',{size:.36});
+  s += lab(25,64.7,'SUNKEN FIRE PIT',{size:.34}) + lab(40.8,60.2,'OLIVE GROVE',{size:.34,fill:MUTE}) + lab(25,y1-.9,'TALL GRASS BAND',{size:.3,fill:MUTE}) + lab(4.1,34,'LANDSCAPED GARAGE ROOF',{size:.3,rot:-90,fill:MUTE});
   s += lab(32.5,41.5,'MASTER TERRACE',{size:.28,rot:-90});
-  s += dim(0,-2.6,50,-2.6,'50 000') + dim(-2.6,0,-2.6,60,'60 000') + dimChain([0,20,30,50],61.6,true) + dimChain([0,22,42,60],52.2,false,{off:-.55});
-  s += tx(0,64.2,'A-100 · MASTER SITE PLAN · PLOT 3 000 m² · 1:500',{size:.55,a:'start',w:500,cls:'m'}) + scaleBar(30,63.3,20,5,.45) + north(53,4);
+  s += dim(x0,-2.6,x1,-2.6,mm(w)) + dim(x0-2.6,0,x0-2.6,y1,mm(PLOT.h)) + dimChain([x0,20,30,x1],y1+1.6,true) + dimChain([0,22,42,46,y1],x1+2.4,false,{off:-.55});
+  s += tx(x0,y1+4.5,'A-100 · MASTER SITE PLAN · FLAT PLOT '+plotDims()+' m = 3 000 m² · 1:500',{size:.5,a:'start',w:500,cls:'m'}) + scaleBar(x1-20,y1+5.3,20,5,.45) + north(x1+3.2,4);
   return s + '</svg>';
 }

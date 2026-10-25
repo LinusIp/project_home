@@ -154,7 +154,7 @@ function stairs(k){ let s='';
   return s; }
 
 function planCAD(k, staged=false, opts={}){
-  const L=LEVELS[k], vb=opts.site?[-3.8,-3.4,57.6,67.4]:[-3.5,0.4,57.5,50.6], bg = staged ? '#f3f2ee' : WHITE, maxY = k==='F'?46:42;
+  const L=LEVELS[k], vb=opts.site?[PLOT.x0-4.9,-3.4,PLOT.w+9.6,PLOT.y1+7.4]:[-3.5,0.4,57.5,50.6], bg = staged ? '#f3f2ee' : WHITE, maxY = k==='F'?46:42;
   let s = `<svg viewBox="${vb.join(' ')}" class="dwg" role="img" aria-label="${L.name} ${staged?'staged':''} floor plan">${defs('c'+k+(staged?'s':''))}${staged?floorDefs():''}<rect x="${vb[0]}" y="${vb[1]}" width="${vb[2]}" height="${vb[3]}" fill="${bg}"/>`;
   if(!staged && !opts.site) s += gridAxes(0.4,46.8,2.2,maxY+1.2,maxY);
   if(opts.site) s += siteContext(k, staged);
@@ -185,7 +185,7 @@ function planCAD(k, staged=false, opts={}){
     s += dimChain(ext,1.35,true,{size:.36}) ;
     const ys = GRID_Y.map(g=>g[1]).filter(y=>y<=maxY); s += dimChain(ys,48.3,false,{off:-.5,size:.36}) + dim(49.6,ys[0],49.6,ys[ys.length-1],Math.round((ys[ys.length-1]-ys[0])*1000).toLocaleString('en-US').replace(/,/g,' '),{off:-.5,size:.36});
   }
-  if(opts.site) s += dim(0,-1.7,50,-1.7,'50.00 m',{size:.62,off:.55}) + dim(-1.7,0,-1.7,60,'60.00 m',{size:.62,off:.7}) + north(52.4,1.6,1.1) + scaleBar(29,61.6,20,5,.55);
+  if(opts.site) s += dim(PLOT.x0,-1.7,PLOT.x1,-1.7,PLOT.w.toFixed(2)+' m',{size:.62,off:.55}) + dim(PLOT.x0-1.7,0,PLOT.x0-1.7,PLOT.y1,PLOT.h.toFixed(2)+' m',{size:.62,off:.7}) + north(PLOT.x1+2.4,1.6,1.1) + scaleBar(PLOT.x1-20,PLOT.y1+1.6,20,5,.55);
   if(!opts.bare) s += north(51.6,6) + scaleBar(0,49.5,10,1,.34);
   if(!opts.bare) s += tx(53.8,49.9,`${L.sheet}${staged?'S':''} · ${L.name.toUpperCase()} · FFL ${zl(L.ffl)} · ${staged?'STAGED PLAN':'FLOOR PLAN'} · 1:200`,{size:.42,a:'end',w:500,cls:'m'});
   return s + '</svg>';
@@ -196,17 +196,44 @@ const planStaged = k => planCAD(k,true);
 function siteContext(k, staged){
   let s='<g opacity="'+(k==='B'?.4:1)+'">';
   if(staged){
-    s += '<rect x="0" y="0" width="50" height="60" fill="url(#fl-grav)"/><rect x=".3" y="57.6" width="49.4" height="2.1" fill="url(#fl-grass)"/><rect x=".3" y="26" width="7.7" height="16" fill="url(#fl-grass)"/>';
-    s += '<rect x="1.5" y=".3" width="7.7" height="8" fill="url(#fl-deck)"/><rect x="9.2" y="1.5" width="21.3" height="7.5" fill="url(#fl-deck)"/><rect x="42.3" y="10" width="7.4" height="10" fill="url(#fl-deck)"/>';
+    const {x0,x1,y1,w} = PLOT;
+    s += '<rect x="'+x0+'" y="0" width="'+w+'" height="'+y1+'" fill="url(#fl-grav)"/><rect x="'+(x0+.3)+'" y="'+(y1-2.3)+'" width="'+(w-.6)+'" height="2" fill="url(#fl-grass)"/><rect x="'+(x0+.3)+'" y="26" width="'+(7.7-x0)+'" height="16" fill="url(#fl-grass)"/>';
+    s += '<rect x="1.5" y=".3" width="7.7" height="8" fill="url(#fl-deck)"/><rect x="9.2" y="1.5" width="21.3" height="7.5" fill="url(#fl-deck)"/><rect x="42.3" y="10" width="'+(x1-.3-42.3)+'" height="10" fill="url(#fl-deck)"/>';
+    s += gardenSVG({lawn:'url(#fl-grass)', court:'#5f7f8f', house:'#dfeceb', pit:'url(#fl-deck)', line:'#f4f4f0', staged:true});
     s += '<rect x="1.5" y="8" width="6" height="18" fill="#b8b6af"/>' + Array.from({length:17},(_,i)=>'<line x1="1.5" y1="'+(9+i)+'" x2="7.5" y2="'+(9+i)+'" stroke="#9d9b94" stroke-width=".05"/>').join('');
     if(k!=='G') s += '<rect x="16" y="19" width="18" height="27" fill="url(#fl-deck)"/><rect x="20" y="22" width="10" height="20" fill="url(#fl-water)"/>';
     if(k==='F') s += pg(LEVELS.G.outline,{f:'#b9bdbf',s:'#8d9194',sw:.5});
     s += '<rect x="17" y="3" width="13" height="7" fill="#2f3336" opacity=".18"/>';
     for(const c of FORECOURT_CARS) s += symbol(['car',...c],'staged');
   }
-  s += '<rect x=".15" y=".15" width="49.7" height="59.7" fill="none" stroke="'+INK+'" stroke-width=".3"/>';
-  s += '<rect x="1.8" y="-.1" width="7.4" height=".5" fill="'+(staged?'#5b6064':WHITE)+'"/><rect x="49.6" y="11.5" width=".5" height="4" fill="'+(staged?'#5b6064':WHITE)+'"/>';
-  s += tx(5.5,-.6,'MAIN GATE',{size:.5,cls:'m'}) + tx(51.2,13.5,'SERVICE',{size:.42,cls:'m',rot:90});
+  if(!staged) s += gardenSVG({lawn:'none', court:'none', house:'none', pit:'none', line:INK});
+  s += '<rect x="'+(PLOT.x0+.15)+'" y=".15" width="'+(PLOT.w-.3)+'" height="'+(PLOT.h-.3)+'" fill="none" stroke="'+INK+'" stroke-width=".3"/>';
+  s += '<rect x="1.8" y="-.1" width="7.4" height=".5" fill="'+(staged?'#5b6064':WHITE)+'"/><rect x="'+(PLOT.x1-.4)+'" y="11.5" width=".5" height="4" fill="'+(staged?'#5b6064':WHITE)+'"/>';
+  s += tx(5.5,-.6,'MAIN GATE',{size:.5,cls:'m'}) + tx(PLOT.x1+1.2,13.5,'SERVICE',{size:.42,cls:'m',rot:90});
   for(const [x,y] of TREES) s += staged ? '<circle cx="'+x+'" cy="'+y+'" r="1.65" fill="url(#fl-tree)" filter="url(#shd)"/>' : '<circle cx="'+x+'" cy="'+y+'" r="1.5" fill="none" stroke="'+INK+'" stroke-width=".5" '+NSS+'/>';
   return s + '</g>';
+}
+
+/* south garden: lawn, half basketball court, greenhouse and sunken fire pit (shared by site plan and board plans) */
+function gardenSVG(o){
+  const [lx,ly,lw,lh]=GARDEN.lawn, [cx,cy,cw,ch]=GARDEN.court, [hx,hy,hw,hh]=GARDEN.house, [px,py,pw,ph]=GARDEN.pit, L=o.line;
+  const st=(w)=>'stroke="'+L+'" stroke-width="'+w+'" '+NSS;
+  let s = '<rect x="'+lx+'" y="'+ly+'" width="'+lw+'" height="'+lh+'" fill="'+o.lawn+'" '+st(.4)+'/>';
+  // half court: baseline on the south side, lane 4.9 × 5.8 m, three-point arc 6.75 m
+  const bx=cx+cw/2, by=cy+ch-1.2;
+  s += '<rect x="'+cx+'" y="'+cy+'" width="'+cw+'" height="'+ch+'" fill="'+o.court+'" '+st(.6)+'/>';
+  s += '<rect x="'+(bx-2.45)+'" y="'+(cy+ch-5.8)+'" width="4.9" height="5.8" fill="none" '+st(.45)+'/>';
+  s += '<path d="M'+(bx-1.8)+' '+(cy+ch-5.8)+' A1.8 1.8 0 0 1 '+(bx+1.8)+' '+(cy+ch-5.8)+'" fill="none" '+st(.45)+'/>';
+  s += '<path d="M'+(cx+.9)+' '+(cy+ch)+' V'+by+' A6.75 6.75 0 0 1 '+(cx+cw-.9)+' '+by+' V'+(cy+ch)+'" fill="none" '+st(.45)+'/>';
+  s += '<path d="M'+(bx-1.8)+' '+cy+' A1.8 1.8 0 0 0 '+(bx+1.8)+' '+cy+'" fill="none" '+st(.45)+'/>';
+  s += '<circle cx="'+bx+'" cy="'+by+'" r=".23" fill="none" '+st(.6)+'/>';
+  // greenhouse: glazed bays with a ridge line
+  s += '<rect x="'+hx+'" y="'+hy+'" width="'+hw+'" height="'+hh+'" fill="'+o.house+'" stroke="'+(o.staged?'#5b6064':INK)+'" stroke-width=".8" '+NSS+'/>';
+  for(let x=hx+1;x<hx+hw;x+=1) s += ln(x,hy,x,hy+hh,.3,o.staged?'#8d9497':INK);
+  s += ln(hx,hy+hh/2,hx+hw,hy+hh/2,.6,o.staged?'#5b6064':INK);
+  // sunken fire pit: U-shaped bench around a gas fire
+  s += '<rect x="'+px+'" y="'+py+'" width="'+pw+'" height="'+ph+'" fill="'+o.pit+'" stroke="'+(o.staged?'#6f6c66':INK)+'" stroke-width=".6" '+NSS+'/>';
+  s += '<path d="M'+(px+.4)+' '+(py+.4)+' V'+(py+ph-.4)+' H'+(px+pw-.4)+' V'+(py+.4)+'" fill="none" stroke="'+(o.staged?'#b9b2a6':INK)+'" stroke-width="'+(o.staged?6:.5)+'" '+NSS+'/>';
+  s += '<rect x="'+(px+pw/2-1.1)+'" y="'+(py+ph/2-.6)+'" width="2.2" height="1.2" fill="'+(o.staged?'#e08a3c':'none')+'" stroke="'+(o.staged?'#9a5a22':INK)+'" stroke-width=".5" '+NSS+'/>';
+  return s;
 }

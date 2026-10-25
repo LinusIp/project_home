@@ -116,9 +116,18 @@ const FURN = {
 };
 /* landscape shared by the site plan, board plans and renders: olive trees and two visitor cars under the canopy */
 const TREES = [
-  ...[4,10,16,34,40,46].flatMap(x=>[[x,50.5],[x,55]]),
-  ...[23,28,33,38,43].map(y=>[46,y]),
   [4.2,29],[4.2,35],[4.2,41],
-  [36,4.5],[42,4.5],[47.2,4.5]
+  ...[23,28,33,38,43].map(y=>[43.6,y]),
+  [36,4.5],[40,4.5],[43.6,4.5],
+  [38,57.5],[43.6,57.5],[38,62.5],[43.6,62.5],
+  [18.6,65],[31.4,65]
 ];
 const FORECOURT_CARS = [[19.6,4.1,1.9,4.6],[22.6,4.1,1.9,4.6]];
+
+/* south garden, inside the extra depth of the 2:3 plot */
+const GARDEN = {
+  lawn:  [16, 47.5, 18, 10.5],
+  court: [2.5, 49, 13, 15],
+  house: [36.5, 49, 7, 5],
+  pit:   [21.5, 59, 7, 5]
+};

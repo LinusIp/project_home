@@ -2,7 +2,7 @@
 const LEVEL_LABEL = { B:'Basement', G:'1st floor', F:'2nd floor' };
 function footprintArea(){
   const inPoly=(x,y,pts)=>{ let c=false; for(let i=0,j=pts.length-1;i<pts.length;j=i++){ const [xi,yi]=pts[i],[xj,yj]=pts[j]; if(((yi>y)!==(yj>y)) && x<(xj-xi)*(y-yi)/(yj-yi)+xi) c=!c; } return c; };
-  let n=0; for(let x=.25;x<PLOT.w;x+=.5) for(let y=.25;y<PLOT.h;y+=.5) if(inPoly(x,y,LEVELS.G.outline)||inPoly(x,y,LEVELS.F.outline)) n++;
+  let n=0; for(let x=PLOT.x0+.25;x<PLOT.x1;x+=.5) for(let y=PLOT.y0+.25;y<PLOT.y1;y+=.5) if(inPoly(x,y,LEVELS.G.outline)||inPoly(x,y,LEVELS.F.outline)) n++;
   return n*.25;
 }
 function boardRoomList(k){
@@ -11,8 +11,8 @@ function boardRoomList(k){
     <div class="bl-total"><span>TOTAL · ${LEVEL_LABEL[k].toUpperCase()}</span><b>${fmt(levelTotal(k),0)} m²</b></div>`;
 }
 function boardStats(){
-  const land=PLOT.w*PLOT.h, foot=footprintArea();
-  return `<section class="b-stats"><div><h4>PLOT AREA</h4><b>3,000 m²</b><small>50 m × 60 m land</small></div>
+  const land=PLOT.area, foot=footprintArea();
+  return `<section class="b-stats"><div><h4>PLOT AREA</h4><b>3,000 m²</b><small>${plotDims()} m flat land</small></div>
     <div><h4>BUILDING FOOTPRINT</h4><b>${fmt(foot,0)} m²</b><small>${fmt(foot/land*100,1)} % of the plot</small></div>
     <div><h4>LANDSCAPING &amp; OPEN AREAS</h4><b>${fmt(land-foot,0)} m²</b><small>gardens, pool, deck, drive</small></div></section>`;
 }
@@ -36,13 +36,13 @@ function boardFloor(k, renders, stripHTML){
 }
 
 function sunPathSVG(){
-  const X=x=>31+x*.72, Y=y=>18+y*.72;
+  const k=.6, X=x=>50-PLOT.w*k/2+(x-PLOT.x0)*k, Y=y=>19+y*k;
   const poly = pts => pts.map(([x,y])=>`${X(x)},${Y(y)}`).join(' ');
   let s = `<svg viewBox="0 0 100 82" class="dwg" role="img" aria-label="Indicative site analysis: sun path and winds">`;
-  s += `<rect x="${X(0)}" y="${Y(0)}" width="${50*.72}" height="${60*.72}" fill="#f3f3f0" stroke="${INK}" stroke-width=".5"/>`;
-  for(const [x,y] of TREES) s += `<circle cx="${X(x)}" cy="${Y(y)}" r=".9" fill="#b9c3a6"/>`;
+  s += `<rect x="${X(0)}" y="${Y(0)}" width="${PLOT.w*k}" height="${PLOT.h*k}" fill="#f3f3f0" stroke="${INK}" stroke-width=".5"/>`;
+  for(const [x,y] of TREES) s += `<circle cx="${X(x)}" cy="${Y(y)}" r="${1.5*k}" fill="#b9c3a6"/>`;
   s += `<polygon points="${poly(LEVELS.G.outline)}" fill="#dcdedd" stroke="${INK}" stroke-width=".35"/><polygon points="${poly(LEVELS.F.outline)}" fill="#c9ccce" stroke="${INK}" stroke-width=".35"/>`;
-  s += `<rect x="${X(20)}" y="${Y(22)}" width="${10*.72}" height="${20*.72}" fill="#8fc3d0"/>`;
+  s += `<rect x="${X(20)}" y="${Y(22)}" width="${10*k}" height="${20*k}" fill="#8fc3d0"/>`;
   const sun = (x,y) => `<circle cx="${x}" cy="${y}" r="2.1" fill="#f0b43c"/>` + Array.from({length:8},(_,i)=>{ const a=i*Math.PI/4; return `<line x1="${x+Math.cos(a)*2.9}" y1="${y+Math.sin(a)*2.9}" x2="${x+Math.cos(a)*4}" y2="${y+Math.sin(a)*4}" stroke="#f0b43c" stroke-width=".5"/>`; }).join('');
   s += `<path d="M14 66 Q50 -6 86 66" fill="none" stroke="#e0a040" stroke-width=".6" stroke-dasharray="1.6 1.2"/>` + sun(50,12) + `<text x="36" y="9" font-size="2.4" class="m">SUMMER SUN</text>`;
   s += `<path d="M24 70 Q50 24 76 70" fill="none" stroke="#e0a040" stroke-width=".6" stroke-dasharray="1.6 1.2"/>` + sun(72,50) + `<text x="77" y="46" font-size="2.4" class="m">WINTER SUN</text>`;
@@ -63,14 +63,14 @@ function boardOverview(){
     F: ['Master suite + terrace','Bedrooms 2–5, en-suite','Family lounge','Laundry']
   };
   const fp = k => `<div class="bo-fp"><div class="bo-fp-h"><b>${LEVEL_LABEL[k].toUpperCase()}</b><span>FFL ${zl(LEVELS[k].ffl)}</span></div><div class="bo-fp-b">${planCAD(k)}<ol>${legend[k].map(t=>`<li>${esc(t)}</li>`).join('')}</ol></div></div>`;
-  const sw = [['sw-conc noise','EXPOSED CONCRETE'],['sw-seam','BLACK STANDING SEAM'],['sw-fin','WHITE FINS'],['sw-smoke','SMOKED GLASS'],['sw-micro noise','GREY MICROCEMENT'],['sw-tile','DARK POOL TILE']];
+  const sw = [['sw-conc noise','EXPOSED CONCRETE'],...(FLAT_ROOF ? [['sw-dark noise','DARK STONE'],['sw-trav noise','TRAVERTINE']] : [['sw-seam','BLACK STANDING SEAM'],['sw-fin','WHITE FINS']]),['sw-smoke','SMOKED GLASS'],['sw-micro noise','GREY MICROCEMENT'],['sw-tile','DARK POOL TILE']];
   return `<div class="board-scroll"><article class="board bo" aria-label="Concept board, overview">
     <div class="p bo-hero"><img src="images/c03.jpg" alt="Concept render of the pool courtyard at dusk"></div>
     <div class="p bo-facts"><h3 class="b-title sm">VILLA CONCEPT</h3>
       <p class="bo-list">3,000 m² PLOT<br>3 LEVELS<br>CENTRAL POOL<br>WALLED COMPOUND</p>
       <h4>MATERIALS</h4><div class="bo-sw">${sw.map(([c,t])=>`<div><span class="sw ${c}"></span><small>${t}</small></div>`).join('')}</div></div>
     <div class="p bo-axo"><img src="images/axo-all.jpg" alt="Exploded axonometric of all levels and the roof"></div>
-    <div class="p bo-site"><h4>SITE PLAN <small>(50 m × 60 m)</small></h4><p class="bo-sm">PLOT AREA: 3,000 m²</p>${sitePlanSVG()}</div>
+    <div class="p bo-site"><h4>SITE PLAN <small>(${plotDims()} m · flat)</small></h4><p class="bo-sm">PLOT AREA: 3,000 m²</p>${sitePlanSVG()}</div>
     <div class="p bo-plans"><h4>FLOOR PLANS</h4>${fp('B')}${fp('G')}${fp('F')}</div>
     <div class="p bo-sec"><h4>SECTION A–A</h4>${sectionSVG()}<h4 style="margin-top:14px">COURTYARD ELEVATION</h4>${elevationPrecise('S')}</div>
     <div class="bo-renders">${[['c02','ARRIVAL · FORECOURT'],['c04','DOUBLE-HEIGHT LOBBY'],['c05','MASTER BEDROOM TERRACE']].map(stripFig).join('')}</div>

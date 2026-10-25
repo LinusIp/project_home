@@ -2,7 +2,7 @@
 
 Architectural presentation for a three-level minimalist high-tech villa built around a central courtyard pool. The land (plot) is 3,000 m², 50 × 60 m, enclosed by a 3 m wall. Floor areas are counted separately for each level.
 
-The villa has three black gabled wings with white fin screens, in the direction of SoNo arhitekti's Mountain Villa. The page design follows the light, rounded UnCabin style.
+The villa has flat roofs with 1.2 m overhangs, a dark stone ground floor and a travertine upper floor, following the client's reference images. Set ROOF_STYLE in data.js to 'gable' to return to the earlier three-gable design.
 
 ## What the page shows
 
@@ -35,6 +35,7 @@ The renders are computed from the design model in the browser (three.js). They a
 
 ## Pages
 
+- `explore.html` is the interactive 3D explorer: a dusk view of the whole villa, and a furnished cutaway of each level floating on a dark studio backdrop (walls cut at 2.0 m), with water, daylight, electricity, gas and AC overlays, room focus and a cost calculator. It is built live in the browser from the same data (three.js r147). `explore-look.js` holds the procedural materials, the furniture and the 3D-only room dressing (fireplace walls, lamps, pendants, art, the workshop tool wall and the cinema risers); `explore.js` places that dressing per level in `DRESS`.
 - `index.html` is the showcase landing page, built only from the concept pictures and sheets (images in `img/`).
 - `drawings.html` is the technical drawing set: concept boards, CAD and staged plans, section, elevations, systems and area schedule (images in `images/`).
 

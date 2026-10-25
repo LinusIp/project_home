@@ -5,13 +5,14 @@ const P = (x,h,y) => new T.Vector3(x-25, h, y-30);
 let seed = 11; const rnd = () => ((seed = (seed*16807) % 2147483647) / 2147483647);
 const std = (c,r=.8,m=0,e) => new T.MeshStandardMaterial({color:c, roughness:r, metalness:m, ...(e?{emissive:e.c, emissiveIntensity:e.i}:{})});
 const M = {
+  darkS:std(0x3d3b38,.6), trav:std(0xd9d1c4,.8), roofL:std(0xd6d2ca,.85),
   conc:std(0xb3b1aa,.9), blk:std(0x222427,.5,.4), floor:std(0xd6d2c8,.45), deck:std(0x9e9c96,.85), gravel:std(0x77766f,1), road:std(0x2a2c2e,.95),
   glass:new T.MeshStandardMaterial({color:0x1a2a30, roughness:.05, metalness:.8, transparent:true, opacity:.32, side:T.DoubleSide, depthWrite:false}),
   tile:std(0x0d3a44,.3,0,{c:0x0e5566,i:.6}), water:new T.MeshStandardMaterial({color:0x0a3440, roughness:.05, metalness:.85, transparent:true, opacity:.78}),
   led:new T.MeshBasicMaterial({color:0xffcf94}), fire:new T.MeshBasicMaterial({color:0xff9a4a}),
   leaf:new T.MeshStandardMaterial({color:0x61704f, roughness:1, flatShading:true}), bark:std(0x4a4036,1), grass:std(0x9c9563,1),
   white:std(0xf1efea,.9), fabric:std(0xa39c91,.95), wood:std(0x8b6a4b,.7), stone:std(0xdcd7cd,.4), smoke:std(0x2c3336,.3,.3), rug:std(0xbfb39c,1),
-  plant:new T.MeshStandardMaterial({color:0x5d7a4a, roughness:1, flatShading:true}), carB:std(0x8d9296,.35,.6), fin:std(0xefefeb,.45,.15),
+  plant:new T.MeshStandardMaterial({color:0x5d7a4a, roughness:1, flatShading:true}), carB:std(0x8d9296,.35,.6), lawn:std(0x5e7a43,1), gh:new T.MeshStandardMaterial({color:0xe4efe9, roughness:.15, metalness:0, transparent:true, opacity:.35, side:T.DoubleSide, depthWrite:false, emissive:0x2a3a2a, emissiveIntensity:.4}), court:std(0x3d5866,.8), fin:std(0xefefeb,.45,.15),
   roof:new T.MeshStandardMaterial({color:0x2b2e31, roughness:.5, metalness:.5, side:T.DoubleSide}), equip:std(0xa9aeb2,.6,.2),
   axoSlab:std(0xd9d9d5,1), axoWall:std(0xf2f2ef,1), axoHL:std(0x8fbfdc,.9), axoHLWall:std(0xbfdcee,.9), axoPool:std(0x7fb8cf,.6),
   axoRoof:new T.MeshStandardMaterial({color:0x55595d, roughness:.8, side:T.DoubleSide})
@@ -105,21 +106,36 @@ const tree=(x,y,s=1)=>{ const t=new T.Mesh(new T.CylinderGeometry(.12*s,.2*s,2.2
 
 /* ---------- main scene ---------- */
 box(-90,140,-80,140,-.4,-.03,M.road,false);
-for(const [a,b,c,d] of [[.3,49.7,.3,21.8],[.3,49.7,42.2,59.7],[.3,19.8,21.8,42.2],[30.2,49.7,21.8,42.2]]) box(a,b,c,d,-.4,0,M.gravel,false);
-for(const [x,y,w,h] of [[1.5,.3,7.7,8],[9.2,1.5,21.3,7.5],[42.3,10,7.4,10]]) box(x,x+w,y,y+h,-.39,.004,M.deck,false);
+const {x0:PX0,x1:PX1,y1:PY1} = PLOT;
+for(const [a,b,c,d] of [[PX0+.3,PX1-.3,.3,21.8],[PX0+.3,PX1-.3,42.2,PY1-.3],[PX0+.3,19.8,21.8,42.2],[30.2,PX1-.3,21.8,42.2]]) box(a,b,c,d,-.4,0,M.gravel,false);
+for(const [x,y,w,h] of [[1.5,.3,7.7,8],[9.2,1.5,21.3,7.5],[42.3,10,PX1-.3-42.3,10]]) box(x,x+w,y,y+h,-.39,.004,M.deck,false);
 for(const e of EXTERNAL.filter(e=>e.id==='X.03'||e.id==='X.02')) for(const [x,y,w,h] of e.r) box(x,x+w,y,y+h,-.39,.01,M.deck,false);
 box(20,30,22,42,-1.55,-1.5,M.tile,false); for(const [a,b,c,d] of [[19.8,20,22,42],[30,30.2,22,42],[20,30,21.8,22],[20,30,42,42.2]]) box(a,b,c,d,-1.5,-.02,M.tile,false);
 box(20,30,22,42,-.06,-.03,M.water,false);
-for(const [a,b,c,d] of [[0,1.8,0,.3],[9.2,50,0,.3],[0,.3,0,60],[0,50,59.7,60],[49.7,50,0,11.5],[49.7,50,15.5,60]]) box(a,b,c,d,0,PLOT.wallH,M.conc);
-box(1.8,9.2,-.2,-.05,0,2.98,M.blk); box(49.85,50.05,11.5,15.5,0,2.98,M.conc);
+for(const [a,b,c,d] of [[PX0,1.8,0,.3],[9.2,PX1,0,.3],[PX0,PX0+.3,0,PY1],[PX0,PX1,PY1-.3,PY1],[PX1-.3,PX1,0,11.5],[PX1-.3,PX1,15.5,PY1]]) box(a,b,c,d,0,PLOT.wallH,M.conc);
+box(1.8,9.2,-.2,-.05,0,2.98,M.blk); box(PX1-.15,PX1+.05,11.5,15.5,0,2.98,M.conc);
+/* south garden */
+{ const [lx,ly,lw,lh]=GARDEN.lawn, [cx,cy,cw,ch]=GARDEN.court, [hx,hy,hw,hh]=GARDEN.house, [px,py,pw,ph]=GARDEN.pit;
+  box(lx,lx+lw,ly,ly+lh,-.4,.02,M.lawn,false); box(cx,cx+cw,cy,cy+ch,-.4,.02,M.court,false);
+  for(const [a,b,c,d] of [[cx+.9,cx+.97,cy,cy+ch-1.2],[cx+cw-.97,cx+cw-.9,cy,cy+ch-1.2],[cx+cw/2-2.45,cx+cw/2+2.45,cy+ch-5.8,cy+ch-5.73],[cx,cx+cw,cy+ch-.07,cy+ch],[cx,cx+cw,cy,cy+.07]]) box(a,b,c,d,.02,.03,M.white,false);
+  box(cx+cw/2-.06,cx+cw/2+.06,cy+ch-.2,cy+ch-.08,0,3.05,M.blk); box(cx+cw/2-.9,cx+cw/2+.9,cy+ch-.5,cy+ch-.44,2.9,3.95,M.white);
+  box(hx,hx+hw,hy,hy+hh,0,2.6,M.gh); for(let x=hx;x<=hx+hw+.01;x+=1) box(x-.04,x+.04,hy,hy+hh,0,2.6,M.blk); box(hx,hx+hw,hy-.04,hy+.04,0,2.6,M.blk); box(hx,hx+hw,hy+hh-.04,hy+hh+.04,0,2.6,M.blk); box(hx,hx+hw,hy,hy+hh,2.6,2.63,M.gh); box(hx,hx+hw,hy+hh/2-.05,hy+hh/2+.05,2.6,2.7,M.blk); for(const yy of [hy+.4,hy+hh-1.2]) box(hx+.4,hx+hw-.4,yy,yy+.8,0,.8,M.wood); for(let x=hx+.9;x<hx+hw-.4;x+=1.2) for(const yy of [hy+.8,hy+hh-.8]){ const pl=new T.Mesh(new T.IcosahedronGeometry(.45,1),M.plant); pl.position.copy(P(x,1.15,yy)); grp.add(pl); }
+  box(px,px+pw,py,py+ph,-.45,-.4,M.deck,false); box(px+.2,px+.8,py+.2,py+ph-.2,-.45,0,M.fabric); box(px+pw-.8,px+pw-.2,py+.2,py+ph-.2,-.45,0,M.fabric); box(px+.8,px+pw-.8,py+ph-.8,py+ph-.2,-.45,0,M.fabric); box(px+pw/2-1.1,px+pw/2+1.1,py+ph/2-.6,py+ph/2+.6,-.45,-.1,M.fire);
+  const fl=new T.PointLight(0xffa25a,1.4,9,2); fl.position.copy(P(px+pw/2,.6,py+ph/2)); scene.add(fl); }
 { const ramp=new T.Mesh(new T.PlaneGeometry(6,18.4),M.conc); ramp.rotation.x=-Math.PI/2+Math.atan2(3.6,18); ramp.position.copy(P(4.5,-1.8,17)); grp.add(ramp); }
 const VOID=[[16,10],[25,10],[25,14],[16,14]];
 slab(LEVELS.B.outline,-3.85,-3.5,M.floor); level('B',M.conc);
-slab(LEVELS.G.outline,-.3,0,M.floor); level('G',M.conc);
-slab(LEVELS.F.outline,3.15,3.5,M.conc,[VOID]); slab(LEVELS.F.outline,3.5,3.52,M.floor,[VOID]); level('F',M.blk);
-slab(LEVELS.F.outline,6.65,7.0,M.blk);
-for(const rf of ROOFS) prism(rf.axis,rf.x1,rf.x2,rf.y1,rf.y2,EAVE,rf.ridge,M.roof);
-fins();
+slab(LEVELS.G.outline,-.3,0,M.floor); level('G',FLAT_ROOF ? M.darkS : M.conc);
+slab(LEVELS.F.outline,3.15,3.5,M.conc,[VOID]); slab(LEVELS.F.outline,3.5,3.52,M.floor,[VOID]); level('F',FLAT_ROOF ? M.trav : M.blk);
+slab(LEVELS.F.outline,6.65,FLAT_ROOF ? ROOF_TOP : 7.0,FLAT_ROOF ? M.roofL : M.blk);
+function overhangBands(O,d,z1,z2,mat,led){ const inP=(x,y)=>{ let c=false; for(let i=0,j=O.length-1;i<O.length;j=i++){ const [xi,yi]=O[i],[xj,yj]=O[j]; if(((yi>y)!==(yj>y)) && x<(xj-xi)*(y-yi)/(yj-yi)+xi) c=!c; } return c; };
+  for(let i=0;i<O.length;i++){ const a=O[i], b=O[(i+1)%O.length], hz=a[1]===b[1]; let n=hz?[0,1]:[1,0]; if(inP((a[0]+b[0])/2+n[0]*.1,(a[1]+b[1])/2+n[1]*.1)) n=[-n[0],-n[1]];
+    if(hz){ const x1=Math.min(a[0],b[0])-d, x2=Math.max(a[0],b[0])+d, y1=n[1]>0?a[1]:a[1]-d, y2=n[1]>0?a[1]+d:a[1]; box(x1,x2,y1,y2,z1,z2,mat); if(led){ const yy=n[1]>0?y2-.12:y1+.04; box(x1+.1,x2-.1,yy,yy+.08,z1-.03,z1,M.led,false); } }
+    else { const y1=Math.min(a[1],b[1])-d, y2=Math.max(a[1],b[1])+d, x1=n[0]>0?a[0]:a[0]-d, x2=n[0]>0?a[0]+d:a[0]; box(x1,x2,y1,y2,z1,z2,mat); if(led){ const xx=n[0]>0?x2-.12:x1+.04; box(xx,xx+.08,y1+.1,y2-.1,z1-.03,z1,M.led,false); } } } }
+if(FLAT_ROOF){ overhangBands(LEVELS.F.outline,ROOF_OVERHANG,6.78,ROOF_TOP,M.roofL,true); overhangBands(LEVELS.G.outline,.9,3.22,3.5,M.roofL,true);
+  for(const [x,y,w,d] of [[18,11,5,1.6],[35.5,12,3,2],[10,28,2.6,4],[36,30,2.6,4]]){ box(x,x+w,y,y+d,ROOF_TOP,ROOF_TOP+.25,M.glass); box(x-.1,x+w+.1,y-.1,y+d+.1,ROOF_TOP,ROOF_TOP+.07,M.blk); }
+  box(27.2,30.3,10.2,15.3,ROOF_TOP,OVERRUN_TOP,M.trav); }
+else { for(const rf of ROOFS) prism(rf.axis,rf.x1,rf.x2,rf.y1,rf.y2,EAVE,rf.ridge,M.roof); fins(); }
 box(16,20,19,24,3.15,3.5,M.blk); box(30,34,19,24,3.15,3.5,M.blk); box(7.85,16.15,42,46.15,3.15,3.5,M.blk);
 box(16.1,19.9,23.75,23.9,3.1,3.13,M.led,false); box(30.1,33.9,23.75,23.9,3.1,3.13,M.led,false);
 for(const [a,b,c,d] of [[16,34,19.25,19.4],[16.25,16.4,19,42],[33.6,33.75,19,42],[34,42,45.6,45.75]]) box(a,b,c,d,3.1,3.13,M.led,false);
@@ -131,7 +147,7 @@ for(const c of FORECOURT_CARS) furn(['car',...c],0);
 for(const [x,y] of TREES) tree(x,y);
 for(let i=0;i<40;i++){ const a=i/40*Math.PI*2, r=64+rnd()*16; tree(25+Math.cos(a)*r,30+Math.sin(a)*r,2.2+rnd()*1.4); }
 { const gg=new T.ConeGeometry(.05,1.1,4); gg.translate(0,.55,0); const im=new T.InstancedMesh(gg,M.grass,1400), d=new T.Object3D();
-  for(let i=0;i<1400;i++){ d.position.copy(P(.6+rnd()*48.8,0,57.8+rnd()*1.8)); d.rotation.set((rnd()-.5)*.35,rnd()*3,(rnd()-.5)*.35); d.scale.setScalar(.7+rnd()*.7); d.updateMatrix(); im.setMatrixAt(i,d.matrix); } grp.add(im); }
+  for(let i=0;i<1400;i++){ d.position.copy(P(PX0+.6+rnd()*(PLOT.w-1.2),0,PY1-2.2+rnd()*1.8)); d.rotation.set((rnd()-.5)*.35,rnd()*3,(rnd()-.5)*.35); d.scale.setScalar(.7+rnd()*.7); d.updateMatrix(); im.setMatrixAt(i,d.matrix); } grp.add(im); }
 scene.add(new T.HemisphereLight(0x93a6cc,0x2a2219,.7));
 { const sun=new T.DirectionalLight(0xffb27a,1.0); sun.position.copy(P(-40,16,24)); sun.target.position.copy(P(25,0,30)); sun.castShadow=true;
   Object.assign(sun.shadow.camera,{left:-45,right:45,top:45,bottom:-45,near:1,far:150}); sun.shadow.mapSize.set(2048,2048); sun.shadow.bias=-.0004; scene.add(sun,sun.target); }
@@ -185,7 +201,7 @@ const upload = async (name, canvas) => { const blob=await new Promise(res=>canva
 
 /* ---------- concept renders ---------- */
 const VIEWS = [ /* name, camera, target, fov, exposure */
-  ['c01',[72,30,80],[25,0,31],34,1.05], ['c02',[10.5,1.7,1.4],[23,3.1,10.5],56,.95], ['c03',[25.5,1.65,57.2],[25,3.4,22],52,.9],
+  ['c01',[70,32,88],[23.3,0,33.5],36,1.05], ['c02',[10.5,1.7,1.4],[23,3.1,10.5],56,.95], ['c03',[25.4,1.65,56.6],[25,3.4,22],52,.9],
   ['c04',[26.4,1.6,18.3],[19.6,3.6,11.6],64,.85], ['c05',[41.4,5.1,45.4],[30,4.3,36],62,.85], ['c06',[41.3,1.6,31.4],[26,1.5,25.5],62,.85],
   ['c07',[40.2,5.1,36.6],[34.5,4.2,32],66,.8], ['c08',[26.6,5.1,18.7],[16.5,4.3,15.2],64,.85], ['c09',[33.4,5.2,45.6],[24,3.4,33],60,.95],
   ['c10',[3.2,-1.9,36.4],[11,-2.5,27.5],64,.7], ['c11',[36.1,-1.8,19.7],[40.5,-2.7,27.6],68,.7], ['c12',[14.6,-1.9,18.6],[8.3,-2.2,13.5],64,.75], ['c13',[21.6,-1.9,18.6],[15.5,-2.4,11],66,.7]
@@ -196,7 +212,7 @@ for(const [name,pos,look,fov,exp] of VIEWS){ log('rendering '+name+' …');
 
 /* ---------- exploded axonometrics ---------- */
 const OFF = {B:0, G:17, F:34, R:50};
-const AXO_LABEL = {B:['BASEMENT','(−3.50 m)'], G:['GROUND · 1ST FLOOR','(±0.00 m)'], F:['UPPER · 2ND FLOOR','(+3.50 m)'], R:['ROOF · 3 GABLES','(+10.15 m)']};
+const AXO_LABEL = {B:['BASEMENT','(−3.50 m)'], G:['GROUND · 1ST FLOOR','(±0.00 m)'], F:['UPPER · 2ND FLOOR','(+3.50 m)'], R:FLAT_ROOF ? ['ROOF · FLAT','(+7.05 m)'] : ['ROOF · 3 GABLES','(+10.15 m)']};
 function buildAxo(hl){
   const s=new T.Scene(); grp=new T.Group(); s.add(grp);
   const mats = k => k===hl ? [M.axoHL,M.axoHLWall] : [M.axoSlab,M.axoWall];
@@ -207,7 +223,7 @@ function buildAxo(hl){
     level(k, wm, {z0:z, cut:2.4, inner:wm});
     for(const it of FURN[k]) furn(it, z);
   }
-  for(const rf of ROOFS) prism(rf.axis,rf.x1,rf.x2,rf.y1,rf.y2,OFF.R,OFF.R+(rf.ridge-EAVE),hl==='R'?M.axoHL:M.axoRoof);
+  if(FLAT_ROOF) slab(LEVELS.F.outline,OFF.R,OFF.R+.45,hl==='R'?M.axoHL:M.axoRoof); else for(const rf of ROOFS) prism(rf.axis,rf.x1,rf.x2,rf.y1,rf.y2,OFF.R,OFF.R+(rf.ridge-EAVE),hl==='R'?M.axoHL:M.axoRoof);
   s.add(new T.HemisphereLight(0xffffff,0x9a9a9a,1.05)); const d=new T.DirectionalLight(0xffffff,.55); d.position.set(-60,120,80); s.add(d);
   grp = mainGrp; return s;
 }
