@@ -228,12 +228,14 @@ function materials(){
     art:TX.art.map(map => Object.assign(stdM({map, roughness:.85}), {envMapIntensity:.3})),
     film:Object.assign(stdM({map:TX.art[2], color:lin(0x333333), roughness:.9, emissive:0xffffff, emissiveMap:TX.art[2], emissiveIntensity:.75}), {envMapIntensity:.1})
   };
+  for(const [k, m] of Object.entries(MAT)) if(m && m.isMaterial) m.name = k;   // names travel with the glTF export to Blender
+  MAT.art.forEach((m, i) => m.name = 'art' + i);
   return MAT;
 }
 const FLOOR_OF = k => ({sleep:'oak', store:'oak', staff:'oak', live:'porcelain', circ:'porcelain', core:'porcelain', wet:'marble', service:'porcelainDark', garage:'concrete', plant:'concrete'})[k] || 'porcelain';
 function floorMat(kind, name){ // a fresh material per room (shares the texture) so a room can be highlighted on its own
   const key = /Cinema/.test(name) ? 'carpet' : /Gym/.test(name) ? 'concrete' : FLOOR_OF(kind);
-  const src = MAT[key]; const m = stdM({map:src.map, color:src.color.clone(), roughness:src.roughness, metalness:src.metalness}); m.envMapIntensity = src.envMapIntensity; return triplanar(m, 1 / src.userData.tri);
+  const src = MAT[key]; const m = stdM({map:src.map, color:src.color.clone(), roughness:src.roughness, metalness:src.metalness}); m.envMapIntensity = src.envMapIntensity; m.name = 'floor_' + key; return triplanar(m, 1 / src.userData.tri);
 }
 
 /* ---------- furniture ---------- */

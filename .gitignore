@@ -1,0 +1,7 @@
+# Blender working files: rebuilt from the export (see blender/build_scene.py)
+blender/villa.glb
+blender/villa-extras.json
+blender/*.blend
+blender/*.blend1
+blender/renders/*-quick.png
+blender/renders/*.png

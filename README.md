@@ -21,7 +21,8 @@ Every drawing, area, board and render is generated from one data model (`data.js
 - `draw-plans.js`, `draw-sections.js`, `draw-cad.js`, `draw-elev.js`, `draw-boards.js`: SVG and board generators
 - `images/`: renders (`c01`–`c13`) and exploded axonometrics (`axo-*`)
 - `bake.html`, `bake.js`: regenerate the renders and axonometrics from the data (needs `serve.js`)
-- `serve.js`: local static server that also saves baked images
+- `serve.js`: local static server that also saves baked images and the Blender export
+- `blender/`: the villa as a Blender scene, rendered in Cycles (see below)
 
 ## Run locally
 
@@ -33,10 +34,33 @@ Open http://localhost:4817 for the showcase, http://localhost:4817/drawings.html
 
 The renders are computed from the design model in the browser (three.js). They are concept visualisations, not photographs.
 
+## Blender model
+
+The same model, furnished and dressed as in the explorer, can be rebuilt as a Blender scene (tested with Blender 5.2) and rendered in Cycles with procedural materials, a dusk sky, downlights, lamps, garden lights and trees:
+
+```bash
+node serve.js
+```
+
+1. Open http://localhost:4817/explore.html?export. It writes `blender/villa.glb` and `blender/villa-extras.json`.
+2. Build the scene, which saves `blender/hovli.blend`:
+
+   ```bash
+   blender -b -P blender/build_scene.py
+   ```
+
+3. Render the concept-board views (exterior, pool, living, kitchen, workshop, cinema, bedroom and an exploded axonometric) to `blender/renders/`. Add `--quick` for half-size previews.
+
+   ```bash
+   blender -b blender/hovli.blend -P blender/render.py
+   ```
+
+The export, the `.blend` file and preview renders are not committed: they are rebuilt from the data.
+
 ## Pages
 
 - `explore.html` is the interactive 3D explorer: a dusk view of the whole villa, and a furnished cutaway of each level floating on a dark studio backdrop (walls cut at 2.0 m), with water, daylight, electricity, gas and AC overlays, room focus and a cost calculator. It is built live in the browser from the same data (three.js r147). `explore-look.js` holds the procedural materials, the furniture and the 3D-only room dressing (fireplace walls, lamps, pendants, art, the workshop tool wall and the cinema risers); `explore.js` places that dressing per level in `DRESS`.
-- `index.html` is the showcase landing page, built only from the concept pictures and sheets (images in `img/`).
+- `index.html` is the showcase landing page, built from the concept pictures and sheets (images in `img/`) and the Blender renders (`blender/renders/`).
 - `drawings.html` is the technical drawing set: concept boards, CAD and staged plans, section, elevations, systems and area schedule (images in `images/`).
 
 Both are published with GitHub Pages from the repository root. `.nojekyll` makes Pages serve the files as they are.

@@ -23,7 +23,9 @@ const M = {
   blk:L.blackMatte, white:L.ceramic, stone:L.worktop, court:L.court, led:L.led, roof:L.extConc,
   world:Object.assign(L.grass.clone(), {color:lin(0x7c8866)}), road:std(0x1c1b1a,.95)
 };
-HX_LOOK.MAT.grass.userData.tri && (M.world.onBeforeCompile = L.grass.onBeforeCompile, M.world.customProgramCacheKey = L.grass.customProgramCacheKey, M.world.userData = {...L.grass.userData});
+for(const [k, m] of Object.entries(M)) if(!m.name) m.name = k;
+M.world.name = 'world';   // a clone of the lawn; the export leaves the landscape to Blender
+HX_LOOK.MAT.grass.userData.tri &&(M.world.onBeforeCompile = L.grass.onBeforeCompile, M.world.customProgramCacheKey = L.grass.customProgramCacheKey, M.world.userData = {...L.grass.userData});
 
 /* ---------- geometry helpers (add to the current group) ---------- */
 let grp;
@@ -152,7 +154,7 @@ function buildFull(k){
   const root = new T.Group(); grp = new T.Group(); root.add(grp); root.position.y = k==='F' ? 3.5 : 0; LEVEL = k; POOLS = [];
   if(k==='G') slab(LEVELS.G.outline, -.45, -.02, M.base);
   walls(k, {top:FULL, ext:k==='F' ? M.trav : M.darkStone, glass:M.glassLit, mullions:true});
-  for(const it of FURN[k]) furnFull(it, .02);
+  for(const it of FURN[k]) furnFull(it, .02 + riserAt(k, it));
   furnFull.dress(k, .02, DRESS[k]);
   for(const r of levelRooms(k)) for(const [x,y,w,h] of r.r) box(x,x+w,y,y+h,0,.02,HX_LOOK.floorMat(r.k, r.n));
   if(k==='G'){ for(let i=0;i<19;i++){ const x = 19.5+i*.29, z = (i+1)*.184; box(x,x+.29,12.6,14,z-.06,z,M.stone); }
@@ -184,7 +186,7 @@ function buildSite(){
   const root = new T.Group(); grp = new T.Group(); root.add(grp);
   const {x0, x1, y1} = PLOT;
   // ground inside the wall: lawn, with paved forecourt, service yard and pool deck flush with the floor
-  box(x0+.3,x1-.3,.3,y1-.3,-.5,-.46,M.grass);
+  for(const [a,b,c,d] of [[x0+.3,x1-.3,.3,21.55],[x0+.3,x1-.3,42.45,y1-.3],[x0+.3,19.55,21.55,42.45],[30.45,x1-.3,21.55,42.45]]) box(a,b,c,d,-.5,-.46,M.grass);   // open over the pool
   for(const [x,y,w,h] of [[1.5,.3,7.7,8],[9.2,1.5,21.3,7.5],[42.3,10,x1-.3-42.3,10]]) box(x,x+w,y,y+h,-.46,-.43,M.deck);
   for(const e of EXTERNAL.filter(e => e.id==='X.03' || e.id==='X.02')) for(const [x,y,w,h] of e.r) box(x,x+w,y,y+h,-.46,0,M.deck);
   box(20,30,22,42,-1.5,-1.45,M.tile); for(const [a,b,c,d] of [[19.8,20,22,42],[30,30.2,22,42],[20,30,21.8,22],[20,30,42,42.2]]) box(a,b,c,d,-1.5,-.02,M.tile);
@@ -514,5 +516,8 @@ function boot(i){ if(i < steps.length){ steps[i](); return setTimeout(() => boot
   setTimeout(() => { $('loader').classList.add('done'); overview(3); }, 200);
   setTimeout(() => { $('hint').style.opacity = 0; }, 8000);
   for(const [k, t] of [['G',1200],['F',2200],['B',3200]]) setTimeout(() => { if(!CUTL[k]) buildCut(k); }, t); }
+/* the built model, for blender/gltf-export.js (explore.html?export writes the villa out for Blender) */
+window.HX_EXPLORER = {scene, CUTL, FULLL, CUT_Y, buildCut, buildFull, get SITE(){ return SITE; }, get ROOF(){ return ROOF; }};
+if(/[?&]export\b/.test(location.search)){ const s = document.createElement('script'); s.src = 'blender/gltf-export.js'; document.body.appendChild(s); }
 boot(0);
 })();

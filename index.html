@@ -114,6 +114,7 @@ section{position:relative}
 .ext .row2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .ext .frame{margin:0}.ext .frame img{height:auto}
 @media (max-width:820px){.ext .row3,.ext .row2{grid-template-columns:1fr}}
+.renders .frame{aspect-ratio:16/9}.renders .frame img{height:100%}
 
 /* sketches: pinned horizontal gallery */
 .sketch-sec{background:linear-gradient(180deg,var(--bg),#0e1012 20%,#0e1012 80%,var(--bg))}
@@ -229,7 +230,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 
 <header class="nav">
   <a class="brand" href="#top"><i aria-hidden="true"></i>HOVLI</a>
-  <nav aria-label="Sections"><a href="#estate">Estate</a><a href="#sketches">Sketches</a><a href="#plans">Plans</a><a href="#interiors">Interiors</a><a href="#lab">Lab</a><a href="#garden">Garden</a><a href="explore.html">3D explorer</a></nav>
+  <nav aria-label="Sections"><a href="#estate">Estate</a><a href="#sketches">Sketches</a><a href="#plans">Plans</a><a href="#renders">Renders</a><a href="#interiors">Interiors</a><a href="#lab">Lab</a><a href="#garden">Garden</a><a href="explore.html">3D explorer</a></nav>
   <a class="pill" href="drawings.html">Technical drawings</a>
 </header>
 
@@ -318,6 +319,15 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   <div class="plans">
     <div class="viewer" id="planView" role="img" aria-label="1st floor plan"></div>
     <div class="glass rooms"><span class="label" id="planLabel">1st floor · spaces</span><h3 id="planTitle">Bedrooms around the void</h3><ol id="planList"></ol><div class="total"><span>Net floor area</span><span id="planTotal"></span></div></div>
+  </div>
+</div></section>
+
+<section class="sec" id="renders" style="padding-top:0"><div class="wrap">
+  <div class="head reveal"><h2>Rendered <em>in Blender</em></h2><p>The same model, built in Blender from the plan data and rendered in Cycles at dusk. Every wall, window and piece of furniture stands where the drawings put it.</p></div>
+  <div class="ext renders">
+    <div class="row2"><figure class="frame clip"><img src="blender/renders/exterior.jpg" width="1920" height="1080" alt="Aerial view of the villa at dusk with the lit pool court" loading="lazy"><figcaption class="cap glass"><span>Exterior</span><span>Dusk</span></figcaption></figure><figure class="frame clip"><img src="blender/renders/pool.jpg" width="1920" height="1080" alt="Pool court with the glazed wings lit from inside" loading="lazy"><figcaption class="cap glass"><span>Pool court</span></figcaption></figure></div>
+    <div class="row3"><figure class="frame clip"><img src="blender/renders/living.jpg" width="1920" height="1080" alt="Living room with sectional sofa, black marble fireplace wall and pool view" loading="lazy"><figcaption class="cap glass"><span>Living room</span></figcaption></figure><figure class="frame clip"><img src="blender/renders/kitchen.jpg" width="1920" height="1080" alt="Kitchen with black tall units, marble backsplash and an oak island with stools" loading="lazy"><figcaption class="cap glass"><span>Kitchen</span></figcaption></figure><figure class="frame clip"><img src="blender/renders/bedroom.jpg" width="1920" height="1080" alt="Master bedroom on the 2nd floor with oak floor and glass to the courtyard" loading="lazy"><figcaption class="cap glass"><span>Master bedroom</span></figcaption></figure></div>
+    <div class="row3"><figure class="frame clip"><img src="blender/renders/workshop.jpg" width="1920" height="1080" alt="Basement workshop with tool chests, pegboard, workbench and robot arm" loading="lazy"><figcaption class="cap glass"><span>Workshop</span><span>Basement</span></figcaption></figure><figure class="frame clip"><img src="blender/renders/cinema.jpg" width="1920" height="1080" alt="Basement cinema with tiered recliners and a wide screen" loading="lazy"><figcaption class="cap glass"><span>Cinema</span><span>Basement</span></figcaption></figure><figure class="frame clip"><img src="blender/renders/axo.jpg" width="1600" height="1600" alt="Exploded axonometric of the basement, 1st and 2nd floors" loading="lazy"><figcaption class="cap glass"><span>Three levels</span><span>Exploded</span></figcaption></figure></div>
   </div>
 </div></section>
 
